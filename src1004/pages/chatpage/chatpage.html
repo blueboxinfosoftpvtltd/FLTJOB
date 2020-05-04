@@ -1,0 +1,77 @@
+<ion-header>
+
+  <ion-navbar #navbar>
+    <ion-row>
+      <ion-col col-3>
+        <img class="profile-photomsg" src="{{PhotoPath}}" />
+      </ion-col>
+      <ion-col col-8 *ngIf="ismessage == undefined" (click)="openprofile()"style="align-self: center">
+        <p style="color: #000">{{PilotFname}} {{PilotLname}}</p>
+      </ion-col>
+      <ion-col col-8 *ngIf="ismessage == true" (click)="openprofile()" style="align-self: center">
+        <p style="color: #000">{{PilotFname}} </p>
+      </ion-col>
+      <ion-col col-8 *ngIf="ismessage == false" (click)="openprofile()" style="align-self: center">
+        <p style="color: #000">{{PilotFname}} {{PilotLname}} </p>
+      </ion-col>
+    </ion-row>
+
+
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+
+  <div class="message-wrap">
+
+    <div *ngFor="let msg of msgList" class="message" [class.left]=" msg.IsReceive===true " [class.right]="  msg.IsReceive!==true ">
+      <div class="msg-detail">
+        <div class="msg-info">
+          <p>
+            {{msg.EntryDate}}</p>
+        </div>
+        <div class="msg-content">
+          <span class="triangle"></span>
+          <p class="line-breaker " *ngIf="msg.MessageType === false">{{msg.Message}}</p>
+          <img src="{{msg.Message}}" *ngIf="msg.MessageType === true" style="width: 120px;height: 120px;" (click)="openModal(msg.Message)" />
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- <ion-grid>
+      <ion-row *ngFor="let msg of msgList">
+        <ion-col col-9 *ngIf="msg.IsReceive===true" class="message" [ngClass]="{'mymessage': msg.IsReceive!==true, 'othermessage': msg.IsReceive===true}">
+          <span class="user_name">{{ msg.from }}:</span>
+          <br>
+          <span>{{ msg.Message }}</span>
+          <div class="time">{{msg.EntryDate | date:'dd.MM hh:MM'}}</div>
+        </ion-col>
+  
+        <ion-col offset-3 col-9  class="message" [ngClass]="{'othermessage':msg.IsReceive!==true, 'mymessage': msg.IsReceive===true}">
+          <span class="user_name">{{ msg.from }}:</span>
+          <br>
+          <span>{{ msg.Message }}</span>
+          <div class="time">{{msg.EntryDate | date:'dd.MM hh:MM'}}</div>
+        </ion-col>
+      </ion-row>
+    </ion-grid> -->
+
+</ion-content>
+
+<ion-footer style="background-color: transparent">
+
+  <div class="input-wrap">
+    <button ion-button clear icon-only item-right (click)="SendAttachment()">
+      <ion-icon name="attach" style="color: #000"></ion-icon>
+    </button>
+    <ion-input placeholder="Type your message..." [(ngModel)]="SendMessage" style="color: #000;"></ion-input>
+    <button ion-button clear icon-only item-right (click)="sendNewMsg(SendMessage)" class="msg-button">
+      <ion-icon name="play" style="margin-left: 3px;"></ion-icon>
+    </button>
+  </div>
+  <!-- <emoji-picker [(ngModel)]="editorMsg"></emoji-picker> -->
+</ion-footer>

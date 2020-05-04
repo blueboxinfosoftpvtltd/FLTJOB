@@ -1,0 +1,66 @@
+page-addrating {
+    hr {
+        border: 0.03em solid #434344;
+    }
+
+    .item-md {
+        padding-left: 0px;
+        background: #fff;
+        color: #000;
+        font-size: 13px
+    }
+
+    .fullbtn {
+        width: 90%;
+    }
+
+    .ratesymbol {
+        background: transparent;
+        border: none;
+        margin-left: 4px;
+        width: 130px;
+    }
+    .item.item-md .checkbox-md {
+        position: static;
+        display: block;
+        margin: 9px 9px 9px 4px;
+    }
+    .select-md .select-icon .select-icon-inner {
+        color: #fff;
+    }
+
+    ion-select {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        overflow: hidden;
+        max-width: 100%;
+        margin-left: -10px;
+    }
+
+    .item.item-md .checkbox-md {
+        position: static;
+        display: block;
+        margin: 9px 14px 9px 4px;
+    }
+    .item-md.item-input.input-has-focus .item-inner, .item-md.item-input.item-input-has-focus .item-inner {
+        border-bottom-color: #dedede;
+        /* -webkit-box-shadow: inset 0 -1px 0 0 #dedede; */
+        box-shadow:none;
+    }
+
+    .item-md.item-input.ng-invalid.ng-touched:not(.input-has-focus):not(.item-input-has-focus) .item-inner {
+        border-bottom-color: #dedede;
+        /* -webkit-box-shadow: inset 0 -1px 0 0 #dedede; */
+        box-shadow: none;
+    }
+    .list-md.item-input.item-input-has-focus:last-child, .list-md .item-input.input-has-focus:last-child{       border-bottom-color: #dedede;
+        -webkit-box-shadow: inset -1 -1px 0 0 #dedede; 
+           box-shadow: none;
+           border-bottom-color: #dedede;
+       }
+       .list-md .item-input:last-child{
+           border-bottom: 0px solid #dedede;
+       }
+}

@@ -1,0 +1,73 @@
+page-dologin {
+    ion-navbar.toolbar-md {
+        min-height: 120px !important;
+    }
+
+    //on iOS
+    ion-navbar.toolbar.toolbar-ios {
+        min-height: 120px !important;
+    }
+
+    .fixed-content {
+        background-color: #fff;
+    }
+
+    .fullbtn {
+        width: 70%;
+        text-transform: none;
+        height: 200%;
+        background: #2068D7
+    }
+
+    ion-header ion-icon.back-button-icon.icon {
+        color: map-get($colors, light);
+    }
+
+    .setinputfield {
+        margin-left: 25px;
+    }
+
+    .item-ios {
+        padding-left: 0px;
+        background: white;
+        color: black;
+        font-size: 13px;
+    }
+
+    .item-md {
+        padding-left: 0px;
+        background: white;
+        color: black;
+        font-size: 13px;
+    }
+
+    .list-ios>.item-block:first-child {
+        border-top: none;
+    }
+
+    .fullbtn {
+        width: 50%;
+        text-transform: none;
+        height: 200%;
+        background: #2068D7
+    }
+
+    .center {
+        margin: 0;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+    }
+
+    .profile-photo {
+        border-radius: 50% !important;
+        border: 3px solid #fff !important;
+        height: 100px;
+        width: 100px;
+        background-color: #000;
+        overflow: hidden;
+        margin-top: -50px;
+    }
+}

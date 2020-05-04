@@ -1,0 +1,136 @@
+page-userratting {
+    fieldset.rating {
+        text-align: center;
+        padding-bottom: 0px;
+        border: none;
+        margin: 0px auto;
+        width: 350px;
+    }
+    /* hide default radio button */
+    .rating > input { display: none; } 
+    
+    /* half selected star styles */
+    .rating > .half:before { 
+        content: "\f089";
+        position: absolute;
+    
+    }
+
+    
+    .rating > label:last-child:before {
+        content: "\f089"; /* empty star outline */
+    }
+    /* unselected star styles */
+    .rating > label:before { 
+        margin: 13px;
+        font-size: 3em;
+        font-family: FontAwesome;
+        display: inline-block;
+        content: "\f005";
+    }
+    /* .rating > label:hover:before { 
+        margin: 5px;
+        font-size: 4em;
+        font-family: FontAwesome;
+        display: inline-block;
+        content: "\f005";
+    } */
+    
+    
+    .rating > label { 
+        color: #e6e6e6;
+        float: right; 
+    }
+    
+    
+    /* color star when clicked */
+    .rating > input:checked ~ label, 
+     /* hover current star */
+    .rating:not(:checked) > label:hover,
+    /* hover previous stars in list */
+    .rating:not(:checked) > label:hover ~ label { 
+        color: #488aff;  
+    
+    } 
+    
+    .rate {
+        display: inline-block;
+        border: 0;
+    }
+    /* Hide radio */
+    .rate > input {
+        display: none;
+    }
+    /* Order correctly by floating highest to the right */
+    .rate > label {
+        float: right;
+    }
+    /* The star of the show */
+    .rate > label:before {
+        display: inline-block;
+        font-size: 1.1rem;
+        padding: .3rem .2rem;
+        margin: 0;
+        cursor: pointer;
+        font-family: FontAwesome;
+        content: "\f005 "; /* full star */
+    }
+    /* Zero stars rating */
+    .rate > label:last-child:before {
+        content: "\f006 "; /* empty star outline */
+    }
+    /* Half star trick */
+    .rate .half:before {
+        content: "\f089 "; /* half star no outline */
+        position: absolute;
+        padding-right: 0;
+    }
+    /* Click + hover color */
+    input:checked ~ label, /* color current and previous stars on checked */
+    label:hover, label:hover ~ label { color: #73B100;  } /* color previous stars on hover */
+    
+    /* Hover highlights */
+    input:checked + label:hover, input:checked ~ label:hover, /* highlight current and previous stars */
+    input:checked ~ label:hover ~ label, /* highlight previous selected stars for new rating */
+    label:hover ~ input:checked ~ label /* highlight previous selected stars */ { color: #A6E72D;  }
+    
+    body {
+        font-family: Arial;
+        text-align: center;
+        margin: 100px auto;
+    }
+    ion-navbar.toolbar.toolbar-ios {
+        min-height: 47px !important;
+    }
+    .toolbar-ios ion-title {
+        top: 5px;
+    }
+  
+    .ionic3-star-rating[_ngcontent-c0] .button[_ngcontent-c0] ion-icon[_ngcontent-c0] {
+        font-size: 40px;
+    }
+    .ionic3-star-rating[_ngcontent-c0] .button[_ngcontent-c0] {
+        font-size: 60px;
+    }
+    #myInput {
+        width: calc(100% - 23px);
+        border: 1px solid #000;
+        border-radius: 0;
+        margin-left: 10px;
+        background: #ffffff;
+        height: 98px;
+    }
+
+    .fullbtn {
+        width: 98%;
+    }
+    ion-footer {
+        bottom: 1px;
+    }
+  .rating ion-icon {
+        color: #488aff;
+        font-size: 45px;
+    }
+
+ 
+}

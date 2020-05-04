@@ -1,0 +1,42 @@
+page-userratting {
+
+    ion-navbar.toolbar.toolbar-ios {
+        min-height: 47px !important;
+    }
+    .toolbar-ios ion-title {
+        top: 5px;
+    }
+
+    .ionic3-star-rating[_ngcontent-c0] .button[_ngcontent-c0] ion-icon[_ngcontent-c0] {
+        font-size: 40px;
+    }
+    .ionic3-star-rating[_ngcontent-c0] .button[_ngcontent-c0] {
+        font-size: 60px;
+    }
+    #myInput {
+        width: calc(100% - 23px);
+        border: solid 1px #000;
+        border-radius: 0;
+        margin-left: 10px;
+        background: #fff;
+        height: 98px;
+    }
+
+    .fullbtn {
+        width: 98%;
+    }
+    ion-footer {
+        bottom: 1px;
+    }
+  .rating ion-icon {
+        color: #488aff;
+        font-size: 45px;
+    }
+
+    .textarea {
+        border: 1px solid #000;
+        color: black;
+    }
+
+ 
+}

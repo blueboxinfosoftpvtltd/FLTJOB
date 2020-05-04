@@ -1,0 +1,88 @@
+<ion-content>
+
+  <ion-list>
+
+    <!-- <ion-item-sliding *ngFor='let data of notificationList'> -->
+    <ion-item *ngFor='let data of notificationList' >
+      <ion-row (click)="requestpage(data)">
+        <ion-col col-3>
+          <img class="profile-photo" src="{{data.photoPath}}" />
+        </ion-col>
+        <ion-col col-8>
+          <ion-row>
+            <div style="margin-left: 20px">{{data.oppositePilotName}}</div>
+          </ion-row>
+          <ion-row>
+            <div style="margin-left: 20px;margin-top: 10px;font-style: italic;">{{data.summary}}</div>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </ion-item>
+    <!-- <ion-item-options>
+        <button ion-button  (click)="removeItem()" icon-only>
+          <ion-icon name="trash"></ion-icon>
+        </button>
+      </ion-item-options>
+    </ion-item-sliding> -->
+
+  </ion-list>
+
+  <!-- <ion-card (click)="requestpage(data)"> -->
+  <!-- <ion-row>
+                <ion-col col-3>
+                  <img class="profile-photo" src="{{data.photoPath}}" />
+                </ion-col>
+                <ion-col col-8>
+                  <ion-row>
+                    <ion-label style="margin-left: 20px">{{data.oppositePilotName}}</ion-label>
+                  </ion-row>
+                  <ion-row>
+                    <ion-label style="margin-left: 20px;margin-top: 10px;font-style: italic;">{{data.summary}}</ion-label>
+                  </ion-row>
+                </ion-col>
+              </ion-row> -->
+  <!-- </ion-card> -->
+  <!-- <ion-col col-12 style="padding: 9px !important;">
+            <ion-card (click)="requestpage(data)">
+              <ion-row>
+                <ion-col col-3>
+                  <img class="profile-photo" src="{{data.photoPath}}" />
+                </ion-col>
+                <ion-col col-8>
+                  <ion-row>
+                    <ion-label style="margin-left: 20px">{{data.oppositePilotName}}</ion-label>
+                  </ion-row>
+                  <ion-row>
+                    <ion-label style="margin-left: 20px;margin-top: 10px;font-style: italic;">{{data.summary}}</ion-label>
+                  </ion-row>
+                </ion-col>
+              </ion-row>
+            </ion-card>
+          </ion-col>
+          <ion-col col-12 style="margin-top: -9px;">
+            <hr>
+          </ion-col> -->
+
+  <!-- <ion-row *ngFor='let data of notificationList'>
+        <ion-col col-12 style="padding: 9px !important;">
+          <ion-card (click)="requestpage(data)">
+            <ion-row>
+              <ion-col col-3>
+                <img class="profile-photo" src="{{data.photoPath}}"/>
+              </ion-col>
+              <ion-col col-8>
+                <ion-row>
+                  <ion-label style="margin-left: 20px">{{data.oppositePilotName}}</ion-label>
+                </ion-row>
+                <ion-row>
+                  <ion-label style="margin-left: 20px;margin-top: 10px;font-style: italic;">{{data.summary}}</ion-label>
+                </ion-row>
+              </ion-col>
+            </ion-row>
+          </ion-card>
+        </ion-col>
+        <ion-col col-12 style="margin-top: -9px;">
+          <hr>
+        </ion-col>
+      </ion-row> -->
+</ion-content>

@@ -1,0 +1,276 @@
+<!--
+  Generated template for the FiltersicPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar #navbar>
+    <ion-title>{{title}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <div ion-fixed class="fixed">
+    <ion-row style="margin-top: 5%">
+
+      <ion-col text-center>
+        <div class="steps">
+          <ion-label *ngIf="filtersicstep1 == 1" class="step" (click)="activestep('1')" [ngStyle]="{'background-color': button1Color,'color' : txt1color}">1</ion-label>
+          <ion-label class="step" *ngIf="filtersicstep2 == 2" (click)="activestep('2')" [ngStyle]="{'background-color': button2Color,'color' : txt2color}">2</ion-label>
+          <ion-label class="step" *ngIf="filtersicstep3 == 3" (click)="activestep('3')" [ngStyle]="{'background-color': button3Color,'color' : txt3color}">3</ion-label>
+          <ion-label class="step" *ngIf="filtersicstep4 == 4" (click)="activestep('4')" [ngStyle]="{'background-color': button4Color,'color' : txt4color}">4</ion-label>
+        </div>
+      </ion-col>
+
+    </ion-row>
+  </div>
+  <div *ngIf="filtersicstep == 1" class="scroll">
+    <ion-row>
+      <ion-col ion-item col-6>
+        <ion-label>Total Time</ion-label>
+      </ion-col>
+      <ion-col ion-item col-6>
+        <ion-input type='number' placeholder='Total Time' [(ngModel)]='totaltime'></ion-input>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col ion-item col-6>
+        <ion-label>Total Time in Type</ion-label>
+      </ion-col>
+      <ion-col ion-item col-6>
+        <ion-input type='number' placeholder='Enter Time' [(ngModel)]='totaltimetype'></ion-input>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col ion-item col-6>
+        <ion-label>Medical Class</ion-label>
+      </ion-col>
+      <ion-col col-6 ion-item>
+        <!-- <ion-label (click)="openpicker()">{{mclass}}</ion-label> -->
+        <ion-select text-wrap class="selectIcon" [(ngModel)]="mclass" class="dineInSelectClass"
+        placeholder="Select Radius">
+        <ion-option class="cusineCountOptions" *ngFor="let r of mclass1" [value]="r.description">{{r.description}}</ion-option>
+      </ion-select>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col ion-item col-6>
+        <ion-label>Select Rating</ion-label>
+      </ion-col>
+      <ion-col col-6 ion-item>
+        <div id="rateYosecond" style="margin: 0 -6px auto"></div>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col ion-item no-lines col-6>
+        <ion-label class='fixedLabel'>Valid Passport</ion-label>
+      </ion-col>
+      <ion-col ion-item no-lines col-3>
+        <ion-label>Yes</ion-label>
+        <ion-checkbox color="dark" (ionChange)="cheboxcheck('vpy',$event)" [(ngModel)]='validpassyes' mode="md"></ion-checkbox>
+      </ion-col>
+      <ion-col ion-item no-lines col-3>
+        <ion-label>No</ion-label>
+        <ion-checkbox color="dark" (ionChange)="cheboxcheck('vpn',$event)" [(ngModel)]='validpassno' mode="md"></ion-checkbox>
+      </ion-col>
+    </ion-row>
+    <hr>
+    <ion-row>
+      <ion-col ion-item no-lines col-6>
+        <ion-label class='fixedLabel'>Rating Type</ion-label>
+      </ion-col>
+      <ion-col ion-item no-lines col-4>
+        <ion-label>Commercial</ion-label>
+        <ion-checkbox color="dark" [(ngModel)]='ratingc' mode="md"></ion-checkbox>
+      </ion-col>
+      <ion-col ion-item no-lines col-2>
+        <ion-label>ATP</ion-label>
+        <ion-checkbox color="dark" [(ngModel)]='ratinga' mode="md"></ion-checkbox>
+      </ion-col>
+    </ion-row>
+    <hr>
+    <ion-row>
+      <ion-col col-6 ion-item>
+        <ion-label>Continent Experience</ion-label>
+      </ion-col>
+
+      <ion-col col-6 ion-item>
+        <ion-label stacked="" (click)="selectcontinents($event)">{{continents}}</ion-label>
+        <!-- <ion-input [readonly]="true" placeholder="Select Continent" [(ngModel)]=continents (click)="selectcontinents($event)"></ion-input> -->
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col ion-item no-lines col-6>
+        <ion-label>12 month simulator training require</ion-label>
+      </ion-col>
+      <ion-col ion-item no-lines col-3>
+        <ion-label style="margin-left: 5px">Yes</ion-label>
+        <ion-checkbox color="dark" (ionChange)="cheboxcheck('msy',$event)" mode="md" [(ngModel)]=mstrainingyes></ion-checkbox>
+      </ion-col>
+      <ion-col ion-item no-lines col-3>
+        <ion-label>No</ion-label>
+        <ion-checkbox color="dark" (ionChange)="cheboxcheck('msn',$event)" mode="md" [(ngModel)]=mstrainingno></ion-checkbox>
+      </ion-col>
+    </ion-row>
+    <hr>
+
+    <ion-row style="margin-top: 8%">
+      <ion-col>
+        <button ion-button full (click)="save1()">Save</button>
+      </ion-col>
+    </ion-row>
+  </div>
+
+
+  <div *ngIf="filtersicstep == 2" class="scroll">
+    <ion-row>
+      <ion-col ion-item col-6>
+        <ion-label>Per Day</ion-label>
+      </ion-col>
+      <ion-col ion-item col-6>
+        <span>&#36;</span> <input placeholder='Enter Rate' type='number' [(ngModel)]='rate' style="background: transparent;border: none;margin-left: 4px;width: 130px;">
+      </ion-col>
+    </ion-row>
+    <ion-row style="margin-top: 8%">
+      <ion-col>
+        <button ion-button full (click)="save2()">Next</button>
+      </ion-col>
+    </ion-row>
+  </div>
+
+
+  <div *ngIf="filtersicstep == 3" class="scroll">
+    <ion-row style="background: #fff">
+      <ion-col ion-item no-lines col-10>
+        <ion-label>All SIC</ion-label>
+      </ion-col>
+      <ion-col ion-item no-lines col-2>
+        <ion-checkbox color="dark" mode="md" [(ngModel)]="allsic"></ion-checkbox>
+      </ion-col>
+      <ion-col col-12>
+        <hr>
+      </ion-col>
+
+    </ion-row>
+    <ion-row style="background: #fff">
+      <ion-col ion-item no-lines col-10>
+        <ion-label>Favorite SIC</ion-label>
+      </ion-col>
+      <ion-col ion-item no-lines col-2>
+        <ion-checkbox color="dark" mode="md" [(ngModel)]="favsic"></ion-checkbox>
+      </ion-col>
+      <ion-col col-12>
+        <hr>
+      </ion-col>
+
+    </ion-row>
+    <ion-row style="background: #fff">
+      <ion-col ion-item no-lines col-10>
+        <ion-label>Available SIC</ion-label>
+      </ion-col>
+      <ion-col ion-item no-lines col-2>
+        <ion-checkbox color="dark" mode="md" [(ngModel)]="avlsic"></ion-checkbox>
+      </ion-col>
+      <ion-col col-12>
+        <hr>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <button ion-button full (click)="filter()">Next</button>
+      </ion-col>
+    </ion-row>
+  </div>
+  <div *ngIf="filtersicstep == 4 && dispdata == true" class="scroll">
+
+    <ion-row *ngFor='let name of siclist' style="background: #fff">
+
+      <ion-col col-2 style="align-self: center">
+        <img class="profile-photo" src="{{name.PhotoPath}}" (click)="getImage()" />
+      </ion-col>
+      <ion-col no-lines col-8>
+        <ion-row>
+          <ion-col col-6 (click)="openProfile(name.pkPilotId)">
+            <ion-label style="color: #000;margin-left: 14px">{{name.PilotFname}} {{name.PilotLname}}</ion-label>
+          </ion-col>
+          <ion-col col-6>
+            <ionic3-star-rating activeIcon="ios-star" defaultIcon="ios-star-outline" activeColor="#f39c12" defaultColor="#000"
+              readonly="false" [rating]="name.starRatting" style="pointer-events: none" text-center>
+            </ionic3-star-rating>
+          </ion-col>
+
+        </ion-row>
+        <ion-row>
+          <ion-col col-2 ion-item no-lines *ngIf="name.isFavrouite">
+            <div class="dot" style="margin-left: 12px"></div>
+          </ion-col>
+          <ion-col col-4 ion-item no-lines *ngIf="name.isFavrouite">
+            <p style="color: #000;margin-left: 5px">Favorite</p>
+          </ion-col>
+          <ion-col col-2 ion-item no-lines *ngIf="name.isNearest">
+            <div class="dot1" style="margin-left: 12px"></div>
+          </ion-col>
+          <ion-col col-4 ion-item no-lines *ngIf="name.isNearest">
+            <p style="color: #000;margin-left: 5px">Nearest</p>
+          </ion-col>
+        </ion-row>
+
+      </ion-col>
+      <ion-col col-2 style="align-self: center">
+        <ion-checkbox color="dark" style="margin-left: 15px;" mode="md" [(ngModel)]="name.checked"></ion-checkbox>
+      </ion-col>
+      <ion-col col-12>
+        <hr>
+      </ion-col>
+
+    </ion-row>
+  </div>
+  <div *ngIf="filtersicstep == 4 && dispdata == false" class="scroll">
+    <ion-row text-center>
+      <ion-col>
+        <ion-label style="color: black;font-size: 15px;">No result found</ion-label>
+      </ion-col>
+
+    </ion-row>
+    <ion-row style="margin-top: 5%">
+      <ion-col>
+        <button ion-button full (click)="changefilter()">Change filter</button>
+      </ion-col>
+    </ion-row>
+  </div>
+</ion-content>
+<!-- <ion-footer *ngIf="filtersicstep == 4 && filtersicdata && siclist != null" style="background-color: black">
+
+  <ion-row>
+    <ion-col>
+      <button ion-button full (click)="sendnotification()">Send Notification</button>
+    </ion-col>
+  </ion-row>
+</ion-footer> -->
+
+<ion-footer *ngIf="filtersicstep == 4 ">
+
+  <ion-row *ngIf="fns_sh == '_send'" style="background-color: white">
+    <ion-col>
+      <button ion-button full (click)="sendnotification()">Send Notification</button>
+    </ion-col>
+  </ion-row>
+  <ion-row *ngIf="fns_sh == '_finish'" style="background-color: white">
+    <ion-col>
+      <button ion-button full (click)="finish()">Finish</button>
+    </ion-col>
+  </ion-row>
+
+  <ion-row *ngIf="fns_sh == '_next'" style="background-color: white">
+    <ion-col>
+      <button ion-button full (click)="next()">Next</button>
+    </ion-col>
+  </ion-row>
+</ion-footer>

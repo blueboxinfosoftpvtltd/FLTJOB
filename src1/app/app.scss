@@ -1,0 +1,117 @@
+// http://ionicframework.com/docs/theming/
+// App Global Sass
+// --------------------------------------------------
+// Put style rules here that you want to apply globally. These
+// styles are for the entire app and not just one component.
+// Additionally, this file can be also used as an entry point
+// to import other Sass files to be included in the output CSS.
+//
+// Shared Sass variables, which can be used to adjust Ionic's
+// default Sass variables, belong in "theme/variables.scss".
+//
+// To declare rules for a specific mode, create a child rule
+// for the .md, .ios, or .wp mode classes. The mode class is
+// automatically applied to the <body> element in the app.
+// ion-navbar.toolbar-md {
+//     min-height: 120px !important;
+// }
+
+// //on iOS
+// ion-navbar.toolbar.toolbar-ios {
+//     min-height: 120px !important;
+//     background: #2068D7;
+// }
+
+.fixed-content {
+    background-color: #fff;
+}
+
+.toolbar-background {
+    background-color: #2068D7;
+}
+
+ion-header ion-icon.back-button-icon.icon {
+    color: map-get($colors, light);
+}
+
+.tabs-md .tab-button.has-title-only {
+    padding: 0 0px;
+}
+
+.tabs-md .tab-button {
+    min-height: 0;
+    font-weight: normal;
+    color: rgba(60, 60, 60, 0.7);
+    padding: 0;
+}
+
+.button-md{
+    text-transform: none;
+}
+.tabs .tabbar {
+    background-color: #000;
+}
+
+.tabs-md .tab-button[aria-selected=true] {
+    color: #fff;
+}
+
+.tabbar a[aria-selected=true] {
+    border: none;
+    -webkit-box-shadow: 0px 3px 0px 0px #488aff; //box-shadow: 0px 0px 0px 0px #488aff inset;
+}
+
+.profile-photo {
+    border-radius: 50% !important;
+    border: 3px solid #fff !important;
+    height: 80px;
+    width: 80px;
+    background-color: #000;
+    overflow: hidden;
+}
+
+.tabs-md .tab-button.has-title-only .tab-button-text {
+    margin: 2px 0;
+    font-size: 1.3rem;
+    line-height: 1.1;
+}
+
+.text-input::-moz-placeholder {
+    color: #a1a1a8;
+}
+
+.text-input:-ms-input-placeholder {
+    color: #a1a1a8;
+}
+
+.text-input::-webkit-input-placeholder {
+    color: #a1a1a8;
+}
+
+.toolbar-title {
+    color: #fff;
+}
+
+.item-md {
+    padding-left: 0px;
+    padding-right: 0px;
+    background: transparent;
+    color: #fff;
+    font-size: 12px;
+}
+
+.list-md .item-input.ng-valid.item-input-has-value:not(.input-has-focus):not(.item-input-has-focus):last-child, .list-md .item-input.ng-valid.input-has-value:not(.input-has-focus):not(.item-input-has-focus):last-child {
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    border-bottom: 0px solid #dedede;
+}
+.item-md.item-input.ng-valid.item-input-has-value:not(.input-has-focus):not(.item-input-has-focus) .item-inner, .item-md.item-input.ng-valid.input-has-value:not(.input-has-focus):not(.item-input-has-focus) .item-inner {
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    border-bottom: 1px solid #dedede;
+}
+
+.card-md {
+    background: transparent;
+    color: #fff;
+}

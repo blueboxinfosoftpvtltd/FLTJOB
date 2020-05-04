@@ -1,0 +1,129 @@
+page-addbankdetail {
+    // .item-md {
+    //     padding-left: 0px;
+    // }
+
+    .item {
+        padding-left: 0px;
+        background: white;
+        color: black;
+        font-size: 13px
+    }
+
+
+    .fullbtn {
+        width: 90%;
+    }
+
+    .symbol {
+        background: transparent;
+        border: none;
+        margin-left: 4px;
+        width: 130px;
+    }
+
+
+    // .setinputfield {
+    //     margin-left: 19%;
+    // }
+
+    // ion-label {
+    //     margin-right: 5px;
+    //     white-space: normal;
+    // }
+
+    // .setinput {
+    //     margin-left: 14px;
+    // }
+
+    // .setinputmtype {
+    //     margin-left: 62px;
+    // }
+
+    // hr {
+    //     border: 0.05em solid #434344;
+    // }
+
+    // .content-ios hr {
+    //     height: 0.55px;
+    //     background-color: rgba(0, 0, 0, 0.12);
+    //     margin: 1px 0;
+    // }
+
+    // ion-label [fixed] {
+    //     min-width: 120px;
+    // }
+
+    // .scroll-content {
+    //     margin-top: 10px !important;
+    // }
+
+    // .txtlabel {
+    //     min-width: 120px;
+    // }
+
+    .label-ios+ion-input .text-input,
+    .label-ios+ion-textarea .text-input,
+    .label-ios+.input+.cloned-input {
+        margin-left: 5px;
+        width: calc(100% - (16px / 2) - 16px);
+    }
+
+    // ion-checkbox {
+    //     background-color: #222 !important;
+    // }
+
+    // ion-icon {
+    //     color: #fff;
+    //     font-size: 25px !important;
+    //     font-weight: bolder;
+    //     margin-left: 6px;
+    // }
+
+    // .datetime-ios {
+    //     padding: 0;
+    // }
+
+    .select-ios {
+        padding: 11px 17px 11px 0px;
+        max-width: 100%;
+    }
+
+    .select-ios .select-icon .select-icon-inner {
+        left: 5px;
+        top: 50%;
+        margin-top: -2px;
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-top: 5px solid;
+        border-right: 5px solid transparent;
+        border-left: 5px solid transparent;
+        color: #999;
+        pointer-events: none;
+        display: none;
+    }
+
+
+    // .select-text {
+    //     font-size: 15px;
+    // }
+
+    // .select-ios .select-icon .select-icon-inner {
+    //     color: #000;
+    // }
+
+    // select {
+    //     -webkit-appearance: menulist-button;
+    //     color: black;
+    // }
+
+    // select:invalid {
+    //     color: green;
+    // }
+
+    .btnstyle {
+        margin-top: 15px;
+        background: white;
+    }
+}

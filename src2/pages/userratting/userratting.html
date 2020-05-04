@@ -1,0 +1,56 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Pilot Rating Screen</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <br><br>
+  <!-- <ionic3-star-rating 
+    activeIcon = "ios-star"
+    defaultIcon = "ios-star-outline"
+    activeColor = "#488aff" 
+    defaultColor = "#f4f4f4"
+    readonly="false"
+    [rating]="3"  nullable="true" text-center>
+</ionic3-star-rating> -->
+
+  <!-- <div id="rateYo"></div> -->
+  <div *ngIf="oppositeid != undefined">
+    <div id="rateYo1" style="margin: 0 auto"></div>
+    <!-- <rating [(ngModel)]="rate" readOnly="false" max="5" emptyStarIconName="star-outline" halfStarIconName="star-half"
+      starIconName="star" nullable="true" (ngModelChange)="onModelChange($event)" >
+
+    </rating> -->
+  </div>
+
+  <div *ngIf="oppositeid == undefined">
+    <div id="rateYo1" style="pointer-events: none;margin: 0 auto"></div>
+    <!-- <rating [(ngModel)]="rate" readOnly="false" max="5" emptyStarIconName="star-outline" halfStarIconName="star-half"
+      starIconName="star" nullable="true" (ngModelChange)="onModelChange($event)" style="pointer-events: none">
+
+    </rating> -->
+  </div>
+  <br>
+  <div *ngIf="oppositeid == undefined">
+    <p text-center style="color: #000;font-size: 17px;">Your Comment:</p>
+    <textarea #myInput id="myInput" rows="1" maxLength="500" [(ngModel)]="comment" style="pointer-events: none"></textarea>
+  </div>
+
+  <div *ngIf="oppositeid != undefined">
+    <p text-center style="color: #000;font-size: 17px;">Your Comment:</p>
+    <textarea #myInput id="myInput" rows="1" maxLength="500" [(ngModel)]="comment"></textarea>
+  </div>
+
+</ion-content>
+<ion-footer style="background-color: white" *ngIf="oppositeid != undefined">
+  <ion-row center>
+    <ion-col text-center>
+      <button ion-button class="fullbtn" (click)="SubmitReview()">Submit</button>
+    </ion-col>
+  </ion-row>
+
+</ion-footer>

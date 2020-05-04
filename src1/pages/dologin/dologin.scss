@@ -1,0 +1,86 @@
+page-dologin {
+    ion-navbar.toolbar-md {
+        min-height: 120px !important;
+    } //on iOS
+    ion-navbar.toolbar.toolbar-ios {
+        min-height: 120px !important;
+    }
+    .fixed-content {
+        background-color: #fff;
+    }
+    .fullbtn {
+        width: 70%;
+        text-transform: none;
+        height: 200%;
+        background: #2068D7
+    }
+    ion-header ion-icon.back-button-icon.icon {
+        color: map-get($colors, light);
+    }
+    .setinputfield {
+        margin-left: 40px;
+    }
+    .item-ios {
+        padding-left: 0px;
+        background: black;
+        color: white;
+        font-size: 13px;
+    }
+    .item-md {
+        padding-left: 0px;
+        background: #fff;
+        color: #000;
+        font-size: 13px;
+    }
+    .list-ios>.item-block:first-child {
+        border-top: none;
+    }
+    .fullbtn {
+        width: 50%;
+        text-transform: none;
+        height: 200%;
+        background: #2068D7
+    }
+    .center {
+        margin: 0;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+    }
+    .profile-photo {
+        border-radius: 50% !important;
+        border: 3px solid #fff !important;
+        height: 100px;
+        width: 100px;
+        background-color: #000;
+        overflow: hidden;
+        margin-top: -50px;
+    }
+    .item-md.item-input.input-has-focus .item-inner, .item-md.item-input.item-input-has-focus .item-inner {
+        border-bottom-color: #dedede;
+        /* -webkit-box-shadow: inset 0 -1px 0 0 #dedede; */
+        box-shadow:none;
+    }
+
+    .item-md.item-input.ng-invalid.ng-touched:not(.input-has-focus):not(.item-input-has-focus) .item-inner {
+        border-bottom-color: #dedede;
+        /* -webkit-box-shadow: inset 0 -1px 0 0 #dedede; */
+        box-shadow: none;
+    }
+    .list-md.item-input.item-input-has-focus:last-child, .list-md .item-input.input-has-focus:last-child{       border-bottom-color: #dedede;
+        -webkit-box-shadow: inset -1 -1px 0 0 #dedede; 
+           box-shadow: none;
+           border-bottom-color: #dedede;
+       }
+       .list-md .item-input:last-child{
+           border-bottom: 0px solid #dedede;
+       }
+
+       .item.item-md .checkbox-md {
+        position: static;
+        display: block;
+         margin: 0px;
+    }
+}

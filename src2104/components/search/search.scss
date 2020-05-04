@@ -1,0 +1,38 @@
+search {
+    .item-ios {
+        padding-left: 0px;
+        //background: black;
+        color: white;
+        font-size: 13px
+    }
+    .card-ios {
+        margin: 6px;
+        border-radius: 2px;
+        width: calc(100% - 24px);
+        font-size: 1.3rem;
+        background: transparent;
+        color: #fff;
+        -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    }
+    .col {
+        padding: 2px !important;
+    }
+    hr {
+        border: 0.05em solid #434344;
+    }
+    .row {
+        align-items: center;
+    }
+    .label-ios {
+        margin: 0;
+    }
+    .profile-photo {
+        border-radius: 50% !important;
+        border: 3px solid #fff !important;
+        height: 30px;
+        width: 30px;
+        background-color: #000;
+        overflow: hidden;
+    }
+}

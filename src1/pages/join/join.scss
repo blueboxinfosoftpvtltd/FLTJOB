@@ -1,0 +1,61 @@
+page-join {
+    .toolbar-title.toolbar-title-md,
+    .toolbar-title.toolbar-title-ios,
+    .toolbar-title.toolbar-title-wp {
+        color: map-get($colors, light);
+    }
+    .item-md {
+        padding-left: 0px;
+        background: #fff;
+        color: #000;
+        font-size: 13px;
+    }
+    .list-ios>.item-block:first-child {
+        border-top: none;
+    }
+    .fullbtn {
+        width: 95%;
+        text-transform: none;
+        height: 200%;
+        background: #2068D7
+    }
+    ion-label {
+        min-width: 140px;
+    }
+    .setinputfield {
+        margin-left: 40px;
+    }
+    .item-md.item-input.input-has-focus .item-inner, .item-md.item-input.item-input-has-focus .item-inner {
+        border-bottom-color: #dedede;
+        /* -webkit-box-shadow: inset 0 -1px 0 0 #dedede; */
+        box-shadow:none;
+    }
+
+    .item-md.item-input.ng-invalid.ng-touched:not(.input-has-focus):not(.item-input-has-focus) .item-inner {
+        border-bottom-color: #dedede;
+        /* -webkit-box-shadow: inset 0 -1px 0 0 #dedede; */
+        box-shadow: none;
+    }
+    .list-md.item-input.item-input-has-focus:last-child, .list-md .item-input.input-has-focus:last-child{       border-bottom-color: #dedede;
+        -webkit-box-shadow: inset -1 -1px 0 0 #dedede; 
+           box-shadow: none;
+           border-bottom-color: #dedede;
+       }
+       .list-md .item-input:last-child{
+           border-bottom: 0px solid #dedede;
+       }
+
+       .select-md .select-icon .select-icon-inner {
+        color: #fff;
+    }
+
+    ion-select {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        overflow: hidden;
+        max-width: 100%;
+        margin-left: -10px;
+    }
+}

@@ -1,0 +1,47 @@
+page-openpendingnotification {
+    .item-md {
+        padding-left: 0px;
+        background: #fff;
+        color: #000;
+        font-size: 13px
+    }
+    .card-md {
+        margin: 6px;
+        border-radius: 2px;
+        width: calc(100% - 24px);
+        font-size: 1.3rem;
+        background: #fff;
+        color: #000;
+        -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        box-shadow: none;
+    }
+    .col {
+        padding: 2px !important;
+    }
+    hr {
+        border: 0.03em solid #434344;
+    }
+    .row {
+        align-items: center;
+    }
+    .label-md {
+        margin: 0;
+    }
+    ion-icon {
+        display: inline-block;
+        font-size: 1.5em;
+        color: white;
+    }
+    .item-block {
+        min-height: 1.2rem;
+    }
+    ion-label {
+        white-space: normal !important;
+    }
+    .boldstyle{
+        font-weight: 600;
+    }
+    .iconcolor{
+        color: #000
+    }
+}

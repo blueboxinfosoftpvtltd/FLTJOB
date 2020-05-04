@@ -1,0 +1,6 @@
+framework module CapacitorFcm {
+  umbrella header "CapacitorFcm-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -1,0 +1,51 @@
+page-message {
+    .item-ios {
+        padding-left: 0px;
+        background: white;
+        color: black;
+        font-size: 13px;
+        padding: 5px 2px 2px 2px;
+    }
+
+    .card-ios {
+        margin: 6px;
+        border-radius: 2px;
+        width: calc(100% - 24px);
+        font-size: 1.3rem;
+        background: #fff;
+        color: #000;
+        -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    }
+
+    .col {
+        padding: 2px !important;
+    }
+
+    .row {
+        align-items: center;
+    }
+
+    .label-ios {
+        margin: 0;
+    }
+
+    .profile-photomsg {
+        border-radius: 50% !important;
+        border: 3px solid #fff !important;
+        height: 80px;
+        width: 80px;
+        background-color: #000;
+        overflow: hidden;
+    }
+
+    .content-ios hr {
+        height: 1.7px;
+        background-color: #ffffff;
+    }
+
+    ion-item-options .button:last-child {
+        padding-right: 0.8em;
+        padding-left: 0.8em;
+    }
+}

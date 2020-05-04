@@ -1,0 +1,159 @@
+page-profile {
+    .item-md {
+        padding-left: 0px;
+    }
+
+    .item-md {
+        padding-left: 0px;
+        background: #fff;
+        color: #000;
+        font-size: 13px
+    }
+
+    .list-md>.item-block:first-child {
+        border-top: none;
+    }
+
+    .fullbtn {
+        width: 90%;
+        color: #fff
+    }
+
+    .setinputfield {
+        margin-left: 19%;
+    }
+    .dot {
+        height: 10px;
+        width: 10px;
+        background-color: #000;
+        border-radius: 50%;
+        display: inline-block;
+    }
+
+    ion-label {
+        margin-right: 5px;
+        white-space: normal;
+    }
+
+    .setinput {
+        margin-left: 14px;
+    }
+
+    .setinputmtype {
+        margin-left: 62px;
+    }
+
+    hr {
+        border: 0.03em solid #434344;
+    }
+
+    .content-md hr {
+        height: 0.55px;
+        background-color: rgba(0, 0, 0, 0.12);
+        margin: 1px 0;
+    }
+
+    ion-label [fixed] {
+        min-width: 120px;
+    }
+
+    .scroll-content {
+        margin-top: 10px !important;
+    }
+
+    .txtlabel {
+        min-width: 120px;
+    }
+    .select-md .select-icon .select-icon-inner {
+        color: #fff;
+    }
+
+    ion-select {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        overflow: hidden;
+        max-width: 100%;
+        margin-left: -10px;
+    }
+    .label-md+ion-input .text-input,
+    .label-md+ion-textarea .text-input,
+    .label-md+.input+.cloned-input {
+        margin-left: 5px;
+        width: calc(100% - (16px / 2) - 16px);
+    }
+
+    ion-checkbox {
+        background-color: #222 !important;
+    }
+
+    ion-icon {
+        color: #000 !important;
+        font-size: 25px !important;
+        font-weight: bolder;
+        margin-left: 6px;
+    }
+
+    .datetime-md {
+        padding: 0;
+    }
+
+    .ratesymbol {
+        background: transparent;
+        border: none;
+        margin-left: 4px;
+        width: 130px;
+    }
+
+    .disabled {
+        pointer-events: none;
+        margin-top: -30px;
+    }
+
+    .row {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-flex-wrap: wrap;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+    }
+
+    .label-md[stacked] {
+        margin-bottom: 4px;
+        font-size: 1.3rem;
+        margin-top: 14px;
+        margin-left: 9px;
+    }
+    .list-md {
+        margin: 6px 0px 16px;
+    }
+
+    .item.item-md .checkbox-md {
+        position: static;
+        display: block;
+        margin: 9px 14px 9px 4px;
+    }
+    .item-md.item-input.input-has-focus .item-inner, .item-md.item-input.item-input-has-focus .item-inner {
+        border-bottom-color: #dedede;
+        /* -webkit-box-shadow: inset 0 -1px 0 0 #dedede; */
+        box-shadow:none;
+    }
+
+    .item-md.item-input.ng-invalid.ng-touched:not(.input-has-focus):not(.item-input-has-focus) .item-inner {
+        border-bottom-color: #dedede;
+        /* -webkit-box-shadow: inset 0 -1px 0 0 #dedede; */
+        box-shadow: none;
+    }
+    .list-md.item-input.item-input-has-focus:last-child, .list-md .item-input.input-has-focus:last-child{       border-bottom-color: #dedede;
+        -webkit-box-shadow: inset -1 -1px 0 0 #dedede; 
+           box-shadow: none;
+           border-bottom-color: #dedede;
+       }
+       .list-md .item-input:last-child{
+           border-bottom: 0px solid #dedede;
+       }
+}

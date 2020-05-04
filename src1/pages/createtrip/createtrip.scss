@@ -1,0 +1,37 @@
+page-createtrip {
+    .item-md {
+        padding-left: 0px;
+        background: #fff;
+        color: #000;
+        font-size: 13px
+    }
+    .fullbtn {
+        width: 90%;
+    }
+    .datetime-md {
+        padding: 13px 8px 13px 23px;
+    }
+    .input-cover{
+        display: none;
+    }
+    .item-md.item-input.input-has-focus .item-inner, .item-md.item-input.item-input-has-focus .item-inner {
+        border-bottom-color: #dedede;
+        /* -webkit-box-shadow: inset 0 -1px 0 0 #dedede; */
+        box-shadow: inset 0 0px 0 0 #dedede;
+    }
+
+    .item-md.item-input.ng-invalid.ng-touched:not(.input-has-focus):not(.item-input-has-focus) .item-inner {
+        border-bottom-color: #dedede;
+        /* -webkit-box-shadow: inset 0 -1px 0 0 #dedede; */
+        box-shadow: inset 0 0px 0 0 #dedede;
+    }
+
+    .select-md .select-icon .select-icon-inner {
+        color: #fff;
+    }
+
+    ion-select {
+        max-width: 100%;
+        margin-left: 6px;
+    }
+}

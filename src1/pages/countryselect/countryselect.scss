@@ -1,0 +1,30 @@
+page-countryselect {
+    .item-md {
+        padding-left: 16px;
+        padding-left: 16px;
+        border-radius: 0;
+        position: relative;
+        font-size: 1.7rem;
+        color: #000;
+        background-color: #fff;
+        -webkit-transition: background-color 200ms linear;
+        transition: background-color 200ms linear;
+    }
+    hr {
+        border: 0.03em solid #434344;
+        padding: 0;
+        margin: 0;
+    }
+    .fixed {
+        width: 100%;
+        overflow: hidden;
+    }
+    .scroll {
+        width: 100%;
+        margin-top: 15%;
+    }
+    .searchbar-md {
+        background: #cac7c7;
+        padding: 8px;
+    }
+}

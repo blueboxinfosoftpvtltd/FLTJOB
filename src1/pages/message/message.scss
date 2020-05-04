@@ -1,0 +1,45 @@
+page-message {
+    .item-md {
+        padding-left: 0px;
+        background: #fff;
+        color: #000;
+        font-size: 13px;
+        padding: 13px;
+        border-bottom: 1px solid #8a8282;
+    }
+    .card-md {
+        margin: 6px;
+        border-radius: 2px;
+        width: calc(100% - 24px);
+        font-size: 1.3rem;
+        background: #fff;
+        color: #000;
+        -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    }
+    .col {
+        padding: 2px !important;
+    }
+    .row {
+        align-items: center;
+    }
+    .label-md {
+        margin: 0;
+    }
+    .profile-photomsg {
+        border-radius: 50% !important;
+        border: 3px solid #fff !important;
+        height: 60px;
+        width: 60px;
+        background-color: #000;
+        overflow: hidden;
+    }
+    .content-md hr {
+        height: 1.7px;
+        background-color: #ffffff;
+    }
+    .item-md.item-block .item-inner {
+        padding-right: 0px;
+        border: none;
+    }
+}

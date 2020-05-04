@@ -1,0 +1,36 @@
+page-login {
+    ion-navbar.toolbar-md {
+        min-height: 120px !important;
+        position: relative;
+    }
+
+    //on iOS
+    ion-navbar.toolbar.toolbar-ios {
+        min-height: 120px !important;
+    }
+
+    .fixed-content {
+        background-color: #fff;
+    }
+
+    .toolbar-background {
+        background-color: #2068D7;
+    }
+
+    .fullbtn {
+        width: 65%;
+        text-transform: none;
+        height: 220%;
+        background: #2068D7
+    }
+
+    .profile-photo {
+        border-radius: 50% !important;
+        border: 3px solid #fff !important;
+        height: 100px;
+        width: 100px;
+        background-color: #000;
+        overflow: hidden;
+        margin-top: -50px;
+    }
+}

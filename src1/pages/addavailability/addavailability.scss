@@ -1,0 +1,109 @@
+page-addavailability {
+    .item-md {
+        padding-left: 16px;
+        padding-left: 16px;
+        border-radius: 0;
+        position: relative;
+        font-size: 1.7rem;
+        color: #000;
+        background-color: #fff;
+        -webkit-transition: background-color 200ms linear;
+        transition: background-color 200ms linear;
+    }
+
+    .toggle-md.toggle-disabled,
+    .item-md.item-toggle-disabled ion-label {
+        opacity: 1;
+        pointer-events: none;
+    }
+
+    .fullbtn {
+        width: 90%;
+    }
+
+    .searchbar-input-container {
+        .searchbar-input {
+            min-height: 0px;
+            background-color: transparent;
+            color: #000;
+
+            &::-webkit-input-placeholder {
+                /* Chrome/Opera/Safari */
+                color: #999;
+            }
+
+            &::-moz-placeholder {
+                /* Firefox 19+ */
+                color: #999;
+            }
+
+            &:-ms-input-placeholder {
+                /* IE 10+ */
+                color: #999;
+            }
+
+            &:-moz-placeholder {
+                /* Firefox 18- */
+                color: #999;
+            }
+        }
+
+        .searchbar-clear-icon {
+            filter: invert(100);
+        }
+    }
+
+    .searchbar-md.searchbar-left-aligned .searchbar-input {
+        padding-left: 9px;
+        font-size: 18px;
+        padding: 0 6px;
+        box-shadow: none;
+    }
+
+    .searchbar-input-container .searchbar-input {
+        background-color: transparent;
+        color: #000;
+    }
+
+    .text-input-md {
+        margin-left: 5px;
+    }
+
+    .textarea {
+        border: 1px solid #000;
+        color: #000;
+    }
+
+    .btnavailability {
+        margin-top: 20%;
+    }
+
+    .searchbar-md .searchbar-search-icon {
+        background-image: none;
+    }
+
+    .searchbar-md {
+        background: inherit;
+        padding: 0px;
+    }
+    
+    .item-md.item-input.input-has-focus .item-inner, .item-md.item-input.item-input-has-focus .item-inner {
+        border-bottom-color: #dedede;
+        /* -webkit-box-shadow: inset 0 -1px 0 0 #dedede; */
+        box-shadow:none;
+    }
+
+    .item-md.item-input.ng-invalid.ng-touched:not(.input-has-focus):not(.item-input-has-focus) .item-inner {
+        border-bottom-color: #dedede;
+        /* -webkit-box-shadow: inset 0 -1px 0 0 #dedede; */
+        box-shadow: none;
+    }
+    .list-md.item-input.item-input-has-focus:last-child, .list-md .item-input.input-has-focus:last-child{       border-bottom-color: #dedede;
+        -webkit-box-shadow: inset -1 -1px 0 0 #dedede; 
+           box-shadow: none;
+           border-bottom-color: #dedede;
+       }
+       .list-md .item-input:last-child{
+           border-bottom: 0px solid #dedede;
+       }
+}

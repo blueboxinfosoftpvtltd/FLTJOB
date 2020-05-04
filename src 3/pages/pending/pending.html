@@ -1,0 +1,35 @@
+<ion-content>
+
+  <br>
+  <p style="color: #000;font-size: 18px;" *ngIf="checkLength == true"><b>&nbsp;&nbsp;Invitations({{length}})</b></p>
+  <ion-row *ngFor='let data of reqList' style="background: #387ef5;margin-top: -10px;">
+    <ion-col style="padding: 9px !important;">
+      <ion-row style="background: #387ef5">
+        <ion-col col-5>
+          <img class="profile-photo" src="{{data.PhotoPath}}" />
+        </ion-col>
+        <ion-col col-7>
+          <ion-row>
+            <ion-label style="margin-left: 0px;color: #ffffff">{{data.sendername}}</ion-label>
+          </ion-row>
+          <ion-row>
+            <ion-label style="margin-left: 0px;margin-top: 10px;font-style: italic;color: #ffffff">{{data.MemberShipType}}</ion-label>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+    </ion-col>
+    <ion-col col-4 text-center>
+      <ion-icon name="close-circle-outline" style="font-size: 30px !important" (click)="DeclineRequest(data.pkRequestId)"></ion-icon>
+      <ion-icon name="checkmark-circle-outline" style="font-size: 30px !important;margin-left: 6px" (click)="AcceptRequest(data.pkRequestId)"></ion-icon>
+
+      <!-- <img src="./assets/icon/decline.png" class="imgsize" (click)="DeclineRequest(data.pkRequestId)"/>
+           
+            <img src="./assets/icon/accept.png" class="imgsize" style="margin-left: 3px;" (click)="AcceptRequest(data.pkRequestId)"/> -->
+    </ion-col>
+
+    <!-- <ion-col col-12 style="margin-top: -9px;">
+          <hr>
+        </ion-col> -->
+  </ion-row>
+</ion-content>

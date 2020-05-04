@@ -1,0 +1,38 @@
+{
+    "continents": {
+        "continentdata": [
+            {
+                "name": "North America"
+            },
+            {
+                "name": "South America"
+            },
+            {
+                "name": "Antarctica"
+            },
+            {
+                "name": "Europe"
+            },
+            {
+                "name": "Asia"
+            },
+            {
+                "name": "Africa"
+            },
+            {
+                "name": "Australia"
+            }
+        ],
+        "oceansdata": [
+            {
+                "name": "North Atlantic"
+            },
+            {
+                "name": "North Pacific"
+            },
+            {
+                "name": "South Pacific"
+            }
+        ]
+    }
+}

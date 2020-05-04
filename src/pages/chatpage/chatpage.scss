@@ -1,0 +1,205 @@
+page-chatpage {
+    $userBackgroundColor: #387ef5;
+    $toUserBackgroundColor: #fff;
+
+    ion-content .scroll-content {
+        background-color: #fff;
+    }
+
+    .toolbar-background {
+        background-color: #fff;
+    }
+
+    ion-header ion-icon.back-button-icon.icon {
+        color: black;
+    }
+    // ion-app.platform-ios.keyboard  ion-footer .toolbar:last-child { 
+    //         padding-bottom: 4px; 
+    //     }
+
+    ion-header {
+        top: -2px;
+    }
+
+    ion-navbar.toolbar.toolbar-ios {
+        min-height: 80px !important;
+    }
+
+    .line-breaker {
+        white-space: pre-line;
+    }
+
+    .input-wrap {
+        padding: 5px;
+        display: flex;
+        background: #fff;
+        border-top: solid 1px #000;
+    }
+
+    .msg-button {
+        background: #000;
+        width: 35px;
+        border-radius: 50px;
+        height: 35px;
+    }
+
+    .user_name {
+        color: #afafaf;
+    }
+
+    .profile-photomsg {
+        border-radius: 50% !important;
+        border: 3px solid #fff !important;
+        height: 70px;
+        width: 70px;
+        background-color: #000;
+        overflow: hidden;
+    }
+
+    .message {
+        padding: 10px !important;
+        transition: all 250ms ease-in-out !important;
+        border-radius: 10px !important;
+        margin-bottom: 4px !important;
+    }
+
+    .mymessage {
+        background: color($colors, primary) !important;
+        color: #000 !important;
+        border-top-right-radius: 0px !important;
+    }
+
+    .othermessage {
+        background: #dcdcdc !important;
+        color: #000 !important;
+        border-top-left-radius: 0px !important;
+    }
+
+    .time {
+        color: #afafaf;
+        float: right;
+        font-size: small;
+    }
+
+    .message_row {
+        background-color: #000;
+    }
+
+    .message-wrap {
+        padding: 0 10px;
+
+        .message {
+            position: relative;
+            padding: 7px 0;
+
+            .user-img {
+                position: absolute;
+                border-radius: 45px;
+                width: 45px;
+                height: 45px;
+                box-shadow: 0 0 2px rgba(0, 0, 0, 0.36);
+            }
+
+            .msg-detail {
+                width: 100%;
+                display: inline-block;
+
+                p {
+                    margin: 0;
+                }
+
+                .msg-info {
+                    p {
+                        font-size: .8em;
+                        color: #888;
+                    }
+                }
+
+                .msg-content {
+                    position: relative;
+                    margin-top: 5px;
+                    border-radius: 5px;
+                    padding: 8px; // border: 1px solid #ddd;
+                    color: #fff;
+                    width: auto;
+                    max-width: 80%;
+
+                    span.triangle {
+                        background-color: #fff;
+                        border-radius: 2px;
+                        height: 8px;
+                        width: 8px;
+                        top: 12px;
+                        display: block; // border-style: solid;
+                        // border-color: #ddd;
+                        // border-width: 1px;
+                        -webkit-transform: rotate(45deg);
+                        transform: rotate(45deg);
+                        position: absolute;
+                    }
+                }
+            }
+        }
+
+        .message.left {
+            .msg-content {
+                background-color: #2068D7;
+                float: left;
+            }
+
+            .msg-detail {
+                padding-left: 10px;
+            }
+
+            .user-img {
+                left: 0;
+            }
+
+            .msg-content {
+                color: #ffffff;
+
+                span.triangle {
+                    background-color: #2068D7;
+                    border-top-width: 0;
+                    border-right-width: 0;
+                    left: -5px;
+                }
+            }
+        }
+
+        .message.right {
+            .msg-detail {
+                padding-right: 10px;
+
+                .msg-info {
+                    text-align: right;
+                }
+            }
+
+            .user-img {
+                right: 0;
+            }
+
+            ion-spinner {
+                position: absolute;
+                right: 10px;
+                top: 50px;
+            }
+
+            .msg-content {
+                background-color: #26458c;
+                float: right;
+
+                span.triangle {
+                    background-color: #26458c;
+                    border-bottom-width: 0;
+                    border-left-width: 0;
+                    right: -5px;
+                }
+            }
+        }
+    }
+    ion-header ion-icon.back-button-icon.icon {
+        color: black;
+    }
+}

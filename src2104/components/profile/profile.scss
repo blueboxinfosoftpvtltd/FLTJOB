@@ -1,0 +1,146 @@
+profile {
+    .item-md {
+        padding-left: 0px;
+    }
+    .list-ios {
+        margin: -1px 10px 32px;
+    }
+
+    .item-ios {
+        padding-left: 0px;
+        background: white;
+        color: black;
+        font-size: 13px
+    }
+
+    .rating-wrap .ionic3-star-rating{
+        margin-left: -5px;
+        
+    }
+    .text-input-ios {
+        margin: 11px 8px 11px 0;
+        padding: 0;
+        width: 100%;
+    }
+
+    .list-ios>.item-block:first-child {
+        border-top: none;
+    }
+
+    .fullbtn {
+        width: 90%;
+    }
+
+    .setinputfield {
+        margin-left: 12%;
+    }
+
+    ion-label {
+        margin-right: 5px;
+        white-space: normal;
+        font-weight: 500;
+    }
+
+    .setinput {
+        margin-left: 14px;
+    }
+
+    .setinputmtype {
+        margin-left: 62px;
+    }
+
+    hr {
+        border: 0.05em solid #c9c9c9;
+    }
+
+    .content-ios hr {
+        height: 0.55px;
+        border: 0.05em solid #c9c9c9;
+        margin: 1px 0;
+    }
+
+    ion-label [fixed] {
+        min-width: 120px;
+
+
+    }
+    
+    .scroll-content {
+        margin-top: 10px !important;
+    }
+
+    .txtlabel {
+        min-width: 120px;
+    }
+
+    .label-ios+ion-input .text-input,
+    .label-ios+ion-textarea .text-input,
+    .label-ios+.input+.cloned-input {
+        margin-left: 5px;
+        width: calc(100% - (16px / 2) - 16px);
+    }
+
+    ion-checkbox {
+        background-color: #222 !important;
+    }
+
+    ion-icon {
+        // color: #000 !important;
+        font-size: 25px !important;
+        font-weight: bolder;
+        margin-left: 6px;
+    }
+
+    .datetime-ios {
+        padding: 0;
+    }
+
+    .ratesymbol {
+        background: transparent;
+        border: none;
+        margin-left: 4px;
+        width: 130px;
+    }
+
+    .disabled {
+        pointer-events: none;
+        margin-top: -1px;
+    }
+
+    .row {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-flex-wrap: wrap;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+    }
+
+    .label-ios[stacked] {
+        margin-bottom: 4px;
+        font-size: 1.3rem;
+    }
+
+    .dot {
+        height: 12px;
+        width: 12px;
+        background-color: #000;
+        border-radius: 50%;
+        display: inline-block;
+    }
+
+    .item-input ion-input,
+    .item-input ion-textarea {
+        position: static;
+        white-space: normal;
+    }
+
+    .text-input-ios {
+        margin: 11px 8px 11px 0;
+        padding: 0;
+        width: 100%;
+        font-weight: 500;
+    }
+}

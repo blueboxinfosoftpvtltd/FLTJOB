@@ -1,0 +1,28 @@
+page-addrating {
+    hr {
+        border: 0.05em solid #c9c9c9;
+    }
+
+    .item-ios {
+        padding-left: 0px;
+        background: white;
+        color: black;
+        font-size: 13px
+    }
+
+    .fullbtn {
+        width: 90%;
+    }
+
+    .ratesymbol {
+        background: transparent;
+        border: none;
+        margin-left: 4px;
+        width: 130px;
+    }
+
+    ion-label {
+        white-space: normal;
+        font-weight: 500;
+    }
+}

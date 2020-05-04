@@ -1,0 +1,925 @@
+<ion-content padding style="margin-top: 8%;background: white">
+
+  <ion-row *ngIf="disableonactive">
+    <ion-buttons end>
+      <button ion-button icon-only (click)="back()" style="background: transparent;margin-top: -20px;">
+        <ion-icon color="black" name="md-close"></ion-icon>
+      </button>
+      <button ion-button icon-only (click)="chating()" style="background: transparent;margin-top: -20px;">
+        <ion-icon color="black" name="chatboxes"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-row>
+
+  <div [ngClass]="{'disabled': disableonactive}">
+    <ion-list *ngIf="type == ''">
+      <ion-row>
+        <ion-col ion-item col-6 style="margin-top: 3%;">
+          <ion-label>Membership Type</ion-label>
+        </ion-col>
+        <ion-col ion-item col-6>
+          <ion-input [(ngModel)]=mtype [readonly]='true' (click)='openpicker("member")' placeholder="Membership Type"></ion-input>
+        </ion-col>
+      </ion-row>
+    </ion-list>
+
+
+
+    <ion-list *ngIf="type == 'Owner Operator'">
+      <ion-row>
+        <ion-col col-6 ion-item>
+          <ion-label>Membership type</ion-label>
+        </ion-col>
+        <ion-col col-6 ion-item>
+          <ion-input [readonly]="true" [(ngModel)]=mtype placeholder="Membership type"></ion-input>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-6 ion-item>
+          <ion-label>Gender</ion-label>
+        </ion-col>
+        <ion-col col-6 ion-item>
+          <ion-label (click)="openpicker('gender')" stacked="">{{gender}}</ion-label>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-6 ion-item>
+          <ion-label>First Name</ion-label>
+        </ion-col>
+        <ion-col col-6 ion-item>
+          <ion-input [(ngModel)]=fname placeholder="First Name"></ion-input>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col col-6 ion-item>
+          <ion-label>Last Name</ion-label>
+        </ion-col>
+        <ion-col col-6 ion-item>
+          <ion-input [(ngModel)]=lname placeholder="Last Name"></ion-input>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col col-6 ion-item>
+          <ion-label>Company Name</ion-label>
+        </ion-col>
+        <ion-col col-6 ion-item>
+          <ion-input [(ngModel)]=cname placeholder="Company Name"></ion-input>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col col-6 ion-item>
+          <ion-label>Current Location</ion-label>
+        </ion-col>
+        <ion-col col-6 ion-item>
+          <ion-label (click)="openpicker('loc')" stacked="">{{clocation}}</ion-label>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col col-6 ion-item>
+          <ion-label>Rating</ion-label>
+        </ion-col>
+        <!-- <ion-col col-6 ion-item> -->
+          <!-- <div id="rateYoowner" style="pointer-events: none;margin: 0 -6px auto"></div> -->
+          <ion-col col-6 ion-item style="pointer-events: none;margin: -2 -6px auto">
+            <div class="rating-wrap">
+            <ionic3-star-rating #rating
+            activeIcon = "ios-star"
+            defaultIcon = "ios-star-outline"
+            activeColor = "#f39c12" 
+            defaultColor = "#000000"
+            readonly="false"
+            rating={{rate}}
+            fontSize = "24px"
+            halfStar= true 
+            (ratingChanged)="logRatingChange($event)">
+        </ionic3-star-rating>
+      </div>
+          </ion-col>
+        <!-- </ion-col> -->
+      </ion-row>
+
+    </ion-list>
+
+
+
+    <ion-list *ngIf="type == 'Instructor'">
+
+      <ion-row>
+        <ion-col col-6 ion-item>
+          <ion-label>Membership type</ion-label>
+        </ion-col>
+        <ion-col col-6 ion-item>
+          <ion-input [readonly]="true" [(ngModel)]=mtype placeholder="Membership type"></ion-input>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-6 ion-item>
+          <ion-label>Gender</ion-label>
+        </ion-col>
+        <ion-col col-6 ion-item>
+          <ion-label (click)="openpicker('gender')" stacked="">{{gender}}</ion-label>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-6 ion-item>
+          <ion-label>First Name</ion-label>
+        </ion-col>
+        <ion-col col-6 ion-item>
+          <ion-input placeholder="First Name" [(ngModel)]=fname></ion-input>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-6 ion-item>
+          <ion-label>Last Name</ion-label>
+        </ion-col>
+        <ion-col col-6 ion-item>
+          <ion-input placeholder="Last Name" [(ngModel)]=lname></ion-input>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-6 ion-item>
+          <ion-label>Phone Number</ion-label>
+        </ion-col>
+        <ion-col col-6 ion-item>
+          <!-- <ion-input type="number" placeholder="Phone Number" [(ngModel)]=phoneno></ion-input> -->
+          <ion-input type="tel" [(ngModel)]="phoneno" maxLength="10"></ion-input>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-6 ion-item>
+          <ion-label>Email Address</ion-label>
+        </ion-col>
+        <ion-col col-6 ion-item>
+          <ion-input type="email" placeholder="Email Address" [(ngModel)]=email></ion-input>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col col-6 ion-item>
+          <ion-label>Rating</ion-label>
+        </ion-col>
+        <!-- <ion-col col-6 ion-item> -->
+          <!-- <div id="rateYo2" style="pointer-events: none;margin: 0 -6px auto"></div> -->
+          <ion-col col-6 ion-item style="pointer-events: none;margin: -2 -6px auto">
+            <div class="rating-wrap">
+            <ionic3-star-rating #rating
+            activeIcon = "ios-star"
+            defaultIcon = "ios-star-outline"
+            activeColor = "#f39c12" 
+            defaultColor = "#000000"
+            readonly="false"
+            rating={{rate}}
+            fontSize = "24px"
+            halfStar= true 
+            (ratingChanged)="logRatingChange($event)">
+        </ionic3-star-rating>
+      </div>
+          </ion-col>
+        <!-- </ion-col> -->
+      </ion-row>
+      <ion-row>
+        <ion-col col-6 ion-item>
+          <ion-label>Total Time</ion-label>
+        </ion-col>
+        <ion-col col-6 ion-item>
+          <ion-input placeholder="Total Time" [(ngModel)]=ttime></ion-input>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col col-6 ion-item>
+          <ion-label>PIC Time</ion-label>
+        </ion-col>
+        <ion-col col-6 ion-item>
+          <ion-input placeholder="PIC Time" [(ngModel)]=pictime></ion-input>
+        </ion-col>
+      </ion-row>
+      
+      <ion-row>
+        <ion-col col-6 ion-item>
+          <ion-label>Complex Time</ion-label>
+        </ion-col>
+        <ion-col col-6 ion-item>
+          <ion-input placeholder="Complex Time" [(ngModel)]=ctime></ion-input>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col col-6 ion-item>
+          <ion-label>High Performance Time</ion-label>
+        </ion-col>
+        <ion-col col-6 ion-item>
+          <ion-input placeholder="High Performance Time" [(ngModel)]=hptime></ion-input>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col col-6 ion-item>
+          <ion-label>Dual Given</ion-label>
+        </ion-col>
+        <ion-col col-6 ion-item>
+          <ion-input placeholder="Dual Given" [(ngModel)]=dgiven></ion-input>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col col-6 ion-item>
+          <ion-label>Medical Class</ion-label>
+        </ion-col>
+        <ion-col col-6 ion-item>
+          <ion-label (click)="openpicker('medical')" stacked="">{{medicalclass}}</ion-label>
+        </ion-col>
+      </ion-row>
+
+
+      <ion-row>
+        <ion-col ion-item no-lines col-6>
+          <ion-label class='fixedLabel'>Instrument Instructor</ion-label>
+        </ion-col>
+        <ion-col ion-item no-lines col-3>
+          <ion-label>Yes</ion-label>
+          <ion-checkbox color="dark" (ionChange)="cheboxcheck('iiy',$event)" [(ngModel)]='iinstructoryes' mode="md"></ion-checkbox>
+        </ion-col>
+        <ion-col ion-item no-lines col-3>
+          <ion-label>No</ion-label>
+          <ion-checkbox color="dark" (ionChange)="cheboxcheck('iin',$event)" [(ngModel)]='iinstructorno' mode="md"></ion-checkbox>
+        </ion-col>
+      </ion-row>
+      <hr>
+      <ion-row>
+        <ion-col ion-item no-lines col-6>
+          <ion-label class='fixedLabel'>Multi Engine Instructor</ion-label>
+        </ion-col>
+        <ion-col ion-item no-lines col-3>
+          <ion-label>Yes</ion-label>
+          <ion-checkbox color="dark" (ionChange)="cheboxcheck('mey',$event)" [(ngModel)]='meinstructoryes' mode="md"></ion-checkbox>
+        </ion-col>
+        <ion-col ion-item no-lines col-3>
+          <ion-label>No</ion-label>
+          <ion-checkbox color="dark" (ionChange)="cheboxcheck('men',$event)" [(ngModel)]='meinstructorno' mode="md"></ion-checkbox>
+        </ion-col>
+      </ion-row>
+      <hr>
+      <ion-row>
+        <ion-col ion-item no-lines col-6>
+          <ion-label class='fixedLabel'>Tail Wheel Instructor</ion-label>
+        </ion-col>
+        <ion-col ion-item no-lines col-3>
+          <ion-label style="margin-left: 5px">Yes</ion-label>
+          <ion-checkbox color="dark" (ionChange)="cheboxcheck('twy',$event)" [(ngModel)]='twinstructoryes' mode="md"></ion-checkbox>
+        </ion-col>
+        <ion-col ion-item no-lines col-3>
+          <ion-label>No</ion-label>
+          <ion-checkbox color="dark" (ionChange)="cheboxcheck('twn',$event)" [(ngModel)]='twinstructorno' mode="md"></ion-checkbox>
+        </ion-col>
+      </ion-row>
+      <hr>
+
+      <ion-row>
+        <ion-col ion-item no-lines col-6>
+          <ion-label class='fixedLabel'>Acrobatic Instructor</ion-label>
+        </ion-col>
+        <ion-col ion-item no-lines col-3>
+          <ion-label>Yes</ion-label>
+          <ion-checkbox color="dark" (ionChange)="cheboxcheck('aiy',$event)" [(ngModel)]='ainstructoryes' mode="md"></ion-checkbox>
+        </ion-col>
+        <ion-col ion-item no-lines col-3>
+          <ion-label>No</ion-label>
+          <ion-checkbox color="dark" (ionChange)="cheboxcheck('ain',$event)" [(ngModel)]='ainstructorno' mode="md"></ion-checkbox>
+        </ion-col>
+      </ion-row>
+      <hr>
+
+
+      <ion-row>
+        <ion-col ion-item style="margin-top: 3%;">
+          <ion-label style="color: royalblue">Experience</ion-label>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col ion-item col-6>
+          <ion-label class='fixedLabel'>Aircraft Experience</ion-label>
+        </ion-col>
+        <ion-col ion-item col-6>
+          <ion-label stacked="" (click)="selectaircraft($event)">{{airexp}}</ion-label>
+          <!-- <ion-input [readonly]="true" placeholder="Select Experience" [(ngModel)]=airexp (click)="selectaircraft($event)"></ion-input> -->
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col ion-item ion-item col-6>
+          <ion-label>Avionics Exp.</ion-label>
+        </ion-col>
+        <ion-col ion-item col-6>
+          <ion-input [readonly]="true" placeholder="Select Experience" [(ngModel)]=avionicsexp (click)="selectavionics()"></ion-input>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-6 ion-item>
+          <ion-label>Pass/Fail</ion-label>
+        </ion-col>
+        <ion-col col-6 ion-item>
+          <ion-input type="number" placeholder="Pass/Fail" [(ngModel)]=passfail></ion-input>
+        </ion-col>
+      </ion-row>
+
+
+
+      <ion-row>
+        <ion-col ion-item style="margin-top: 3%;">
+          <ion-label style="color: royalblue">Domestic Rate</ion-label>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-6 ion-item>
+          <ion-label>Per Hour</ion-label>
+        </ion-col>
+        <ion-col col-6 ion-item>
+          <span>&#36;</span> <input type="text" placeholder="Per Hour" [(ngModel)]=dperhour class="ratesymbol">
+        </ion-col>
+      </ion-row>
+
+
+      <ion-row>
+        <ion-col ion-item style="margin-top: 3%;">
+          <ion-label style="color: royalblue">International Rate</ion-label>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-6 ion-item>
+          <ion-label>Per Hour</ion-label>
+        </ion-col>
+        <ion-col col-6 ion-item>
+          <span>&#36;</span><input type="text" placeholder="Per Hour" [(ngModel)]=iperhour class="ratesymbol">
+        </ion-col>
+      </ion-row>
+    </ion-list>
+
+
+    <ion-list *ngIf="type == 'Pilot' || type == 'Second In Command'" text-wrap>
+
+      <ion-row>
+        <ion-col col-6 ion-item>
+          <ion-label>Membership type</ion-label>
+        </ion-col>
+        <ion-col col-6 ion-item>
+          <ion-input [readonly]="true" [(ngModel)]=mtype placeholder="Membership type"></ion-input>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-6 ion-item>
+          <ion-label>Gender</ion-label>
+        </ion-col>
+        <ion-col col-6 ion-item>
+          <ion-label (click)="openpicker('gender')" stacked="">{{gender}}</ion-label>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-6 ion-item>
+          <ion-label>First Name</ion-label>
+        </ion-col>
+        <ion-col col-6 ion-item>
+          <ion-input [(ngModel)]=fname placeholder="First Name"></ion-input>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col col-6 ion-item>
+          <ion-label>Last Name</ion-label>
+        </ion-col>
+        <ion-col col-6 ion-item>
+          <ion-input [(ngModel)]=lname placeholder="Last Name"></ion-input>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col col-6 ion-item>
+          <ion-label>Current Location</ion-label>
+        </ion-col>
+        <ion-col col-6 ion-item>
+          <ion-label (click)="openpicker('loc')" stacked="">{{clocation}}</ion-label>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col col-6 ion-item>
+          <ion-label>Phone Number</ion-label>
+        </ion-col>
+        <ion-col col-6 ion-item>
+          <ion-input type="text" [(ngModel)]="phoneno" maxLength="10"></ion-input>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-6 ion-item>
+          <ion-label>Email Address</ion-label>
+        </ion-col>
+        <ion-col col-6 ion-item>
+          <ion-input type="email" placeholder="Email Address" [(ngModel)]=email></ion-input>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col col-6 ion-item>
+          <ion-label>Rating</ion-label>
+        </ion-col>
+        <!-- <ion-col col-6 ion-item> -->
+          <!-- <div id="rateYo3" style="pointer-events: none;margin: 0 -6px auto"></div> -->
+          <ion-col col-6 ion-item style="pointer-events: none;margin: -2 -6px auto">
+            <div class="rating-wrap">
+            <ionic3-star-rating #rating
+            activeIcon = "ios-star"
+            defaultIcon = "ios-star-outline"
+            activeColor = "#f39c12" 
+            defaultColor = "#000000"
+            readonly="false"
+            rating={{rate}}
+            fontSize = "24px"
+            halfStar= true 
+            (ratingChanged)="logRatingChange($event)">
+        </ionic3-star-rating>
+      </div>
+          </ion-col>
+        <!-- </ion-col> -->
+      </ion-row>
+
+      <ion-row>
+        <ion-col col-6 ion-item>
+          <ion-label>Total Time</ion-label>
+        </ion-col>
+        <ion-col col-6 ion-item>
+          <ion-input placeholder="Total Time" [(ngModel)]=ttime></ion-input>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col col-6 ion-item>
+          <ion-label>PIC Time</ion-label>
+        </ion-col>
+        <ion-col col-6 ion-item>
+          <ion-input placeholder="PIC Time" [(ngModel)]=pictime></ion-input>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col col-6 ion-item>
+          <ion-label>Medical Class</ion-label>
+        </ion-col>
+        <ion-col col-6 ion-item>
+          <ion-label (click)="openpicker('medical')" stacked="">{{medicalclass}}</ion-label>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col col-6 ion-item>
+          <ion-label>Passport</ion-label>
+        </ion-col>
+        <ion-col col-6 ion-item>
+          <ion-label (click)="openpicker('passport')" stacked="">{{passport}}</ion-label>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col col-6 ion-item>
+          <ion-label>Country of Citizenship</ion-label>
+        </ion-col>
+        <ion-col col-6 ion-item>
+          <ion-label stacked="" (click)="selectcountries($event)">{{country}}</ion-label>
+          <!-- <ion-input [readonly]="true" placeholder="Select Country" [(ngModel)]="country" (click)="selectcountries($event)"></ion-input> -->
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col col-6 ion-item>
+          <ion-label>Passport Expiration Date</ion-label>
+        </ion-col>
+        <ion-col col-5 ion-item>
+          <ion-datetime max="2200-12-31" [(ngModel)]="passportexpdate" displayFormat="MM/DD/YYYY" pickerFormat="MMMM DD YYYY"></ion-datetime>
+        </ion-col>
+        <ion-col ion-item col-1>
+
+        </ion-col>
+      </ion-row>
+
+
+      <ion-row>
+        <ion-col ion-item style="margin-top: 3%;">
+          <ion-label style="color: royalblue">Type Ratings</ion-label>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col ion-item ion-item col-5>
+          <ion-label>Type Ratings</ion-label>
+        </ion-col>
+        <ion-col ion-item ion-item col-2>
+          <ion-icon color="black" *ngIf="!disableonactive" name="add-circle-outline" (click)="addrating()"></ion-icon>
+        </ion-col>
+        <ion-col ion-item ion-item col-5>
+
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col ion-item col-4 style="align-items: unset;margin-top: 4%">
+          <ion-label>Type Ratings</ion-label>
+        </ion-col>
+        <ion-col ion-item col-8>
+          <ion-row *ngFor='let data of certificationdata'>
+            <ion-col ion-item no-lines col-3>
+              <div class="dot"></div>
+              <!-- <ion-icon name="close-circle-outline"></ion-icon> -->
+            </ion-col>
+            <ion-col ion-item no-lines col-9 (click)="updaterating(data)">
+              <span>{{data.AirCraftType}}</span>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+
+
+      <!-- <ion-row>
+        <ion-col ion-item style="margin-top: 3%;">
+          <ion-label style="color: royalblue">Experience</ion-label>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-6 ion-item>
+          <ion-label>Experience</ion-label>
+        </ion-col>
+        <ion-col col-6 ion-item>
+          <ion-label (click)="openpicker('exp')" stacked="">{{experience}}</ion-label>
+        </ion-col>
+      </ion-row> -->
+
+      <ion-row>
+        <ion-col col-6 ion-item>
+          <ion-label>Continent</ion-label>
+        </ion-col>
+
+        <ion-col col-6 ion-item>
+          <ion-label stacked="" (click)="selectcontinents($event)">{{selectedcontinents}}</ion-label>
+          <!-- <ion-input [readonly]="true" placeholder="Select Continent" [(ngModel)]=selectedcontinents (click)="selectcontinents($event)"></ion-input> -->
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col col-6 ion-item>
+          <ion-label>Oceanic Exp.</ion-label>
+        </ion-col>
+        <ion-col col-6 ion-item>
+          <ion-label stacked="" (click)="selectociens($event)">{{selectedociens}}</ion-label>
+          <!-- <ion-input [readonly]="true" placeholder="Select Oceanic" [(ngModel)]=selectedociens (click)="selectociens($event)"></ion-input> -->
+        </ion-col>
+      </ion-row>
+
+
+      <!-- <ion-row>
+        <ion-col ion-item style="margin-top: 3%;">
+          <ion-label style="color: royalblue">Special Training</ion-label>
+        </ion-col>
+      </ion-row> -->
+
+
+
+      <!-- <ion-row>
+        <ion-col col-6 ion-item>
+          <ion-label>Special Training</ion-label>
+        </ion-col>
+        <ion-col col-6 ion-item>
+          <ion-label (click)="openpicker('strain')" stacked="">{{specialtraining}}</ion-label>
+        </ion-col>
+      </ion-row>
+      
+      <ion-row>
+        <ion-col ion-item no-lines col-6>
+          <ion-label>12 month simulator current</ion-label>
+        </ion-col>
+        <ion-col ion-item no-lines col-3>
+          <ion-label style="margin-left: 5px">Yes</ion-label>
+          <ion-checkbox color="dark" (ionChange)="cheboxcheck('msy',$event)" mode="md" [(ngModel)]=mstrainingyes></ion-checkbox>
+        </ion-col>
+        <ion-col ion-item no-lines col-3>
+          <ion-label>No</ion-label>
+          <ion-checkbox color="dark" (ionChange)="cheboxcheck('msn',$event)" mode="md" [(ngModel)]=mstrainingno></ion-checkbox>
+        </ion-col>
+      </ion-row>
+      <hr> -->
+
+
+      <ion-row *ngIf="!disableonactive">
+        <ion-col ion-item no-lines style="margin-top: 3%;">
+          <ion-label style="color: royalblue">Notes</ion-label>
+        </ion-col>
+      </ion-row>
+
+      <ion-textarea *ngIf="!disableonactive" style="border: 1px solid #000;min-height: 100px;color: 000" [(ngModel)]="msg"></ion-textarea>
+    </ion-list>
+
+
+    <ion-list *ngIf="type == 'Flight Attendant'">
+
+      <ion-row>
+        <ion-col col-6 ion-item>
+          <ion-label>Membership type</ion-label>
+        </ion-col>
+        <ion-col col-6 ion-item>
+          <ion-input [readonly]="true" [(ngModel)]=mtype placeholder="Membership type"></ion-input>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-6 ion-item>
+          <ion-label>Gender</ion-label>
+        </ion-col>
+        <ion-col col-6 ion-item>
+          <ion-label (click)="openpicker('gender')" stacked="">{{gender}}</ion-label>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-6 ion-item>
+          <ion-label>First Name</ion-label>
+        </ion-col>
+        <ion-col col-6 ion-item>
+          <ion-input [(ngModel)]=fname placeholder="First Name"></ion-input>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col col-6 ion-item>
+          <ion-label>Last Name</ion-label>
+        </ion-col>
+        <ion-col col-6 ion-item>
+          <ion-input [(ngModel)]=lname placeholder="Last Name"></ion-input>
+        </ion-col>
+      </ion-row>
+
+
+      <ion-row>
+        <ion-col col-6 ion-item>
+          <ion-label>Phone Number</ion-label>
+        </ion-col>
+        <ion-col col-6 ion-item>
+          <!-- <ion-input type="number" placeholder="Phone Number" [(ngModel)]=phoneno></ion-input> -->
+          <ion-input type="text" [(ngModel)]="phoneno" maxLength="10"></ion-input>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-6 ion-item>
+          <ion-label>Email Address</ion-label>
+        </ion-col>
+        <ion-col col-6 ion-item>
+          <ion-input type="email" placeholder="Email Address" [(ngModel)]=email></ion-input>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col col-6 ion-item>
+          <ion-label>Rating</ion-label>
+        </ion-col>
+        <!-- <ion-col col-6 ion-item> -->
+          <!-- <div id="rateYo4" style="pointer-events: none;margin: 0 -6px auto"></div> -->
+          <ion-col col-6 ion-item style="pointer-events: none;margin: -2 -6px auto">
+            <div class="rating-wrap">
+            <ionic3-star-rating #rating
+            activeIcon = "ios-star"
+            defaultIcon = "ios-star-outline"
+            activeColor = "#f39c12" 
+            defaultColor = "#000000"
+            readonly="false"
+            rating={{rate}}
+            fontSize = "24px"
+            halfStar= true 
+            (ratingChanged)="logRatingChange($event)">
+        </ionic3-star-rating>
+      </div>
+          <!-- </ion-col> -->
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-6 ion-item>
+          <ion-label>Passport</ion-label>
+        </ion-col>
+        <ion-col col-6 ion-item>
+          <ion-label (click)="openpicker('passport')" stacked="">{{passport}}</ion-label>
+        </ion-col>
+      </ion-row>
+
+
+      <ion-row>
+        <ion-col ion-item style="margin-top: 3%;">
+          <ion-label style="color: royalblue">Experience</ion-label>
+        </ion-col>
+      </ion-row>
+
+
+      <ion-row>
+        <ion-col col-6 ion-item>
+          <ion-label>Years of Experience</ion-label>
+        </ion-col>
+        <ion-col col-6 ion-item>
+          <ion-input placeholder="Enter Experience" [(ngModel)]=yexp></ion-input>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col col-6 ion-item>
+          <ion-label>Aircraft Experience</ion-label>
+        </ion-col>
+        <ion-col col-6 ion-item>
+          <ion-label stacked="" (click)="selectaircraft($event)">{{airexp}}</ion-label>
+          <!-- <ion-input [readonly]="true" placeholder="Select Experience" [(ngModel)]=airexp (click)="selectaircraft($event)"></ion-input> -->
+        </ion-col>
+      </ion-row>
+
+      
+      <ion-row>
+        <ion-col ion-item no-lines col-6>
+          <ion-label>Aircraft Specific Training</ion-label>
+        </ion-col>
+        <ion-col ion-item no-lines col-3>
+          <ion-label style="margin-left: 5px">Yes</ion-label>
+          <ion-checkbox color="dark" (ionChange)="cheboxcheck('asy',$event)" mode="md" [(ngModel)]=astrainingyes></ion-checkbox>
+        </ion-col>
+        <ion-col ion-item no-lines col-3>
+          <ion-label>No</ion-label>
+          <ion-checkbox color="dark" (ionChange)="cheboxcheck('asn',$event)" mode="md" [(ngModel)]=astrainingno></ion-checkbox>
+        </ion-col>
+      </ion-row>
+<hr>
+      <ion-row *ngIf="astrainingyes == true">
+        <ion-col col-6 ion-item>
+          <ion-label>Aircraft Training Experience</ion-label>
+        </ion-col>
+        <ion-col col-6 ion-item>
+          <ion-label stacked="" (click)="selecttrainaircraft($event)">{{airtrainexp}}</ion-label>
+          <!-- <ion-input [readonly]="true" placeholder="Select Experience" [(ngModel)]=airexp (click)="selectaircraft($event)"></ion-input> -->
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col col-6 ion-item>
+          <ion-label>Region Experience</ion-label>
+        </ion-col>
+        <ion-col col-6 ion-item>
+          <ion-label (click)="openpicker('rexp')" stacked="">{{regionexp}}</ion-label>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-6 ion-item>
+          <ion-label>Continent</ion-label>
+        </ion-col>
+        <ion-col col-6 ion-item>
+          <ion-label stacked="" (click)="selectcontinents($event)">{{selectedcontinents}}</ion-label>
+          <!-- <ion-input [readonly]="true" placeholder="Select Continent" [(ngModel)]=selectedcontinents (click)="selectcontinents($event)"></ion-input> -->
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col col-6 ion-item>
+          <ion-label>Unrestricted US Pass</ion-label>
+        </ion-col>
+        <ion-col col-6 ion-item>
+          <ion-label (click)="openpicker('upassport')" stacked="">{{unrestricteduspass}}</ion-label>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-6 ion-item>
+          <ion-label>International Visa Held</ion-label>
+        </ion-col>
+        <ion-col col-6 ion-item>
+          <ion-label stacked="" (click)="openpicker('internationalvisa')">{{internationalvisa}}</ion-label>
+          <!-- <ion-input [readonly]="true" placeholder="Select Country" [(ngModel)]="country" (click)="selectcountries($event)"></ion-input> -->
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-6 ion-item>
+          <ion-label>CPR Training</ion-label>
+        </ion-col>
+        <ion-col col-6 ion-item>
+          <ion-label (click)="openpicker('cptraining')" stacked="">{{cprtraining}}</ion-label>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-6 ion-item>
+          <ion-label>Cullinary Training</ion-label>
+        </ion-col>
+        <ion-col col-6 ion-item>
+          <ion-label (click)="openpicker('ctrain')" stacked="">{{cullinarytraining}}</ion-label>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="cullinarytraining == 'Yes'">
+          <ion-col col-6 ion-item>
+              <ion-label>Select Cullinary Training</ion-label>
+          </ion-col>
+        <ion-col col-6 ion-item>         
+          <ion-select [(ngModel)]="selectedcullinarytraining" style="display: contents;">
+              <ion-option value="CPR Training">CPR Training</ion-option>
+              <ion-option value="Other">Other</ion-option>
+          </ion-select>
+        </ion-col>
+          </ion-row>
+
+      <hr>
+      <ion-row>
+        <ion-col ion-item no-lines col-6>
+          <ion-label>Languages Spoken</ion-label>
+        </ion-col>
+        <ion-col ion-item no-lines col-6>
+          <ion-label stacked="" (click)="selectlanguage($event)">{{selectedlanguage}}</ion-label>
+          <!-- <ion-input [readonly]="true" placeholder="Select language" [(ngModel)]=selectedlanguage (click)="selectlanguage($event)"></ion-input> -->
+        </ion-col>
+      </ion-row>
+      <hr>
+      <ion-row>
+        <ion-col ion-item style="margin-top: 3%;">
+          <ion-label style="color: royalblue">Special Training</ion-label>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col col-6 ion-item>
+          <ion-label>Special Training</ion-label>
+        </ion-col>
+        <ion-col col-6 ion-item>
+          <ion-label (click)="openpicker('strain')" stacked="">{{specialtraining}}</ion-label>
+        </ion-col>
+      </ion-row>
+
+      <ion-row *ngIf="specialtraining == 'Yes'">
+          <ion-col col-6 ion-item>
+              <ion-label>Select Training</ion-label>
+          </ion-col>
+        <ion-col col-6 ion-item>         
+          <ion-select [(ngModel)]="selectedtraining" style="display: contents;">
+              <ion-option value="CPR Training">CPR Training</ion-option>
+              <ion-option value="Other">Other</ion-option>
+          </ion-select>
+        </ion-col>
+      </ion-row>
+
+
+      <ion-row *ngIf="selectedtraining == 'Other'">
+          <ion-col col-6 ion-item>
+            <ion-label>Other Training</ion-label>
+          </ion-col>
+          <ion-col col-6 ion-item>
+              <ion-input  placeholder="Other Training" [(ngModel)]="othertraining"></ion-input>
+          </ion-col>
+        </ion-row>
+
+      <ion-row>
+        <ion-col ion-item no-lines col-6>
+          <ion-label>12 month simulator current</ion-label>
+        </ion-col>
+        <ion-col ion-item no-lines col-3>
+          <ion-label style="margin-left: 5px">Yes</ion-label>
+          <ion-checkbox color="dark" (ionChange)="cheboxcheck('msy',$event)" mode="md" [(ngModel)]=mstrainingyes></ion-checkbox>
+        </ion-col>
+        <ion-col ion-item no-lines col-3>
+          <ion-label>No</ion-label>
+          <ion-checkbox color="dark" (ionChange)="cheboxcheck('msn',$event)" mode="md" [(ngModel)]=mstrainingno></ion-checkbox>
+        </ion-col>
+      </ion-row>
+      
+      <hr>
+
+      <ion-row>
+        <ion-col ion-item style="margin-top: 3%;">
+          <ion-label style="color: royalblue">Domestic Rate</ion-label>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-6 ion-item>
+          <ion-label>Per Day</ion-label>
+        </ion-col>
+        <ion-col col-6 ion-item>
+          <span>&#36;</span> <input type="text" placeholder="Per Day" [(ngModel)]=dperhour class="ratesymbol">
+        </ion-col>
+      </ion-row>
+
+
+
+      <ion-row>
+        <ion-col ion-item style="margin-top: 3%;">
+          <ion-label style="color: royalblue">International Rate</ion-label>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-6 ion-item>
+          <ion-label>Per Day</ion-label>
+        </ion-col>
+        <ion-col col-6 ion-item>
+          <span>&#36;</span> <input type="text" placeholder="Per Day" [(ngModel)]=iperhour class="ratesymbol">
+        </ion-col>
+      </ion-row>
+    </ion-list>
+  </div>
+
+  <ion-row center style="margin-top: 15px;background: white" *ngIf="!disableonactive">
+    <ion-col text-center>
+      <button ion-button class="fullbtn" (click)="updatedata()">Save</button>
+    </ion-col>
+  </ion-row>
+</ion-content>

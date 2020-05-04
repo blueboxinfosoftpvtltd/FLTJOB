@@ -1,0 +1,46 @@
+<ion-content>
+  <div style="background-color: #2068D7;min-height: 120px !important;">
+    <ion-buttons>
+      <button ion-button icon-only (click)="back()" style="background: transparent;margin-top: 17px;">
+        <ion-icon name="arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+  </div>
+  <div align="center">
+    <img src="http://pilot.itsguru.com/ProfileImage/DefaultImg.png" class="profile-photo" />
+  </div>
+  <form nonvalidate [formGroup]="loginform">
+    <div>
+
+      <ion-item style="margin-top: 15%;padding-left: 15px;padding-right: 15px;">
+        <ion-label style="min-width: 140px">Email</ion-label>
+        <ion-input class="setinputfield" [(ngModel)]=email placeholder="Email" formControlName="email"></ion-input>
+      </ion-item>
+
+      <ion-item style="padding-left: 15px;padding-right: 15px;">
+        <ion-label style="min-width: 140px">Password</ion-label>
+        <ion-input class="setinputfield" type="password" [(ngModel)]=password placeholder="Password" formControlName="password"></ion-input>
+      </ion-item>
+
+      <ion-row center style="margin-top: 20px;background: white;">
+        <ion-col col-4></ion-col>
+        <ion-col ion-item no-lines style="text-align: center">
+          <ion-label style="margin-right: 110px;">Remember me</ion-label>
+          <ion-checkbox color="dark" mode="md" (ionChange)="rememberme($event)" [(ngModel)]='isremember'
+            formControlName="isremember"></ion-checkbox>
+        </ion-col>
+      </ion-row>
+    </div>
+    <ion-row center style="margin-top: 40px;background: white;">
+      <ion-col text-center>
+        <button ion-button class="fullbtn" (click)="login()" [disabled]="!isLogin()">Sign in</button>
+      </ion-col>
+    </ion-row>
+
+    <ion-row center style="margin-top: 20px;background: white;">
+      <ion-col text-center>
+        <ion-label style="color:black;padding: 2px" (click)="GoToForgotPassword()">Forgot Password?</ion-label>
+      </ion-col>
+    </ion-row>
+  </form>
+</ion-content>

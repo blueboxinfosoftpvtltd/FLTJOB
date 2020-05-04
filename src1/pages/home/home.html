@@ -1,0 +1,57 @@
+<!-- <ion-header>
+  <ion-navbar>
+    <ion-title>
+      Ionic Blank
+    </ion-title>
+  </ion-navbar>
+</ion-header> -->
+
+<ion-content no-padding>
+  <!-- <hr class="line"> -->
+  <div ion-fixed class="fixed">
+    <ion-row>
+      <ion-col ion-item no-lines col-3 style="margin-top: 5px">
+        <ion-badge *ngIf="currentcount > 0" id="notifications-badge" color="accent">{{currentcount}}</ion-badge>
+        <button class="btnstyle" ion-button full (click)="current()" [ngStyle]="{'background-color': cbuttonColor,'color' : ctxtcolor}">Current</button>
+      </ion-col>
+      <ion-col ion-item no-lines col-3 style="margin-top: 5px">
+        <ion-badge *ngIf="futurecount > 0" id="notifications-badge" color="accent">{{futurecount}}</ion-badge>
+        <button class="btnstyle" ion-button full (click)="future()" [ngStyle]="{'background-color': fbuttonColor ,'color' : ftxtcolor}">Future</button>
+      </ion-col>
+      <ion-col ion-item no-lines col-3 style="margin-top: 5px">
+        <ion-badge *ngIf="historycount > 0" id="notifications-badge" color="accent">{{historycount}}</ion-badge>
+        <button class="btnstyle" ion-button full (click)="history()" [ngStyle]="{'background-color': hbuttonColor ,'color' : htxtcolor}">History</button>
+      </ion-col>
+      <ion-col ion-item no-lines col-3 style="margin-top: 5px">
+        <ion-badge *ngIf="pendingcount > 0" id="notifications-badge" color="accent">{{pendingcount}}</ion-badge>
+        <button id="notification-button" class="btnstyle" ion-button full (click)="pending()" [ngStyle]="{'background-color': pbuttonColor ,'color' : ptxtcolor}">
+          Pending</button>
+      </ion-col>
+    </ion-row>
+    <hr>
+
+  </div>
+  <div class="scroll">
+    <div *ngIf="homecontainer == 'currentbtn'">
+      <current></current>
+    </div>
+    <div *ngIf="homecontainer == 'futurebtn'">
+      <future></future>
+    </div>
+    <div *ngIf="homecontainer == 'historybtn'">
+      <history></history>
+    </div>
+    <div *ngIf="homecontainer == 'pendingbtn'">
+      <pending></pending>
+    </div>
+  </div>
+</ion-content>
+
+<ion-footer *ngIf="type == 'Owner Operator'" style="background-color: white">
+  <ion-row center>
+    <ion-col text-center>
+      <button ion-button class="fullbtn" (click)="createtrip()">Create Trip</button>
+    </ion-col>
+  </ion-row>
+
+</ion-footer>

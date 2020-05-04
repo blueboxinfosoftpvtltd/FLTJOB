@@ -1,0 +1,90 @@
+<!--
+  Generated template for the FavuserPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+    <ion-title>My Favorites</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item-sliding *ngFor='let data of favuserlist'>
+      <ion-item>
+        <ion-row (click)="requestpage(data)">
+          <ion-col col-3>
+            <img class="profile-photo" src="{{data.PhotoPath}}" />
+          </ion-col>
+          <ion-col col-4>
+            <ion-row>
+              <div style="margin-left: 20px">{{data.PilotFname}}</div>
+            </ion-row>
+            <ion-row>
+              <div style="margin-left: 20px;margin-top: 10px;">{{data.Pilotlname}}</div>
+            </ion-row>
+            <ion-row>
+              <div style="margin-left: 20px;margin-top: 10px;">{{data.MemberShipType}}</div>
+            </ion-row>
+          </ion-col>
+          <ion-col col-5 style="pointer-events: none;align-self: center">
+            <div class="rating-wrap">
+              <ionic3-star-rating #rating activeIcon="ios-star" defaultIcon="ios-star-outline" activeColor="#f39c12" defaultColor="#000000"
+                readonly="false" rating={{data.ratingCount}} fontSize="24px" halfStar=t rue (ratingChanged)="logRatingChange($event)">
+              </ionic3-star-rating>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-item>
+      <ion-item-options>
+        <button ion-button (click)="removeItem(data.fkPilotid)" icon-only>
+          <ion-icon name="trash"></ion-icon>
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+  <!-- <div>
+    <ion-row *ngFor='let data of favuserlist'>
+      <ion-col col-12>
+        <ion-card (click)="GoToProfile(data.fkPilotid)">
+          <ion-row>
+            <ion-col col-2>
+              <img class="profile-photo1" src="{{data.PhotoPath}}" />
+            </ion-col>
+            <ion-col col-5>
+              <ion-row>
+                <ion-label style="margin-left: 20px">{{data.PilotFname}}</ion-label>
+              </ion-row>
+              <ion-row>
+                <ion-label style="margin-left: 20px;margin-top: 10px;">{{data.Pilotlname}}</ion-label>
+              </ion-row>
+              <ion-row>
+                <ion-label style="margin-left: 20px;margin-top: 10px;">
+                  <b>{{data.MemberShipType}}</b>
+                </ion-label>
+              </ion-row>
+            </ion-col>
+            <ion-col style="pointer-events: none;margin: -2px -6px auto">
+              <div class="rating-wrap">
+                <ionic3-star-rating #rating activeIcon="ios-star" defaultIcon="ios-star-outline" activeColor="#f39c12" defaultColor="#000000"
+                  readonly="false" rating={{data.ratingCount}} fontSize="24px" halfStar=t rue (ratingChanged)="logRatingChange($event)">
+                </ionic3-star-rating>
+              </div>
+
+            </ion-col>
+          </ion-row>
+        </ion-card>
+      </ion-col>
+      <ion-col col-12>
+        <hr>
+      </ion-col>
+    </ion-row>
+  </div>
+  <br>
+  <br>
+  <br>
+  <br> -->
+
+</ion-content>
