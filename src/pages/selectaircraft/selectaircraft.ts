@@ -47,8 +47,8 @@ export class SelectaircraftPage {
   count: any;
   totalcount: any;
   lang: any;
-  trainaircrafts:any;
-  traintempdata:any;
+  trainaircrafts: any;
+  traintempdata: any;
   public date: string = new Date().toISOString();
   constructor(public navCtrl: NavController, public navParams: NavParams, public event: Events, public provider: AuthproviderProvider) {
     this.provider.setloading();
@@ -57,6 +57,7 @@ export class SelectaircraftPage {
     console.log(name);
   }
 
+  // when type i searchbox
   onInput() {
     if (this.type == 'aircraft' || this.type == 'singleaircraft') {
       if (this.searchcode.toString().length >= 2) {
@@ -68,8 +69,8 @@ export class SelectaircraftPage {
       else if (this.searchcode.toString().length < 2) {
         this.aircrafts = this.tempdata;
       }
-    } 
-   else if (this.type == 'trainaircraft') {
+    }
+    else if (this.type == 'trainaircraft') {
       if (this.searchcode.toString().length >= 2) {
         this.trainaircrafts = this.trainaircrafts.filter((item) => {
           console.log(this.searchcode);
@@ -98,6 +99,7 @@ export class SelectaircraftPage {
     console.log('call cancel');
   }
 
+  // infinite scroll method
   doInfinite(infiniteScroll) {
     this.index = this.count;
     this.count = parseInt(this.count) + 100;
@@ -124,20 +126,20 @@ export class SelectaircraftPage {
     if (this.type == 'aircraft' || this.type == 'singleaircraft' || this.type == 'trainaircraft') {
       this.title = "Select Aircraft";
       var aircraft = this.provider.getmasterdata();
-      if(this.type == 'aircraft' || this.type == 'singleaircraft'){
+      if (this.type == 'aircraft' || this.type == 'singleaircraft') {
         this.aircrafts = aircraft.data.AirCraft;
         this.tempdata = this.aircrafts;
       }
-      
+
       console.log(this.aircrafts);
-       if(this.type == 'trainaircraft'){
+      if (this.type == 'trainaircraft') {
         this.trainaircrafts = aircraft.data.AirCraft2;
-        this.traintempdata = this.trainaircrafts; 
+        this.traintempdata = this.trainaircrafts;
       }
-      
-     // this.aircrafts = this.navParams.get('aircraftdata');
-        
-         
+
+      // this.aircrafts = this.navParams.get('aircraftdata');
+
+
       this.provider.dismissloading();
       this.aircraftname = this.navParams.get('selectedaircraft');
     }
@@ -152,15 +154,17 @@ export class SelectaircraftPage {
       this.totalcount = this.lang.data.Languages.length;
 
       console.log(this.languages);
-      //this.languages = this.navParams.get('languagedata');
-      //this.templanguage = this.languages;
+
       this.provider.dismissloading();
       this.lanname = this.navParams.get('selectedlanguage');
     }
     console.log('ionViewDidLoad SelectaircraftPage');
+
+
+    // back button functionality
     this.navBar.backButtonClick = () => {
       this.selectedaircraft = [];
-      this.selectedtrainaircraft=[];
+      this.selectedtrainaircraft = [];
       this.selectedlanguage = [];
       if (this.type == 'aircraft' || this.type == 'singleaircraft') {
         //this.aircrafts = this.tempdata;
@@ -191,8 +195,8 @@ export class SelectaircraftPage {
         }
 
       }
-      if(this.type == "trainaircraft"){
-     
+      if (this.type == "trainaircraft") {
+
         for (let i = 0; i < this.traintempdata.length; i++) {
           if (this.traintempdata[i].checked == true) {
             this.listtrainaircraft.push(this.traintempdata[i]);
@@ -254,7 +258,7 @@ export class SelectaircraftPage {
 
       }
 
-     
+
     };
 
   }
@@ -263,6 +267,7 @@ export class SelectaircraftPage {
 
   }
 
+  // multiple aircraft selection
   checkboxselectaircraft(data, event) {
     if (event.checked == false) {
       this.listaircraft.splice(data);
@@ -270,6 +275,7 @@ export class SelectaircraftPage {
     }
   }
 
+  // language selection 
   checkboxselectlanguage(data, event) {
     if (event.checked == false) {
       this.languagelist.splice(data);
@@ -277,6 +283,7 @@ export class SelectaircraftPage {
     //this.languagelist = <Array<any>>(<Object>this.languages);
   }
 
+  // single aircrat selection
   listselect(aircraftname, id) {
     this.event.publish('aircraftname', [aircraftname, id]);
     this.navCtrl.pop();

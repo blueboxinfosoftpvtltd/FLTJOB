@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams ,ViewController} from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 
 /**
  * Generated class for the ChatimagemodalPage page.
@@ -15,16 +15,17 @@ import { IonicPage, NavController, NavParams ,ViewController} from 'ionic-angula
 })
 export class ChatimagemodalPage {
   img: any;
-  constructor(public navCtrl: NavController, public navParams: NavParams,private view: ViewController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private view: ViewController) {
   }
 
+  // get image 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ChatimagemodalPage');
     this.img = this.navParams.get('img');
   }
 
 
-
+  // close open modal
   closeModal() {
     const data = {
       name: 'John Doe',

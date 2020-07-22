@@ -35,6 +35,7 @@ export class AuthproviderProvider {
   sdata: any;
   idata: any;
   fdata: any;
+  isback: boolean = false;
   constructor(public http: HttpClient, public storage: Storage, public loadingCtrl: LoadingController) {
     console.log('Hello AuthproviderProvider Provider');
     this.url = "http://pilot2.itsguru.com/API/Pilot";
@@ -296,7 +297,7 @@ export class AuthproviderProvider {
     return this.http.post(this.url + "/filterSecondInCommand", fsic, { headers: header });
   }
 
-  filterflightattendant(id, exp, passport, continents, aircrafttraining, language, showpic, tripid, rate, rating, isnearest, isfavouite, isavailable, airtrainexp, selectedcullinarytraining, cullinaryothertraining, selectedtraining, othertraining, unrestricteduspass, simulator, specialtraining1, cullinarytraining1) {
+  filterflightattendant(id, exp, passport, continents, aircrafttraining, language, showpic, tripid, rate, rating, isnearest, isfavouite, isavailable, airtrainexp, selectedcullinarytraining, cullinaryothertraining, selectedtraining, othertraining, unrestricteduspass, simulator, specialtraining1, cullinarytraining1, ivisa) {
 
     let ffa = {
       "loggedinpilotid": id,
@@ -315,12 +316,13 @@ export class AuthproviderProvider {
       "TrainAircraftList": airtrainexp,
       "Cullinary": "",
       "CullinaryOther": "",
-      "SpecialTrained": "",
-      "SpecialTrainedOther": "",
+      "SpecialTrained": selectedtraining,
+      "SpecialTrainedOther": othertraining,
       "IsReqPrev12MonthTraining": simulator,
       "CurrentUnrestrictedUSPass": unrestricteduspass,
-      "IsSpecialTrained": 0,
-      "CullinaryTraining": ""
+      "IsSpecialTrained": specialtraining1,
+      "CullinaryTraining": "",
+      "InternationalVisas": ivisa
     }
 
     let header = new HttpHeaders();
@@ -1249,6 +1251,33 @@ export class AuthproviderProvider {
   }
   getfdata() {
     return this.fdata;
+  }
+
+  setback(val) {
+    this.isback = val;
+  }
+  getback() {
+    return this.isback;
+  }
+
+  setrequestread(id) {
+    let reqdata = {
+      "fkPilotId": id
+    }
+    let header = new HttpHeaders();
+    header.append('Content-Type', 'application/json');
+    return this.http.post(this.url + "/NotificationIsrecentZero", reqdata, { headers: header });
+
+  }
+
+
+  setmsgread(id) {
+    let reqdata = {
+      "fkToPilotId": id
+    }
+    let header = new HttpHeaders();
+    header.append('Content-Type', 'application/json');
+    return this.http.post(this.url + "/MessageListIsrecentZero", reqdata, { headers: header });
   }
 
 }

@@ -11,6 +11,8 @@ import { Component, Input } from '@angular/core';
   templateUrl: 'search.html'
 })
 export class SearchComponent {
+
+  // get search data and display in component from tabpage
   @Input('searchres') searchdata: any;
   text: string;
 

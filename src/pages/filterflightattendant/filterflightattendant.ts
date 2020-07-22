@@ -112,8 +112,15 @@ export class FilterflightattendantPage {
   airtrainexp: any;
   isprofile: any;
   isgender: any;
+  gdata: any;
+  idata: any;
+  ivisa: any;
   constructor(public navCtrl: NavController, public navParams: NavParams, private selector: WheelSelector, public provider: AuthproviderProvider, public events: Events, public alertCtrl: AlertController, public modalCtrl: ModalController) {
     var that = this;
+    // get rescheduled data is available
+    this.gdata = provider.getfdata();
+
+    // get aircraft data
     this.events.subscribe('selectdata', res => {
       if (res != undefined) {
         this.airexp = res;
@@ -122,9 +129,13 @@ export class FilterflightattendantPage {
       //   this.airexp = "";
       // }
     })
+
+    // get master data to get speial train name and culinarry name
     this.masterdata = this.provider.getmasterdata();
     this.SpecialtrainedName = this.masterdata.data.SpecialtrainedName;
     this.CullinaryName = this.masterdata.data.CullinaryName;
+
+    // set rating plugin
     jQuery(function () {
 
 
@@ -181,23 +192,31 @@ export class FilterflightattendantPage {
 
     })
 
+    // get language data
     this.events.subscribe('languagedata', res => {
       this.language = res;
     })
+
+    // get continents data
     this.provider.getContinents().subscribe(res => {
       this.continentlist = res;
       this.continentlist = this.continentlist.continents.continentdata;
     });
   }
 
+
+  // get rating chnage value
   logRatingChange(rating) {
     this.ratingcount = rating;
     console.log(this.ratingcount);
   }
+
+  // click to open aircraft page
   selecttrainaircraft() {
     this.navCtrl.push('SelectaircraftPage', { 'selectedaircraft': this.airtrainexp, 'type': 'aircraft', animate: false });
   }
   ionViewDidEnter() {
+    // method to handle back button functionality
     this.navBar.backButtonClick = () => {
       console.log(this.filterfastep);
 
@@ -273,12 +292,74 @@ export class FilterflightattendantPage {
       }
     };
 
+    // set rescheduled data if available
+    if (this.gdata) {
+
+      this.exp = this.gdata.YEAREXP;
+      this.continents = this.gdata.Continent;
+      this.ratingcount = this.gdata.RatingCount;
+
+      if (this.gdata.HavePassport) {
+        this.validpassyes = true;
+      }
+      else {
+        this.validpassno = true;
+      }
+
+      if (this.gdata.AircraftSpecifictraining) {
+        this.astraingyes = true;
+      }
+      else {
+        this.astraingyno = true;
+      }
+      if (this.gdata.SP_TRAINING == "") {
+        this.specialtraining = "No";
+      }
+      else {
+        this.specialtraining = "Yes";
+        this.selectedtraining = this.gdata.SP_TRAINING;
+        this.selectedtraining = this.selectedtraining.split(',');
+      }
+      if (this.gdata.SP_TRAINING == "Other") {
+        this.othertraining = this.gdata.SpecialTrainedOther;
+      }
+
+      if (this.gdata.IsReqPrev12MonthTraining) {
+        this.mstrainingyes = true;
+      }
+      else {
+        this.mstrainingno = true;
+      }
+      if (this.gdata.VISA) {
+        this.invisayes = true;
+      }
+      else {
+        this.invisano = true;
+      }
+
+
+      if (this.gdata.SHOWPROFILE) {
+        this.sprofileyes = true;
+      }
+      else {
+        this.sprofileno = true;
+      }
+      if (this.gdata.CurrentUnrestrictedUSPass) {
+        this.unrestricteduspass = "Yes";
+      }
+      else {
+        this.unrestricteduspass = "No";
+      }
+
+      this.language = this.gdata.LANG_SPOKEN;
+    }
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad FiltercaptainPage');
   }
 
+  // set wheel selector plugin value
   openpicker(type) {
     if (type == 'ctrain') {
       this.selector.show({
@@ -335,6 +416,8 @@ export class FilterflightattendantPage {
     }
   }
 
+
+  // chekbox click method
   cheboxcheck(op, event) {
     // if (op == 'asty') {
     //   if (event.checked == true) {
@@ -526,10 +609,12 @@ export class FilterflightattendantPage {
     }
   }
 
+  // click to open continents page
   selectcontinents() {
     this.navCtrl.push('SelectcontinentPage', { 'continetdata': this.continentlist, 'selectedcontinent': this.continents, animate: false });
   }
 
+  // click to open select lanaguage page
   selectlanguage() {
     console.log(this.languagedata);
     this.provider.setloading();
@@ -537,11 +622,13 @@ export class FilterflightattendantPage {
     this.provider.dismissloading();
 
   }
+  // click to open aircraft select page
   selectaircraft(event) {
     this.navCtrl.push('SelectaircraftPage', { 'selectedaircraft': this.airexp, 'type': 'aircraft', animate: false });
   }
 
 
+  // method is called when next button is pressed from 3rd tab
   filter() {
     if (this.favattendant == undefined || this.favattendant == false) {
       this.favattendant = 0
@@ -612,16 +699,16 @@ export class FilterflightattendantPage {
       this.txt4color = '#000';
       this.ratingcertificate = [];
       if (this.validpassno == true) {
-        this.havepasssport = "0";
+        this.havepasssport = false;
       }
       else if (this.validpassyes == true) {
-        this.havepasssport = "1";
+        this.havepasssport = true;
       }
       if (this.astraingno == true) {
-        this.aircraftspecifitraining = "0";
+        this.aircraftspecifitraining = false;
       }
       else if (this.astraingyes == true) {
-        this.aircraftspecifitraining = "1";
+        this.aircraftspecifitraining = true;
       }
       if (this.sprofileno == true) {
         this.showprofile = "0";
@@ -630,31 +717,37 @@ export class FilterflightattendantPage {
         this.showprofile = "1";
       }
       if (this.mstrainingno == true) {
-        this.simulator = "0";
+        this.simulator = false;
       }
       else if (this.mstrainingyes == true) {
-        this.simulator = "1";
+        this.simulator = true;
+      }
+      if (this.invisayes == true) {
+        this.ivisa = true;
+      }
+      else if (this.invisano == true) {
+        this.ivisa = false;
       }
       if (this.unrestricteduspass == "Yes") {
-        this.unrestricteduspass1 = "1";
+        this.unrestricteduspass1 = true;
       } else if (this.unrestricteduspass == "No") {
-        this.unrestricteduspass1 = "0";
+        this.unrestricteduspass1 = false;
       }
       if (this.cullinarytraining == "Yes") {
-        this.cullinarytraining1 = "1";
+        this.cullinarytraining1 = true;
       } else if (this.cullinarytraining == "No") {
-        this.cullinarytraining1 = "0";
+        this.cullinarytraining1 = false;
       }
       if (this.specialtraining == "Yes") {
-        this.specialtraining1 = "1";
+        this.specialtraining1 = true;
       } else if (this.specialtraining == "No") {
-        this.specialtraining1 = "0";
+        this.specialtraining1 = false;
       }
       if (this.selectedtraining != undefined || this.selectedtraining != null) {
         var fselectedtraining = this.selectedtraining.join();
       }
 
-      this.provider.filterflightattendant(this.id, this.exp, this.havepasssport, this.continents, this.aircraftspecifitraining, this.language, this.showprofile, this.tripid, this.rate, this.ratingcount, this.isnearest, this.favattendant, 1, this.airtrainexp, this.selectedcullinarytraining, this.cullinaryothertraining, fselectedtraining, this.othertraining, this.unrestricteduspass1, this.simulator, this.specialtraining1, this.cullinarytraining1).subscribe(res => {
+      this.provider.filterflightattendant(this.id, this.exp, this.havepasssport, this.continents, this.aircraftspecifitraining, this.language, this.showprofile, this.tripid, this.rate, this.ratingcount, this.isnearest, this.favattendant, 1, this.airtrainexp, this.selectedcullinarytraining, this.cullinaryothertraining, fselectedtraining, this.othertraining, this.unrestricteduspass1, this.simulator, this.specialtraining1, this.cullinarytraining1, this.ivisa).subscribe(res => {
         console.log(res);
         if (this.showfinishfi == true) {
           this.fns_shno = this.fns_shno + 1;
@@ -688,6 +781,7 @@ export class FilterflightattendantPage {
     }
   }
 
+  // methd is called when next button presed from 1st tab
   save1() {
     this.title = 'Day Rate - FA';
     this.filterfastep1 = '1';
@@ -705,7 +799,7 @@ export class FilterflightattendantPage {
 
 
   }
-
+  // methd is called when next button presed from 2nd tab
   save2() {
     if (this.rate == undefined) {
       this.errormessage = "Please enter rate"
@@ -729,6 +823,8 @@ export class FilterflightattendantPage {
 
   }
 
+
+  // method is called when change filter button is pressed
   changefilter() {
     var that = this;
     jQuery(function () {
@@ -762,6 +858,8 @@ export class FilterflightattendantPage {
     this.txt3color = '#fff';
     this.txt4color = '#fff';
   }
+
+  // method to handle tab click event like 1,2,3,4
   activestep(op) {
     this.filterfastep = op;
 
@@ -831,6 +929,8 @@ export class FilterflightattendantPage {
       this.txt4color = '#000';
     }
   }
+
+  // display alert dialog
   showAlert() {
     const alert = this.alertCtrl.create({
       title: 'Pilot',
@@ -840,6 +940,7 @@ export class FilterflightattendantPage {
     alert.present();
   }
 
+  // method is called when send notification button pressed
   sendnotification() {
     this.provider.setloading();
     for (let i = 0; i < this.attendantlist.length; i++) {
@@ -850,11 +951,42 @@ export class FilterflightattendantPage {
     }
     if (this.attendentid.length != 0) {
       this.provider.sendnotification(this.attid, this.id, this.tripid, this.rate).subscribe(res => {
+        // if (this.fins == true) {
+        //   this.provider.dismissloading();
+        //   this.navCtrl.push('FilterflightinstructorPage', {
+        //     'id': this.id, 'tripid': this.tripid, 'aircraftname': this.aircraftname, 'oce': this.oceexp, 'isprofile': this.isprofile, 'isgender': this.isgender
+        //   });
+        // }
         if (this.fins == true) {
-          this.provider.dismissloading();
-          this.navCtrl.push('FilterflightinstructorPage', {
-            'id': this.id, 'tripid': this.tripid, 'aircraftname': this.aircraftname, 'oce': this.oceexp, 'isprofile': this.isprofile, 'isgender': this.isgender
-          });
+          //this.provider.dismissloading();
+          if (this.gdata) {
+            this.provider.getitrip(this.gdata.pkTripId, this.id).subscribe(res => {
+              console.log(res);
+              this.idata = res;
+              this.idata = this.idata.data.Trip;
+              if (this.idata == null) {
+                this.provider.setidata("");
+                this.provider.dismissloading();
+                this.navCtrl.push('FilterflightinstructorPage', { 'id': this.id, 'tripid': this.tripid, 'aircraftname': this.aircraftname, 'fatt': this.fatt, 'fins': this.fins, 'oce': this.oceexp, 'isprofile': this.isprofile, 'isgender': this.isgender });
+              }
+              // console.log(tid);
+              else {
+                this.idata = this.idata[0];
+                this.provider.setidata(this.idata);
+                this.provider.dismissloading();
+                this.navCtrl.push('FilterflightinstructorPage', { 'id': this.id, 'tripid': this.tripid, 'aircraftname': this.aircraftname, 'fatt': this.fatt, 'fins': this.fins, 'oce': this.oceexp, 'isprofile': this.isprofile, 'isgender': this.isgender });
+                //this.app.getRootNav().push("SelectprofilePage");
+
+              }
+              //this.provider.dismissloading();
+            },
+              err => this.provider.dismissloading());
+          }
+          else {
+            this.provider.dismissloading();
+            this.navCtrl.push('FilterflightinstructorPage', { 'id': this.id, 'tripid': this.tripid, 'aircraftname': this.aircraftname, 'fatt': this.fatt, 'fins': this.fins, 'oce': this.oceexp, 'isprofile': this.isprofile, 'isgender': this.isgender });
+          }
+
         }
         else {
           this.provider.dismissloading();
@@ -870,6 +1002,7 @@ export class FilterflightattendantPage {
 
   }
 
+  // display alert dialog
   showAlert1(title, msg) {
     const alert = this.alertCtrl.create({
       title: title,
@@ -886,17 +1019,20 @@ export class FilterflightattendantPage {
     alert.present();
   }
 
-
+  // call when finish button press
   finish() {
     this.navCtrl.push('TabpagePage', { 'istab': false });
   }
 
+  // call when next button press from 4th tab
   next() {
     if (this.fins == true) {
       this.navCtrl.push('FilterflightinstructorPage', { 'id': this.id, 'tripid': this.tripid, 'aircraftname': this.aircraftname, 'fatt': this.fatt, 'isprofile': this.isprofile, 'isgender': this.isgender });
     }
   }
 
+
+  // open profile page in modal controller
   openProfile(opid) {
     this.provider.setloading();
     this.provider.viewprofile(this.id, opid).subscribe(res => {

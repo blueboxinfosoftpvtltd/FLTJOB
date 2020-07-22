@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Events, ViewController } from 'ionic-angular';
-import { WheelSelector } from '@ionic-native/wheel-selector';
+import { WheelSelector } from '@ionic-native/wheel-selector/ngx';
 import { ProfilePage } from '../profile/profile';
 import { SharedserviceProvider } from '../../providers/sharedservice/sharedservice';
 import { AuthproviderProvider } from '../../providers/authprovider/authprovider';

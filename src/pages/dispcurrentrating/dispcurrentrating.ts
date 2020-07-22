@@ -25,6 +25,8 @@ export class DispcurrentratingPage {
   }
 
   ionViewDidEnter() {
+
+    // get rating certificate using current user login id
     console.log('ionViewDidLoad DispcurrentratingPage');
     this.authprovider.setloading();
     this.storage.get('id').then(val => {
@@ -51,19 +53,23 @@ export class DispcurrentratingPage {
 
   }
 
+  // call when add rating is called
   addrating() {
     this.navCtrl.push('AddratingPage', { 'classdata': this.classdata, 'aircraftdata': this.aircraftdata });
   }
 
+  // call when edit rating is called
   edit(data) {
     this.navCtrl.push('AddratingPage', { 'editdata': data, 'classdata': this.classdata, 'aircraftdata': this.aircraftdata, 'isedit': true });
   }
 
+  // when delete is click
   delete(data) {
     this.presentConfirm(data);
 
   }
 
+  // display alert dialog
   successalert(title, msg) {
     let alert = this.alertCtrl.create({
       title: title,
@@ -80,6 +86,7 @@ export class DispcurrentratingPage {
     alert.present();
   }
 
+  // alert to confirm on deletion of certificate
   presentConfirm(data) {
     let alert = this.alertCtrl.create({
       title: 'Pilot',

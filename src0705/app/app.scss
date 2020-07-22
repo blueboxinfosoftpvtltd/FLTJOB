@@ -1,0 +1,119 @@
+// http://ionicframework.com/docs/theming/
+// App Global Sass
+// --------------------------------------------------
+// Put style rules here that you want to apply globally. These
+// styles are for the entire app and not just one component.
+// Additionally, this file can be also used as an entry point
+// to import other Sass files to be included in the output CSS.
+//
+// Shared Sass variables, which can be used to adjust Ionic's
+// default Sass variables, belong in "theme/variables.scss".
+//
+// To declare rules for a specific mode, create a child rule
+// for the .md, .ios, or .wp mode classes. The mode class is
+// automatically applied to the <body> element in the app.
+// ion-navbar.toolbar-md {
+//     min-height: 120px !important;
+// }
+
+// //on iOS
+// ion-navbar.toolbar.toolbar-ios {
+//     min-height: 120px !important;
+//     background: #2068D7;
+// }
+
+// ion-app.platform-ios.keyboard  ion-footer .toolbar:last-child { 
+//     padding-bottom: 4px; 
+// } /*override iOS style "calc(env(safe-area-inset-bottom) + 4px)"  for footer padding when keyboard is visible*/
+
+// ion-app, ion-nav, ion-tab, ion-tabs, .app-root{
+//     -webkit-transition: bottom 0.3s;
+//     transition: bottom 0.3s;
+//   }
+    
+ion-app.platform-ios13 ion-content { pointer-events: auto; /*fix scroll lock on ios12.2*/ }
+.fixed-content {
+    background-color: #fff;
+}
+
+.toolbar-background {
+    background-color: #2068D7;
+}
+
+ion-header ion-icon.back-button-icon.icon {
+    color: map-get($colors, light);
+}
+
+
+.tabs-md .tab-button.has-title-only {
+    padding: 0 0px;
+}
+
+.tabs-md .tab-button {
+    min-height: 0;
+    font-weight: normal;
+    color: rgba(60, 60, 60, 0.7);
+    padding: 0;
+}
+
+.tabs .tabbar {
+    background-color: #fff;
+}
+
+.tabs-ios .tab-button[aria-selected=true] {
+    color: #000;
+}
+
+.tabbar a[aria-selected=true] {
+    border: none;
+    -webkit-box-shadow: 0px 3px 0px 0px #488aff; //box-shadow: 0px 0px 0px 0px #488aff inset;
+}
+
+.profile-photo {
+    border-radius: 50% !important;
+    border: 3px solid #fff !important;
+    height: 80px;
+    width: 80px;
+    background-color: #000;
+    overflow: hidden;
+}
+
+.tabs-ios .tab-button.has-title-only .tab-button-text {
+    margin: 2px 0;
+    font-size: 1.3rem;
+    line-height: 1.1;
+}
+.input-cover{
+    display:none!important;
+}
+.text-input::-moz-placeholder {
+    color: #a1a1a8;
+}
+
+.text-input:-ms-input-placeholder {
+    color: #a1a1a8;
+}
+
+.text-input::-webkit-input-placeholder {
+    color: #a1a1a8;
+}
+
+.toolbar-title {
+    color: #fff;
+}
+
+
+.action-sheet-group.sc-ion-action-sheet-ios {
+    overflow: auto;
+  }
+  // workaround: action sheet not honoring safe area margins
+  .action-sheet-wrapper.sc-ion-action-sheet-ios {
+    top: 0;
+    height: auto;
+  }
+  .action-sheet-group {
+    overflow: auto !important;
+}
+// ion-app.md [padding] .scroll-content {
+//     padding: 5px;
+// }

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Events,Navbar, AlertController, ModalController } from 'ionic-angular';
-import { WheelSelector } from '@ionic-native/wheel-selector';
+import { WheelSelector } from '@ionic-native/wheel-selector/ngx';
 import { AuthproviderProvider } from '../../providers/authprovider/authprovider';
 declare var jQuery: any;
 import { ViewChild } from '@angular/core';

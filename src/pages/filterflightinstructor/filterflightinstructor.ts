@@ -82,8 +82,11 @@ export class FilterflightinstructorPage {
   idata: any;
   constructor(public navCtrl: NavController, public navParams: NavParams, private selector: WheelSelector, public provider: AuthproviderProvider, public events: Events, public alertCtrl: AlertController, public modalCtrl: ModalController) {
 
+    // get rescheduled data if available
     this.idata = this.provider.getidata();
     var that = this;
+
+    // ser rating
     jQuery(function () {
 
 
@@ -118,9 +121,12 @@ export class FilterflightinstructorPage {
     this.txt3color = '#fff';
     this.txt4color = '#fff';
 
+    // get continents data via events
     this.events.subscribe('continentdata', res => {
       this.continents = res;
     })
+
+    // get continents data
     this.provider.getContinents().subscribe(res => {
       this.continentlist = res;
       this.continentlist = this.continentlist.continents.continentdata;
@@ -129,12 +135,14 @@ export class FilterflightinstructorPage {
 
   }
 
+  // get rating change value
   logRatingChange(rating) {
     this.ratingcount = rating;
     console.log(this.ratingcount);
   }
 
   ionViewDidEnter() {
+    // method to handle back button
     this.navBar.backButtonClick = () => {
       console.log(this.filterfistep);
 
@@ -210,6 +218,7 @@ export class FilterflightinstructorPage {
       }
     };
 
+    // set reschedule data if available
     if (this.idata) {
       this.totaltime = this.idata.TotalTime;
       this.dualgiven = this.idata.TimeOfInstruct;
@@ -248,6 +257,7 @@ export class FilterflightinstructorPage {
     console.log('ionViewDidLoad FiltercaptainPage');
   }
 
+  // checkbox click event method
   cheboxcheck(op, event) {
     if (op == 'iiy') {
       if (event.checked == true) {
@@ -333,9 +343,12 @@ export class FilterflightinstructorPage {
     }
   }
 
+  // method to open continents page
   selectcontinents() {
     this.navCtrl.push('SelectcontinentPage', { 'continetdata': this.continentlist, 'selectedcontinent': '' });
   }
+
+  // method is called when next button pressed from 3rd tab
 
   filter() {
     if (this.favinstructor == undefined || this.favinstructor == false) {
@@ -457,6 +470,7 @@ export class FilterflightinstructorPage {
     }
   }
 
+  // method is called when next button pressed from 1st tab
   save1() {
     this.title = 'Day Rate - FI';
     this.filterfistep1 = '1';
@@ -474,7 +488,7 @@ export class FilterflightinstructorPage {
 
 
   }
-
+  // method is called when next button pressed from 2nd tab
   save2() {
     if (this.rate == undefined) {
       this.errormessage = "Please enter rate"
@@ -498,6 +512,8 @@ export class FilterflightinstructorPage {
 
   }
 
+
+  // method is called when change filter button pressed
   changefilter() {
 
     var that = this;
@@ -532,6 +548,8 @@ export class FilterflightinstructorPage {
     this.txt3color = '#fff';
     this.txt4color = '#fff';
   }
+
+  // method to handle tab click on top like 1,2,3,4
   activestep(op) {
     this.filterfistep = op;
 
@@ -600,6 +618,8 @@ export class FilterflightinstructorPage {
       this.txt4color = '#000';
     }
   }
+
+  // display alert dialog
   showAlert() {
     const alert = this.alertCtrl.create({
       title: 'Pilot',
@@ -609,6 +629,7 @@ export class FilterflightinstructorPage {
     alert.present();
   }
 
+  // call when send notification button press
   sendnotification() {
     this.provider.setloading();
     for (let i = 0; i < this.flightinstructorlist.length; i++) {
@@ -633,6 +654,7 @@ export class FilterflightinstructorPage {
 
   }
 
+  // display alert dialog
   showAlert1(title, msg) {
     const alert = this.alertCtrl.create({
       title: title,
@@ -649,10 +671,12 @@ export class FilterflightinstructorPage {
     alert.present();
   }
 
+  // call when finish button pressed
   finish() {
     this.navCtrl.push('TabpagePage', { 'istab': false });
   }
 
+  // call to open profile page in modal controller
   openProfile(opid) {
     this.provider.setloading();
     this.provider.viewprofile(this.id, opid).subscribe(res => {

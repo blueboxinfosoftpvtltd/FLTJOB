@@ -67,10 +67,47 @@ export class CreatetripPage {
   sdata: any;
   idata: any;
   fdata: any;
+  call: any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events, public sharedservice: SharedserviceProvider, public view: ViewController, private selector: WheelSelector, public provider: AuthproviderProvider, public storage: Storage) {
 
-    this.aircraftdata = this.provider.getmasterdata();
-    this.aircraftdata = this.aircraftdata.data.AirCraft;
+
+    console.log(this.aircraftdata);
+    this.provider.setloading();
+
+    // this method is wait untill masterdata is not load
+    this.call = setInterval(() => {
+      console.log("demo test");
+      if (this.provider.getmasterdata()) {
+        this.aircraftdata = this.provider.getmasterdata();
+        this.provider.dismissloading();
+        clearInterval(this.call);
+        this.aircraftdata = this.aircraftdata.data.AirCraft;
+
+        // get data if owner reschedule trip
+        this.gdata = this.provider.gtdata();
+        if (this.gdata) {
+          this.daircode = this.gdata.DepartureCode;
+          this.daircode = this.daircode.split("-");
+          this.daircode = this.daircode[0];
+          this.destaircode = this.gdata.DestinationCode;
+          this.destaircode = this.destaircode.split("-");
+          this.destaircode = this.destaircode[0];
+          this.aircrafttype = this.gdata.AircraftType;
+          for (let i = 0; i < this.aircraftdata.length; i++) {
+            if (this.aircrafttype == this.aircraftdata[i].AircraftType) {
+              this.aircraftid = this.aircraftdata[i].pkAircraftId;
+            }
+          }
+          this.radius = this.gdata.nearMeCaptain;
+          if (this.radius == 0) {
+            this.radius = "";
+          }
+        }
+      }
+
+    }, 5000)
+
+    // form validation
     this.tripform = new FormGroup({
       tripname: new FormControl('', Validators.required),
       daircode: new FormControl('', Validators.required),
@@ -92,6 +129,8 @@ export class CreatetripPage {
     this.fins = navParams.get('fins');
     this.count = "50";
     //this.radius = this.select.radius[0].description;
+
+    // get aircraft and airportcode data
     this.events.subscribe('airdata', res => {
       // this.provider.setloading();
       console.log(res);
@@ -110,25 +149,7 @@ export class CreatetripPage {
       })
 
     })
-    this.gdata = this.provider.gtdata();
-    if (this.gdata) {
-      this.daircode = this.gdata.DepartureCode;
-      this.daircode = this.daircode.split("-");
-      this.daircode = this.daircode[0];
-      this.destaircode = this.gdata.DestinationCode;
-      this.destaircode = this.destaircode.split("-");
-      this.destaircode = this.destaircode[0];
-      this.aircrafttype = this.gdata.AircraftType;
-      for (let i = 0; i < this.aircraftdata.length; i++) {
-        if (this.aircrafttype == this.aircraftdata[i].AircraftType) {
-          this.aircraftid = this.aircraftdata[i].pkAircraftId;
-        }
-      }
-      this.radius = this.gdata.nearMeCaptain;
-      if (this.radius == 0) {
-        this.radius = "";
-      }
-    }
+
 
     this.events.subscribe('departureairportcode', res => {
       this.daircode = res;
@@ -154,6 +175,7 @@ export class CreatetripPage {
     console.log('ionViewDidLoad CreatetripPage');
   }
 
+  // profile photo checkbox
   profilecheboxcheck(data, event) {
     console.log(data);
     console.log(event);
@@ -179,6 +201,7 @@ export class CreatetripPage {
     }
   }
 
+  // gender checkbox
   gendercheboxcheck(data, event) {
     console.log(data);
     console.log(event)
@@ -204,14 +227,18 @@ export class CreatetripPage {
     }
   }
 
+  // call when click on aircraft
   selectaircraft() {
     this.navCtrl.push('SelectaircraftPage', { 'aircraftdata': this.aircraftdata, 'selectedaircraft': "", 'type': 'singleaircraft' });
   }
+
+  // call when click on airport
 
   selectairport(op) {
     this.navCtrl.push('AirportcodePage', { 'codedata': this.airportcode, 'count': this.count, 'category': op });
   }
 
+  // if form is valid then create trip button is enable
   isTrip() {
     if (this.tripform.valid) {
       return true;
@@ -220,6 +247,8 @@ export class CreatetripPage {
       return false;
     }
   }
+
+  // select value from wheel selector 
   openpicker() {
 
     this.selector.show({
@@ -246,6 +275,8 @@ export class CreatetripPage {
     );
   }
 
+
+  // method is call when create trip button click
   save() {
     if (this.radius == "Select Radius") {
       this.radius = "";
@@ -254,13 +285,13 @@ export class CreatetripPage {
     this.provider.createtrip(this.id, this.tripname, this.daircode, this.enaircode, this.captain, this.scommand, this.fatt, this.fins, this.destaircode, this.sdate, this.edate, this.radius, this.aircraftid).subscribe(res => {
       console.log(res);
       this.resdata = res;
-      //this.provider.dismissloading();
+
       if (this.captain == true) {
+        // if reschedule trip then get data 
         if (this.gdata) {
-          // this.provider.setloading();
+
           this.provider.gettrip(this.gdata.pkTripId, this.id).subscribe(res => {
             console.log(res);
-
             this.pdata = res;
             this.pdata = this.pdata.data.Trip;
             if (this.pdata == null) {
@@ -268,18 +299,19 @@ export class CreatetripPage {
               this.provider.dismissloading();
               this.navCtrl.push('FiltercaptainPage', { 'id': this.id, 'tripid': this.resdata.data.Trip.pkTripId, 'aircraftname': this.aircrafttype, 'captain': this.captain, 'scommand': this.scommand, 'fatt': this.fatt, 'fins': this.fins, 'isprofile': this.iprofileyes, 'isgender': this.igenderyes });
             }
-            // console.log(tid);
+
             else {
               this.pdata = this.pdata[0];
               this.provider.setpdata(this.pdata);
               this.provider.dismissloading();
               this.navCtrl.push('FiltercaptainPage', { 'id': this.id, 'tripid': this.resdata.data.Trip.pkTripId, 'aircraftname': this.aircrafttype, 'captain': this.captain, 'scommand': this.scommand, 'fatt': this.fatt, 'fins': this.fins, 'isprofile': this.iprofileyes, 'isgender': this.igenderyes });
-              //this.app.getRootNav().push("SelectprofilePage");
+
 
             }
           },
             err => this.provider.dismissloading());
         }
+        // if not reschedule
         else {
           this.provider.dismissloading();
           this.navCtrl.push('FiltercaptainPage', { 'id': this.id, 'tripid': this.resdata.data.Trip.pkTripId, 'aircraftname': this.aircrafttype, 'captain': this.captain, 'scommand': this.scommand, 'fatt': this.fatt, 'fins': this.fins, 'isprofile': this.iprofileyes, 'isgender': this.igenderyes });
@@ -288,10 +320,30 @@ export class CreatetripPage {
 
       }
       else if (this.scommand == true) {
+        // if reschedule trip then get data 
         if (this.gdata) {
-          this.provider.dismissloading();
-          this.navCtrl.push('FiltersicPage', { 'id': this.id, 'tripid': this.resdata.data.Trip.pkTripId, 'aircraftname': this.aircrafttype, 'captain': this.captain, 'fatt': this.fatt, 'fins': this.fins, 'isprofile': this.iprofileyes, 'isgender': this.igenderyes });
+
+          this.provider.getstrip(this.gdata.pkTripId, this.id).subscribe(res => {
+            console.log(res);
+            this.sdata = res;
+            this.sdata = this.sdata.data.Trip;
+            if (this.sdata == null) {
+              this.provider.setsdata("");
+              this.provider.dismissloading();
+              this.navCtrl.push('FiltersicPage', { 'id': this.id, 'tripid': this.resdata.data.Trip.pkTripId, 'aircraftname': this.aircrafttype, 'captain': this.captain, 'fatt': this.fatt, 'fins': this.fins, 'isprofile': this.iprofileyes, 'isgender': this.igenderyes });
+            }
+
+            else {
+              this.sdata = this.sdata[0];
+              this.provider.setsdata(this.sdata);
+              this.provider.dismissloading();
+              this.navCtrl.push('FiltersicPage', { 'id': this.id, 'tripid': this.resdata.data.Trip.pkTripId, 'aircraftname': this.aircrafttype, 'captain': this.captain, 'fatt': this.fatt, 'fins': this.fins, 'isprofile': this.iprofileyes, 'isgender': this.igenderyes });
+
+            }
+          },
+            err => this.provider.dismissloading());
         }
+        // if not reschedule
         else {
           this.provider.dismissloading();
           this.navCtrl.push('FiltersicPage', { 'id': this.id, 'tripid': this.resdata.data.Trip.pkTripId, 'aircraftname': this.aircrafttype, 'captain': this.captain, 'fatt': this.fatt, 'fins': this.fins, 'isprofile': this.iprofileyes, 'isgender': this.igenderyes });
@@ -300,10 +352,31 @@ export class CreatetripPage {
       }
 
       else if (this.fatt == true) {
+        // if reschedule trip then get data 
         if (this.gdata) {
-          this.provider.dismissloading();
-          this.navCtrl.push('FilterflightattendantPage', { 'id': this.id, 'tripid': this.resdata.data.Trip.pkTripId, 'aircraftname': this.aircrafttype, 'captain': this.captain, 'scommand': this.scommand, 'fins': this.fins, 'isprofile': this.iprofileyes, 'isgender': this.igenderyes });
+          this.provider.getftrip(this.gdata.pkTripId, this.id).subscribe(res => {
+            console.log(res);
+            this.fdata = res;
+            this.fdata = this.fdata.data.Trip;
+            if (this.fdata == null) {
+              this.provider.setfdata("");
+              this.provider.dismissloading();
+              this.navCtrl.push('FilterflightattendantPage', { 'id': this.id, 'tripid': this.resdata.data.Trip.pkTripId, 'aircraftname': this.aircrafttype, 'captain': this.captain, 'scommand': this.scommand, 'fins': this.fins, 'isprofile': this.iprofileyes, 'isgender': this.igenderyes });
+            }
+
+            else {
+              this.fdata = this.fdata[0];
+              this.provider.setfdata(this.fdata);
+              this.provider.dismissloading();
+              this.navCtrl.push('FilterflightattendantPage', { 'id': this.id, 'tripid': this.resdata.data.Trip.pkTripId, 'aircraftname': this.aircrafttype, 'captain': this.captain, 'scommand': this.scommand, 'fins': this.fins, 'isprofile': this.iprofileyes, 'isgender': this.igenderyes });
+
+
+            }
+
+          },
+            err => this.provider.dismissloading());
         }
+        // if not reschedule
         else {
           this.provider.dismissloading();
           this.navCtrl.push('FilterflightattendantPage', { 'id': this.id, 'tripid': this.resdata.data.Trip.pkTripId, 'aircraftname': this.aircrafttype, 'captain': this.captain, 'scommand': this.scommand, 'fins': this.fins, 'isprofile': this.iprofileyes, 'isgender': this.igenderyes });
@@ -312,6 +385,7 @@ export class CreatetripPage {
       }
 
       else if (this.fins == true) {
+        // if reschedule trip then get data 
         if (this.gdata) {
           this.provider.getitrip(this.gdata.pkTripId, this.id).subscribe(res => {
             console.log(res);
@@ -322,19 +396,20 @@ export class CreatetripPage {
               this.provider.dismissloading();
               this.navCtrl.push('FilterflightinstructorPage', { 'id': this.id, 'tripid': this.resdata.data.Trip.pkTripId, 'aircraftname': this.aircrafttype, 'isprofile': this.iprofileyes, 'isgender': this.igenderyes });
             }
-            // console.log(tid);
+
             else {
               this.idata = this.idata[0];
               this.provider.setidata(this.idata);
               this.provider.dismissloading();
               this.navCtrl.push('FilterflightinstructorPage', { 'id': this.id, 'tripid': this.resdata.data.Trip.pkTripId, 'aircraftname': this.aircrafttype, 'isprofile': this.iprofileyes, 'isgender': this.igenderyes });
-              //this.app.getRootNav().push("SelectprofilePage");
+
 
             }
-            //this.provider.dismissloading();
+
           },
             err => this.provider.dismissloading());
         }
+        // if not reschedule
         else {
           this.provider.dismissloading();
           this.navCtrl.push('FilterflightinstructorPage', { 'id': this.id, 'tripid': this.resdata.data.Trip.pkTripId, 'aircraftname': this.aircrafttype, 'isprofile': this.iprofileyes, 'isgender': this.igenderyes });

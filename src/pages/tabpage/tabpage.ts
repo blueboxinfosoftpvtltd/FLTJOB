@@ -79,33 +79,119 @@ export class TabpagePage {
     createtripcomplete: any;
     istabpage: any;
     oppositeid: any;
-    // startDate: any = new Date("2017-10-01");
-    // endDate: any = new Date("2017-10-07");
-    //,public backgroundGeolocation: BackgroundGeolocation
-    //public camera: Camera,
+    utype: any;
+    pencount: any = "";
+    mcount: any = "";
     constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events, public provider: AuthproviderProvider, public app: App, public alertCtrl: AlertController, public storage: Storage, public actionSheetCtrl: ActionSheetController, public platform: Platform, public toastCtrl: ToastController, public file: File, public filePath: FilePath, public googlePlus: GooglePlus, public firebase: Firebase, public socket: Socket, public geolocation: Geolocation, public modalCtrl: ModalController) {
-        // const config: BackgroundGeolocationConfig = {
-        //     desiredAccuracy: 10,
-        //     stationaryRadius: 20,
-        //     distanceFilter: 30,
-        //     debug: true, //  enable this hear sounds for background-geolocation life-cycle.
-        //     stopOnTerminate: false, // enable this to clear background location settings when the app terminates
-        // };
 
-        storage.get('introslidelogin1').then(val => {
-            this.intro = val;
-            if (this.intro == null || this.intro == undefined || this.intro == "") {
-                this.storage.set("introslidelogin1", true);
-                let profileModal = this.modalCtrl.create("IntroductionPage", { slidename: "login1" });
-                profileModal.present();
-            }
-            else {
-
+        // get conn tab count badge
+        this.events.subscribe('pencount', val => {
+            this.pencount = val;
+            if (this.pencount == 0) {
+                this.pencount = "";
             }
         })
 
+        // get msg tab count badge
+        this.events.subscribe('mcount', val => {
+            this.mcount = val;
+            if (this.mcount == 0) {
+                this.mcount = "";
+            }
+        })
+
+        // get user type to display slides screen as per user type
+        this.storage.get('usertype').then(usertype => {
+
+            storage.get('introslidelogin1').then(val => {
+                this.intro = val;
+                if (usertype == 'Owner Operator') {
+                    if (this.intro == null || this.intro == undefined || this.intro == "") {
+                        console.log("operator slide call");
+                        this.storage.set("introslidelogin1", true);
+                        let profileModal = this.modalCtrl.create("IntroductionPage", { slidename: "login1", user: usertype });
+                        profileModal.present();
+                    }
+                }
+                else if (usertype == 'Pilot') {
+                    setTimeout(() => {
+                        storage.get('introslidelogin5').then(val => {
+                            if (val == null || val == undefined || val == "") {
+                                console.log("login 5 slides call");
+                                let profileModal = this.modalCtrl.create("IntroductionPage", { slidename: "login1", user: usertype });
+                                profileModal.present();
+                                this.storage.set('introslidelogin5', true);
+
+
+                            }
+
+                        })
+                    }, 5000);
+
+                }
+
+                else if (usertype == 'Flight Attendant') {
+                    setTimeout(() => {
+                        storage.get('introslidelogin6').then(val => {
+                            if (val == null || val == undefined || val == "") {
+                                console.log("login 5 slides call");
+                                let profileModal = this.modalCtrl.create("IntroductionPage", { slidename: "login1", user: usertype });
+                                profileModal.present();
+                                this.storage.set('introslidelogin6', true);
+
+
+                            }
+
+                        })
+                    }, 5000);
+
+                }
+                else if (usertype == 'Instructor') {
+                    setTimeout(() => {
+                        storage.get('introslidelogin7').then(val => {
+                            if (val == null || val == undefined || val == "") {
+                                console.log("login 5 slides call");
+                                let profileModal = this.modalCtrl.create("IntroductionPage", { slidename: "login1", user: usertype });
+                                profileModal.present();
+                                this.storage.set('introslidelogin7', true);
+
+
+                            }
+
+                        })
+                    }, 5000);
+
+                }
+
+                else if (usertype == 'Second In Command') {
+                    setTimeout(() => {
+                        storage.get('introslidelogin8').then(val => {
+                            if (val == null || val == undefined || val == "") {
+                                console.log("login 5 slides call");
+                                let profileModal = this.modalCtrl.create("IntroductionPage", { slidename: "login1", user: usertype });
+                                profileModal.present();
+                                this.storage.set('introslidelogin8', true);
+
+
+                            }
+
+                        })
+                    }, 5000);
+
+                }
+
+
+
+
+            })
+            this.utype = usertype;
+            console.log(this.utype);
+
+        })
         platform.ready().then(() => {
             //LocalNotifications.requestPermissions();
+
+            //get search data to perform search operation
             this.events.subscribe('refreshsearchdata', val => {
                 this.searchres = val;
                 this.searchdataarray = this.searchres.data.Pilots;
@@ -113,59 +199,8 @@ export class TabpagePage {
                 this.tempdataarray = this.searchdataarray;
             })
 
-            // let notifications = {
-            //     id: 1,
-            //     text: "data.body",
-            //     sound: 'default',
-            //     foreground: true,
-            //     data: "data"
-            // }
-            // this.localNotifications.schedule(notifications);
-            // this.localNotifications.schedule({
-            //     id: 1,
-            //     text: "JSON.stringify(data)",
-            //     sound: 'default',
-            //     data: { secret: "key" }
-            //   });
 
-            // if (platform.is('ios') || platform.is('android')) {
-
-            //     //Subscribe on pause
-            //     this.platform.pause.subscribe(() => {
-            //         //Hello pause
-            //         this.backgroundGeolocation.stop();
-            //     });
-
-            //     //Subscribe on resume
-            //     this.platform.resume.subscribe(() => {
-            //         this.backgroundGeolocation.start();
-            //     });
-            // }
-            // this.backgroundGeolocation.getCurrentLocation()
-            //     .then((location: BackgroundGeolocationResponse) => {
-            //         console.log(location);
-            //         var lat = location.latitude;
-            //         var long = location.longitude;
-            //         var latlong = lat + "," + long;
-            //         this.provider.updatePosition(this.id, latlong).subscribe(res => {
-
-            //         })
-
-            //         this.backgroundGeolocation.finish();
-
-            //     });
-            //         PushNotifications.addListener('pushNotificationReceived', 
-            //   (notification: PushNotification) => {
-            //     alert('Push received: ' + JSON.stringify(notification));
-            //   }
-            // );
-
-            // PushNotifications.addListener('pushNotificationActionPerformed', 
-            //   (notification: PushNotificationActionPerformed) => {
-            //     alert('Push action performed: ' + JSON.stringify(notification));
-            //   }
-            // );
-
+            // get current position
             this.geolocation.getCurrentPosition()
                 .then((data: any) => {
                     //this.isLocationEnabled 	= true;
@@ -185,15 +220,14 @@ export class TabpagePage {
 
             this.istabpage = navParams.get('istab');
             if (this.istabpage == undefined) {
+
+                // get availabilitydata
                 this.events.subscribe('available', val => {
+                    // location.reload();
                     this.availabilitydata = val;
 
                 })
-                // this.events.subscribe('tabpage', val => {
-                //     this.istabpage = val;
-                //     console.log(this.istabpage);
-                //     this.userfullname = this.provider.getusername();
-                //     if (this.istabpage == undefined) {
+
                 this.storage.get('usertype').then(res => {
                     console.log(res);
                     if (res == "Owner Operator") {
@@ -205,6 +239,8 @@ export class TabpagePage {
 
                 })
 
+
+                // get google login data
                 this.events.subscribe('userdata', val => {
                     console.log('google login data', val);
                     this.userdata = val;
@@ -216,16 +252,14 @@ export class TabpagePage {
                     this.userfullname = this.userdata.data.Pilot.PilotFname;
                     this.provider.setusername(this.userfullname);
                 })
+
+                // if availability upadte then get availability data
                 this.events.subscribe('updatedavailability', res => {
                     this.availabilitydata = res;
                 })
 
-                // this.getDateArray(this.startDate, this.endDate);
-                // this.storage.get('userfullname').then(res => {
-                //     console.log(res);
-                //     this.userfullname = res;
-                // })
 
+                // get id of login user to perform search operation
                 this.storage.get('id').then(val => {
                     this.id = val;
                     this.userdata = this.navParams.get("data");
@@ -244,18 +278,13 @@ export class TabpagePage {
                         this.searchdataarray = this.searchres.data.Pilots;
                         console.log(this.searchdataarray);
                         this.tempdataarray = this.searchdataarray;
-                        // if (this.userdata == undefined) {
-                        //     this.storage.get('userdata').then(val => {
-                        //         console.log(val);
-                        //         this.userdata = val;
-                        //         this.userprofilepic = this.userdata.data.Pilot.PhotoPath;
-                        //         this.events.publish('userdata', this.userdata, this.masterdata);
-                        //     })
-                        // }
+
                     })
 
 
                 })
+
+                // set focus on search box to perform search
 
                 this.events.subscribe('setfocus', val => {
                     console.log(val);
@@ -269,8 +298,6 @@ export class TabpagePage {
                     this.tabIndex = tabIndex;
                 }
 
-                //     }
-                // })
 
             }
             else if (this.istabpage == 'google') {
@@ -317,14 +344,7 @@ export class TabpagePage {
                     this.searchdataarray = this.searchres.data.Pilots;
                     console.log(this.searchdataarray);
                     this.tempdataarray = this.searchdataarray;
-                    // if (this.userdata == undefined) {
-                    //     this.storage.get('userdata').then(val => {
-                    //         console.log(val);
-                    //         this.userdata = val;
-                    //         this.userprofilepic = this.userdata.data.Pilot.PhotoPath;
-                    //         this.events.publish('userdata', this.userdata, this.masterdata);
-                    //     })
-                    // }
+
                 })
             }
             else if (this.istabpage == false) {
@@ -359,115 +379,12 @@ export class TabpagePage {
                     this.searchdataarray = this.searchres.data.Pilots;
                     console.log(this.searchdataarray);
                     this.tempdataarray = this.searchdataarray;
-                    // if (this.userdata == undefined) {
-                    //     this.storage.get('userdata').then(val => {
-                    //         console.log(val);
-                    //         this.userdata = val;
-                    //         this.userprofilepic = this.userdata.data.Pilot.PhotoPath;
-                    //         this.events.publish('userdata', this.userdata, this.masterdata);
-                    //     })
-                    // }
+
                 })
 
             }
-            //this.navCtrl.push('ChatpagePage', { 'oppositeid': '1' });
 
-            // this.localNotifications.on('click').subscribe(notification => {
-            //      let alert = this.alertCtrl.create({
-            //             title:'Pilot',
-            //             message : JSON.stringify(notification)
-            //           });
-            //           alert.present(); 
-            //   });
-
-
-            //       this.firebase.onNotificationOpen().subscribe(data =>{
-            //         console.log(JSON.stringify(data));
-            //         if (data.tap && data.t !== undefined) {
-            //             console.log("Received in background");
-            //             console.log('id of user', data.id);
-            //             if (data.t == '1') {
-            //                 this.socket.connect();
-            //                 this.provider.setoppositeid(data.id);
-            //                 this.socket.emit('set-nickname', 'pilot');
-            //                 this.navCtrl.push('ChatpagePage', { 'oppositeid': data.id });
-            //             }
-            //             else if (data.t == '2') {
-            //                 this.navCtrl.push('RequestpagePage', { 'oppositeid': data.id, 'reqid': data.req });
-            //             }
-            //             else if (data.t == '3') {
-            //                 this.navCtrl.push('RequestpagePage', { 'oppositeid': data.id, 'reqid': data.req });
-            //             }
-            //             else if (data.t == '4') {
-            //                 this.navCtrl.push('RequestpagePage', { 'oppositeid': data.id, 'reqid': data.req });
-            //             }
-            //             else if (data.t = '5') {
-            //                 this.navCtrl.push('OpenpendingnotificationPage', { 'tripid': data.id });
-            //             }
-            //             else if (data.t = '8') {
-            //                 this.navCtrl.push('OpenpendingnotificationPage', { 'tripid': data.id });
-            //             }
-            //         } else {
-            //             console.log("Received in foreground");
-            //             console.log(JSON.stringify(data));
-            //             this.oppositeid = this.provider.getoppositeid();
-            //             if(data.t == '1'){
-            //             if(this.oppositeid != data.id ){
-            //                 this.formnotification(data);
-            //             }
-            //             else{
-            //                     console.log('opposite id same');
-
-            //             }
-            //         }
-            //         else{
-            //             this.formnotification(data);
-            //         }
-
-
-
-            //         };
-            //     });
-
-            //  let observable = this.localNotifications.on('click').subscribe(notification => {
-            //         console.log('loc data');
-            //         console.log(notification);
-            //         if(notification.data.t !== undefined){
-            //         if (notification.data.t == '1') {
-            //             this.socket.connect();
-            //             this.provider.setoppositeid(notification.data.id);
-            //             this.socket.emit('set-nickname', 'pilot');
-            //             this.navCtrl.push('ChatpagePage', { 'oppositeid': notification.data.id });
-            //             //observable.unsubscribe();
-            //         }
-            //         else if (notification.data.t == '2') {
-            //             this.navCtrl.push('RequestpagePage', { 'oppositeid': notification.data.id, 'reqid': notification.data.req });
-            //             //observable.unsubscribe();
-            //         }
-            //         else if (notification.data.t == '3') {
-            //             this.navCtrl.push('RequestpagePage', { 'oppositeid': notification.data.id, 'reqid': notification.data.req });
-            //             //observable.unsubscribe();
-            //         }
-            //         else if (notification.data.t == '4') {
-            //             this.navCtrl.push('RequestpagePage', { 'oppositeid': notification.data.id, 'reqid': notification.data.req });
-            //             //observable.unsubscribe();
-            //         }
-            //         else if (notification.data.t = '5') {
-            //             this.navCtrl.push('OpenpendingnotificationPage', { 'tripid': notification.data.id });
-            //             //observable.unsubscribe();
-            //         }
-            //         else if (notification.data.t = '8') {
-            //             this.navCtrl.push('OpenpendingnotificationPage', { 'tripid': notification.data.id });
-            //             //observable.unsubscribe();
-            //         }
-            //     }
-            //     else{
-            //         //alert('no page open');
-            //     }
-            //       });
-            // LocalNotifications.addListener('localNotificationReceived',(notification)=>{
-            //     console.log(notification);
-            // })
+            // local notification action perform
 
             LocalNotifications.addListener('localNotificationActionPerformed', (notification) => {
                 console.log(notification);
@@ -504,42 +421,9 @@ export class TabpagePage {
                     //alert('no page open');
                 }
             })
-            // this.localNotifications.on('click').subscribe(notification => {
-            //     console.log('loc data');
-            //     console.log(notification);
-            //     if(notification.data.t !== undefined){
-            //     if (notification.data.t == '1') {
-            //         this.socket.connect();
-            //         this.provider.setoppositeid(notification.data.id);
-            //         this.socket.emit('set-nickname', 'pilot');
-            //         this.navCtrl.push('ChatpagePage', { 'oppositeid': notification.data.id });
-            //         //observable.unsubscribe();
-            //     }
-            //     else if (notification.data.t == '2') {
-            //         this.navCtrl.push('RequestpagePage', { 'oppositeid': notification.data.id, 'reqid': notification.data.req });
-            //         //observable.unsubscribe();
-            //     }
-            //     else if (notification.data.t == '3') {
-            //         this.navCtrl.push('RequestpagePage', { 'oppositeid': notification.data.id, 'reqid': notification.data.req });
-            //         //observable.unsubscribe();
-            //     }
-            //     else if (notification.data.t == '4') {
-            //         this.navCtrl.push('RequestpagePage', { 'oppositeid': notification.data.id, 'reqid': notification.data.req });
-            //         //observable.unsubscribe();
-            //     }
-            //     else if (notification.data.t = '5') {
-            //         this.navCtrl.push('OpenpendingnotificationPage', { 'tripid': notification.data.id });
-            //         //observable.unsubscribe();
-            //     }
-            //     else if (notification.data.t = '8') {
-            //         this.navCtrl.push('OpenpendingnotificationPage', { 'tripid': notification.data.id });
-            //         //observable.unsubscribe();
-            //     }
-            // }
-            // else{
-            //     //alert('no page open');
-            // }
-            //   });
+
+
+            // decide when to send push notification or local notification for chat
 
             PushNotifications.addListener('pushNotificationReceived',
                 (notification: PushNotification) => {
@@ -562,6 +446,7 @@ export class TabpagePage {
             );
 
             // Method called when tapping on a notification
+
             PushNotifications.addListener('pushNotificationActionPerformed',
                 (notification: PushNotificationActionPerformed) => {
                     // this.formnotification(notification);
@@ -590,26 +475,15 @@ export class TabpagePage {
                         else if (notification.notification.data.t = '8') {
                             this.navCtrl.push('OpenpendingnotificationPage', { 'tripid': notification.notification.data.id });
                         }
-                        // } else {
-                        //     console.log("Received in foreground");
-                        //     console.log(JSON.stringify(notification.data));
-                        //     this.oppositeid = this.provider.getoppositeid();
-                        //     if(notification.data.t == '1'){
-                        //     if(this.oppositeid != notification.data.id ){
-                        //         this.formnotification(notification.data);
-                        //     }
-                        //     else{
-                        //             console.log('opposite id same');
 
-                        //     }
-                        //     }
-                        // }
                     }
 
                 }
             );
         })
     }
+
+    // method for click on profile tab
 
     profileclick() {
 
@@ -635,31 +509,34 @@ export class TabpagePage {
         }
 
     }
+
+    // method for click on home tab
     homeclick() {
 
         console.log('click home');
         this.events.publish('member', this.masterdata);
     }
+
+    // method for clik on search box
     searchclick() {
         this.events.publish('searchdata', this.searchdata);
     }
-    pendingclick() {
 
-    }
-
-    notificationclick() {
-
-    }
-    messageclick() {
-
-    }
     ionViewDidLoad() {
         console.log('ionViewDidLoad TabpagePage');
     }
+
+    // open mutiuser login/logout modal
     logout() {
-        this.showAlert();
+        let modaloption = {
+            cssClass: "modal-fullscreen"
+        }
+        let usermodal = this.modalCtrl.create("UsermodalPage", {}, modaloption);
+        usermodal.present();
+        // this.showAlert();
     }
 
+    // method is used when click on manage availability
     availablity() {
         if (this.isOwner == false) {
             this.navCtrl.push('GetavailablepilotPage');
@@ -671,54 +548,12 @@ export class TabpagePage {
         }
     }
 
+    // method for click on prfile page
     profile() {
-        //this.app.getRootNav().getActiveChildNav().select(1);
         this.navCtrl.push('FavuserPage');
     }
 
-    showAlert() {
-        const prompt = this.alertCtrl.create({
-            title: this.userfullname,
-            message: "Are you sure you want to logout ?",
-            buttons: [
-                {
-                    text: 'Yes',
-                    handler: data => {
-                        this.storage.get('isgooglelogin').then(val => {
-                            this.isgooglelogin = val;
-                            if (this.isgooglelogin == true) {
-                                // this.app.getRootNav().getActiveChildNav().select(0);
-                                //      this.navCtrl.push('LoginPage', { animate: false }).then(() => {
-                                //  })
-                                this.googlePlus.logout().then(() => {
-                                    this.storage.set('isgooglelogin', false);
-                                    console.log('google logout');
-                                    this.app.getRootNav().getActiveChildNav().select(0);
-                                    this.navCtrl.push('LoginPage', { animate: false }).then(() => {
-                                    })
-                                })
-                            }
-                            else {
-                                this.app.getRootNav().getActiveChildNav().select(0);
-                                this.navCtrl.push('LoginPage', { animate: false }).then(() => {
-                                    this.storage.set('logout', true);
-                                });
-                            }
-                        })
-
-
-                    }
-                },
-                {
-                    text: 'No',
-                    handler: data => {
-                        console.log('No clicked');
-                    }
-                }
-            ]
-        });
-        prompt.present();
-    }
+    // when user focus lost from search box
 
     onfocuslost() {
         this.myInput = "";
@@ -727,6 +562,7 @@ export class TabpagePage {
         this.app.getRootNav().getActiveChildNav().select(5);
     }
 
+    // when user focus to search box and start typing
     onInput() {
         this.searchdataarray = this.tempdataarray;
         console.log(this.myInput);
@@ -741,16 +577,15 @@ export class TabpagePage {
         }
     }
 
+    // method is used when user click on profile pic
+
     async presentActionSheet() {
         const image = await Camera.getPhoto({
             quality: 50,
             allowEditing: true,
             resultType: CameraResultType.DataUrl
         });
-        // image.webPath will contain a path that can be set as an image src. 
-        // You can access the original file using image.path, which can be 
-        // passed to the Filesystem API to read the raw data of the image, 
-        // if desired (or pass resultType: CameraResultType.Base64 to getPhoto)
+
         console.log(image);
         var imageUrl = image.dataUrl;
         console.log(imageUrl);
@@ -763,33 +598,11 @@ export class TabpagePage {
             this.storage.set("userprofilepic", this.userprofilepic);
             this.provider.dismissloading();
         })
-        // let actionSheet = this.actionSheetCtrl.create({
-        //     buttons: [
-        //         {
-        //             text: 'Gallery',
-        //             handler: () => {
-        //                 this.takePicture(1);
-        //                 //this.takePicture(this.Cam.PictureSourceType.PHOTOLIBRARY);
-        //             }
-        //         },
-        //         {
-        //             text: 'Camera',
-        //             handler: () => {
-        //                 this.takePicture(2);
-        //                 //this.takePicture(this.camera.PictureSourceType.CAMERA);
-        //             }
-        //         },
-        //         {
-        //             text: 'Cancel',
-        //             role: 'cancel'
-        //         }
-        //     ]
-        // });
-        // actionSheet.present();
+
     }
 
     async takePicture(sourceType) {
-        // Create options for the Camera Dialog
+
 
         if (sourceType == 1) {
 
@@ -820,60 +633,14 @@ export class TabpagePage {
             // Can be set to the src of an image now
         }
 
-        // var options = {
-        //     quality: 50,
-        //     sourceType: sourceType,
-        //     saveToPhotoAlbum: false,
-        //     correctOrientation: true
-        // };
 
-        // // Get the data of an image
-        // this.camera.getPicture(options).then((imagePath) => {
-        //     // Special handling for Android library
-        //     if (this.platform.is('android') && sourceType === this.camera.PictureSourceType.PHOTOLIBRARY) {
-        //         this.filePath.resolveNativePath(imagePath)
-        //             .then(filePath => {
-        //                 let correctPath = filePath.substr(0, filePath.lastIndexOf('/') + 1);
-        //                 let currentName = imagePath.substring(imagePath.lastIndexOf('/') + 1, imagePath.lastIndexOf('?'));
-        //             });
-        //     } else {
-        //         var currentName = imagePath.substr(imagePath.lastIndexOf('/') + 1);
-        //         var correctPath = imagePath.substr(0, imagePath.lastIndexOf('/') + 1);
-        //         this.file.readAsDataURL(correctPath, currentName)
-        //             .then(base64File => {
-        //                 let string = base64File.split(',');
-        //                 let img = string[1];
-        //                 this.provider.setloading();
-        //                 this.provider.uploadUserProfilePic(this.id, img).subscribe(res => {
-        //                     this.newuserprofilepic = res;
-        //                     this.userprofilepic = this.newuserprofilepic.data.Pilot.PhotoPath;
-        //                     this.storage.set("userprofilepic", this.userprofilepic);
-        //                     this.provider.dismissloading();
-        //                 })
-        //             })
-        //             .catch(() => {
-        //                 this.provider.dismissloading();
-        //             })
-        //     }
-        // }, (err) => {
-        //     this.presentToast('Error while selecting image.');
-        // });
-    }
-    private presentToast(text) {
-        let toast = this.toastCtrl.create({
-            message: text,
-            duration: 3000,
-            position: 'top'
-        });
-        toast.present();
     }
 
 
+
+    // create local notification
     formnotification(data) {
-        //console.log('function call...');
-        //console.log("data",data);
-        //console.log("body",data.body);
-        //console.log("id",data.gcm.message_id);
+
         LocalNotifications.schedule({
             notifications: [
                 {
@@ -888,29 +655,11 @@ export class TabpagePage {
                 }
             ]
         });
-        // LocalNotifications.schedule({
-        //     notifications: [
-        //       {
-        //         title: "Fltjob",
-        //         body: "Body",
-        //         id: 1,
-        //         schedule: { at: new Date(Date.now() + 1000 * 5) },
-        //         sound: 'default',
-        //         attachments: null,
-        //         actionTypeId: "",
-        //         extra: null
-        //       }
-        //     ]
-        //   });
-        // let notification = {
-        //     id: data.id,
-        //     text: data.body,
-        //     sound: 'default',
-        //     foreground: true,
-        //     data: data
-        // }
-        // this.localNotifications.schedule(notification);
+
     }
+
+
+    // get current lat and long
 
     geocodeLatLng(geocoder, latlng) {
         var latlngStr = latlng.split(',', 2);
@@ -920,14 +669,11 @@ export class TabpagePage {
             console.log("Geolocation" + status)
 
             if (status === 'OK') {
-                //    console.log("results"+JSON.stringify(results));
-                //    var a= JSON.stringify(results);
-                //    console.log(JSON.parse(a))
+
                 console.log(results);
                 var countryname = results[6].formatted_address.toString();
                 console.log(countryname);
-                // if(countryname == undefined){
-                // this.storage.set("country", countryname);
+
                 localStorage.setItem("country", countryname);
                 // }
             } else {

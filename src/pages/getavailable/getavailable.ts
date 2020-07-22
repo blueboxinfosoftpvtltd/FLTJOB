@@ -43,28 +43,14 @@ export class GetavailablePage {
   pastdates: any;
   featuredates: any;
   userdate: any;
-  // var startDate = new Date("2017-10-01"); //YYYY-MM-DD
-  // var endDate = new Date("2017-10-07"); //YYYY-MM-DD
-  // from: '2018-03-1', to: '2019-03-25' };
 
-  // optionsRange: CalendarComponentOptions = {
-  //   from: new Date(1),
-  //   pickMode: 'range',
-
-  // };
-  // optionsRange: CalendarComponentOptions = {
-  //   from: new Date(1),
-  //   pickMode: 'range',
-  //   daysConfig: [{
-  //     date: new Date(2019, 3, 24),
-  //     disable: true
-  //   },]
-  // };
   optionsRange: CalendarComponentOptions;
   calendaroption: CalendarModalOptions;
   constructor(public navCtrl: NavController, public navParams: NavParams, public provider: AuthproviderProvider, public storage: Storage, public events: Events, public alertCtrl: AlertController) {
     this.currentdate = new Date().toISOString();
     this.currentdate = moment(this.currentdate).format('YYYY-MM-DD');
+
+    // get dates from availability page to mark as selected
     this.events.subscribe('datearr', res => {
       if (res != undefined) {
         this.datearray = res;
@@ -94,6 +80,8 @@ export class GetavailablePage {
     this.fromdate = this.navParams.get('fromdate');
     this.todate = this.navParams.get('todate');
     console.log(this.isaddavailability);
+
+    // when availability is not available
     if (this.isaddavailability == undefined) {
       this.optionsRange = {
         pickMode: 'multi',
@@ -105,6 +93,8 @@ export class GetavailablePage {
         },]
       };
     }
+
+    // when availability dates is available
     else if (this.isaddavailability == true) {
       this.splitdate = this.currentdate.split('-');
       console.log(this.splitdate);
@@ -122,14 +112,10 @@ export class GetavailablePage {
         // to: null,
         daysConfig: this._daysConfig
       }
-      // this.optionsRange = {
-      //   from: new Date(2018, 0, 1),
-      //   to: null,
-      //   pickMode: 'multi',
-      //   defaultDates : 
-      // };
+
     }
 
+    // get login id to get available dates
     this.storage.get('id').then(val => {
       this.id = val;
       this.provider.getallavailable(this.id).subscribe(res => {
@@ -146,6 +132,7 @@ export class GetavailablePage {
     console.log(event);
   }
 
+  // after view init set dates in calender
   ngAfterViewInit() {
     this._daysConfig.push({
       disable: false,
@@ -157,6 +144,8 @@ export class GetavailablePage {
     $(".back,.today").prop("disabled", false);
     console.log('ionViewDidLoad GetavailablePage');
   }
+
+  // display alert dialog
   showAlert(title, msg) {
     const alert = this.alertCtrl.create({
       title: title,
@@ -166,21 +155,20 @@ export class GetavailablePage {
     alert.present();
   }
 
+  // this method is called after date selected
   onChange($event) {
     var finaldate;
     var temp = this.res;
     console.log(this.res);
     this.userdate = $event;
     console.log('selected date', this.userdate);
-    // finaldate = $event[length - 1];
-    // console.log(finaldate);
-    // finaldate = moment(finaldate).format('MM/DD/YYYY');
+
     if (this.res != undefined) {
       finaldate = this.res.filter(function (v) {
         return !$event.includes(v);
       });
       finaldate = finaldate.join();
-      //finaldate = moment(finaldate).format('MM/DD/YYYY');
+
       console.log(this.res);
       console.log(finaldate.length);
       if (finaldate.length === 0) {
@@ -188,12 +176,12 @@ export class GetavailablePage {
           return !temp.includes(v);
         });
         finaldate = finaldate.join();
-        //finaldate = moment(finaldate).format('MM/DD/YYYY');
+
       }
       if (finaldate.length === 0) {
         finaldate = this.res[0];
         finaldate = finaldate.join();
-        //finaldate = moment(finaldate).format('MM/DD/YYYY');
+
       }
     }
     else {
@@ -201,25 +189,14 @@ export class GetavailablePage {
       finaldate = moment(this.userdate).format('MM/DD/YYYY');
     }
 
-    // console.log(
-    //   this.res.filter(function(v) {
-    //     return !$event.includes(v);
-    //   })
-    // )
-
-    //   console.log($event);
-    //   length = $event.length;
-    //   finaldate = $event[length - 1];
-    //   console.log(finaldate);
-    //   finaldate = moment(finaldate).format('MM/DD/YYYY');
-
-    // console.log(finaldate);
+    // method is called when fromdate true
     if (this.fromdate == true) {
       this.navCtrl.pop().then(() => {
         this.events.publish('fromdate', finaldate);
       })
 
     }
+    // call when todate is true
     else if (this.todate == true) {
       this.navCtrl.pop().then(() => {
         this.events.publish('todate', finaldate);

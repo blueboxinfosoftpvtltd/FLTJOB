@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Events, AlertController, Alert } from 'ionic-angular';
-import { WheelSelector } from '@ionic-native/wheel-selector';
+import { WheelSelector } from '@ionic-native/wheel-selector/ngx';
 import { AuthproviderProvider } from '../../providers/authprovider/authprovider';
 import { Storage } from '@ionic/storage';
 import * as moment from 'moment';

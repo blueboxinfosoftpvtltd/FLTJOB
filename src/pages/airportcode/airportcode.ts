@@ -39,36 +39,20 @@ export class AirportcodePage {
   newarray: any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public provider: AuthproviderProvider, public events: Events) {
 
+    // get airport data
     this.airportcodes = this.navParams.get('codedata');
     this.totalcount = this.airportcodes.TotalCount;
     this.airportcodes = this.airportcodes.data.AirportCode;
     console.log(this.airportcodes);
-    // this.enrouteairportcodelist3 = localStorage.getItem("enrouteairportcodelist");
-    // // console.log(this.enrouteairportcodelist3);
-    // if (this.enrouteairportcodelist3 != null) {
-    //   this.enrouteairportcodelist2 = JSON.parse(this.enrouteairportcodelist3);
-    //   localStorage.setItem("enrouteairportcodelist1", JSON.stringify(this.enrouteairportcodelist2));
-    // }
-
     this.count = this.navParams.get('count');
     this.category = this.navParams.get('category');
-
-    // if (this.enrouteairportcodelist2 == null) {
-    //   this.enrouteairportcodelist2 = [];
-    // }
-
-    // // this.airportcodes1 = this.airportcodes.data.AirportCode;
-    // this.airportcodes = this.enrouteairportcodelist2.concat(this.airportcodes.data.AirportCode);
-    // var uniq = {}
-    // this.airportcodes = this.airportcodes.filter(obj => !uniq[obj.pkAirportcodeId] && (uniq[obj.pkAirportcodeId] = true));
-    // //this.airportcodes = this.airportcodes.data;
-
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AirportcodePage');
   }
 
+  // method to call when infinite sroll active
   doInfinite(infiniteScroll) {
     this.i = this.count;
     this.count = parseInt(this.count) + 500;
@@ -94,8 +78,9 @@ export class AirportcodePage {
   }
 
   ionViewDidEnter() {
-    this.navBar.backButtonClick = () => {
 
+    // back button functionality
+    this.navBar.backButtonClick = () => {
       if (this.airportcodes !== undefined) {
         for (let i = 0; i < this.airportcodes.length; i++) {
           if (this.airportcodes[i].checked == true) {
@@ -117,48 +102,13 @@ export class AirportcodePage {
 
   }
 
+  // checkbox check method
   checkboxselect(data, event) {
-
-    // if (event.checked == true) {
-    //       this.enrouteairportcodelist.push(data);
-    //     }
-    //     else {
-    //       this.enrouteairportcodelist.splice(data);
-    //     }
-    //     console.log(this.enrouteairportcodelist);
-    // this.enrouteairportcodelist = <Array<any>>(<Object>this.airportcodes);
-    // console.log(data)
-    // this.enrouteairport.push(data);
-    // // console.log(this.enrouteairportcodelist);
-    // console.log(this.enrouteairport);
-
-
-
-    //   this.enrouteairportcodelist3 = localStorage.getItem("enrouteairportcodelist1");
-
-    //   if(this.enrouteairportcodelist3 != null){
-    //     this.enrouteairportcodelist2  = JSON.parse(this.enrouteairportcodelist3);
-    //     this.enrouteairport = this.enrouteairport.concat(this.enrouteairportcodelist2);
-    //   }
-    //  console.log(this.enrouteairport);
-
-
-    //   localStorage.removeItem("enrouteairportcodelist1");
-    //   var uniq = {};
-    //   this.enrouteairport =  this.enrouteairport.filter(obj => !uniq[obj.pkAirportcodeId] && obj.checked == true);
-    //   console.log(this.enrouteairport);
-
     console.log(this.enrouteairport);
-
-    // this.enrouteairportcodelist3 = localStorage.getItem("enrouteairportcodelist");
-    // this.enrouteairportcodelist2  = JSON.parse(this.enrouteairportcodelist3);
     localStorage.setItem("enrouteairportcodelist", JSON.stringify(this.enrouteairport));
-
-
-
-
   }
 
+  // when single airport code select
   listselect(code, id) {
     if (this.category == 'departure') {
       this.events.publish('departureairportcode', code);
@@ -174,6 +124,7 @@ export class AirportcodePage {
 
   }
 
+  // when type in search box
   getItems(event) {
     if (this.searchcode.toString().length >= 2) {
       this.searchdata = true;

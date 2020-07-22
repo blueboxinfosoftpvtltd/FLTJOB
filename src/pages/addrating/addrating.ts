@@ -54,9 +54,9 @@ export class AddratingPage {
   cdate: any;
   certiid: any;
   btnname: any;
-  mstrainingyes : any;
-  mstrainingno : any;
-  simulatortraining:any;
+  mstrainingyes: any;
+  mstrainingno: any;
+  simulatortraining: any;
   constructor(public navCtrl: NavController, public navParams: NavParams, private selector: WheelSelector, public events: Events, public provider: AuthproviderProvider, public storage: Storage, public alertCtrl: AlertController) {
     this.certificate = this.dummyJson.certificate[0].description;
     this.category = this.dummyJson.category[0].description;
@@ -80,6 +80,7 @@ export class AddratingPage {
     this.aircraftdata = this.navParams.get('aircraftdata');
     this.editdata = this.navParams.get('editdata');
     console.log(this.aircraftdata);
+    // set data when edit mode is true
     if (this.editdata != undefined) {
       this.certiid = this.editdata.pkRatingCertiId;
       this.certificate = this.editdata.RatingCertification;
@@ -91,11 +92,11 @@ export class AddratingPage {
       this.minrate = this.editdata.MinimumRate;
       this.classid = this.editdata.fkClassId;
       this.editcurrentintype = this.editdata.CurrentInType;
-      if(this.editdata.IsReqPrev12MonthTraining == true){
+      if (this.editdata.IsReqPrev12MonthTraining == true) {
         this.mstrainingyes = true;
         this.mstrainingno = false;
       }
-     else if(this.editdata.IsReqPrev12MonthTraining == false){
+      else if (this.editdata.IsReqPrev12MonthTraining == false) {
         this.mstrainingyes = false;
         this.mstrainingno = true;
       }
@@ -107,8 +108,12 @@ export class AddratingPage {
         if (this.editcurrentintype == 'SIC') {
           this.sic = true;
         }
-        else {
+        else if (this.editcurrentintype == 'PIC') {
           this.pic = true;
+        }
+        else {
+          this.sic = false;
+          this.pic = false;
         }
       }
     }
@@ -122,6 +127,7 @@ export class AddratingPage {
     console.log('ionViewDidLoad AddratingPage');
   }
 
+  // get wheel selector plugin value
   openpicker(op) {
 
     if (op == 'cer') {
@@ -162,14 +168,18 @@ export class AddratingPage {
     }
   }
 
+  // select oceanics data
   selectclass() {
     this.navCtrl.push('SelectoceansPage', { 'classdata': this.classdata, 'class': true })
   }
 
+  // click to open aircraft page
   selectaircraft() {
     this.navCtrl.push('SelectaircraftPage', { 'aircraftdata': this.aircraftdata, 'selectedaircraft': "", 'type': 'singleaircraft' });
   }
 
+
+  // method when submit button button click
   add() {
     this.provider.setloading();
     this.cdate = moment(this.mydate.toString()).format('DD/MM/YYYY');
@@ -222,7 +232,7 @@ export class AddratingPage {
         else if (this.mstrainingyes == true) {
           this.simulatortraining = true;
         }
-        this.provider.insertratingcerti(this.certificate, this.id, this.categoryid, this.classid, this.aircraft, this.hours, this.picrate, this.minrate, this.current, this.cdate,this.simulatortraining).subscribe(res => {
+        this.provider.insertratingcerti(this.certificate, this.id, this.categoryid, this.classid, this.aircraft, this.hours, this.picrate, this.minrate, this.current, this.cdate, this.simulatortraining).subscribe(res => {
 
           this.res = res;
           if (this.res.Code == 200) {
@@ -250,7 +260,7 @@ export class AddratingPage {
         else if (this.mstrainingyes == true) {
           this.simulatortraining = true;
         }
-        this.provider.updateratingcerti(this.certiid, this.certificate, this.id, this.categoryid, this.classid, this.aircraft, this.hours, this.picrate, this.minrate, this.current, this.cdate,this.simulatortraining).subscribe(res => {
+        this.provider.updateratingcerti(this.certiid, this.certificate, this.id, this.categoryid, this.classid, this.aircraft, this.hours, this.picrate, this.minrate, this.current, this.cdate, this.simulatortraining).subscribe(res => {
 
           this.res = res;
           if (this.res.Code == 200) {
@@ -276,6 +286,7 @@ export class AddratingPage {
 
   }
 
+  // display alert dialog
   showalert(title, message) {
     let alert = this.alertCtrl.create({
       title: title,
@@ -292,26 +303,27 @@ export class AddratingPage {
     alert.present();
   }
 
+  // get checkbox value
   cheboxcheck(op, event) {
-   if (op == 'msy') {
-    if (event.checked == true) {
-      this.mstrainingno = false;
-      this.mstrainingyes = true;
+    if (op == 'msy') {
+      if (event.checked == true) {
+        this.mstrainingno = false;
+        this.mstrainingyes = true;
+      }
+      else {
+        this.mstrainingno = true;
+        this.mstrainingyes = false;
+      }
     }
-    else {
-      this.mstrainingno = true;
-      this.mstrainingyes = false;
+    else if (op == 'msn') {
+      if (event.checked == true) {
+        this.mstrainingno = true;
+        this.mstrainingyes = false;
+      } else {
+        this.mstrainingno = false;
+        this.mstrainingyes = true;
+      }
     }
   }
-  else if (op == 'msn') {
-    if (event.checked == true) {
-      this.mstrainingno = true;
-      this.mstrainingyes = false;
-    } else {
-      this.mstrainingno = false;
-      this.mstrainingyes = true;
-    }
-  }
-}
 
 }

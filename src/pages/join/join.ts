@@ -35,8 +35,8 @@ export class JoinPage {
       { description: 'Flight Attendant', id: '4' }
     ],
     gendertype: [
-      { description: 'Select'},
-      { description: 'Male'},
+      { description: 'Select' },
+      { description: 'Male' },
       { description: 'Female' }
     ],
   }
@@ -60,10 +60,12 @@ export class JoinPage {
   gender: any;
   passerror: boolean = false;
   path: any;
-  constructor(private iab: InAppBrowser,private transfer: FileTransfer,private file: File,private document: DocumentViewer,public navCtrl: NavController, public navParams: NavParams, public view: ViewController, private selector: WheelSelector, public authprovider: AuthproviderProvider, public alertCtrl: AlertController, public platform: Platform) {
+  constructor(private iab: InAppBrowser, private transfer: FileTransfer, private file: File, private document: DocumentViewer, public navCtrl: NavController, public navParams: NavParams, public view: ViewController, private selector: WheelSelector, public authprovider: AuthproviderProvider, public alertCtrl: AlertController, public platform: Platform) {
+
+    // form validation
     this.joinform = new FormGroup({
       mtype: new FormControl('', Validators.required),
-      gender: new FormControl('', Validators.required),
+      gender: new FormControl(),
       fname: new FormControl(),
       lname: new FormControl(),
       email: new FormControl('', Validators.compose([Validators.maxLength(70), Validators.pattern('^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$'), Validators.required])),
@@ -81,52 +83,94 @@ export class JoinPage {
   }
 
   ionViewDidLoad() {
+
+    // back button text to blank
     this.view.setBackButtonText('');
     console.log('ionViewDidLoad JoinPage');
   }
 
-  checkedterms(event){
+  // check teams and condition
+  checkedterms(event) {
     console.log(event);
     this.isterms = event._value;
   }
 
- async GoToTermsPrivacy(name){
-    
-    if(name == "Terms of use"){
+  // metod is used to open privacy policy
+  async GoToTermsPrivacy(name) {
 
-      await Browser.open({ url: 'http://pilot2.itsguru.com/pdf/Fltjob Terms of Use.pdf' });
+    if (name == "Terms of use") {
+      const options: DocumentViewerOptions = {
+        title: 'My PDF',
+        email: {
+          enabled: false
+        },
+        print: {
+          enabled: false
+        },
+      }
+      let path = this.file.documentsDirectory
 
-      // const browser = this.iab.create('http://pilot2.itsguru.com/pdf/Fltjob Terms of Use.pdf');
-      // browser.on('loadstop').subscribe(event => {
-      //   browser.insertCSS({ code: "body{color: red;" });      });
+      const transfer = this.transfer.create();
 
-      // browser.close();
+      transfer.download('http://pilot2.itsguru.com/pdf/Fltjob%20Terms%20of%20Use.pdf', path + 'myfile.pdf').then(entry => {
+
+        let url = entry.toURL();
+
+        this.document.viewDocument(url, 'application/pdf', options);
+      })
     }
 
-    if(name == "Privacy Policy"){
+    if (name == "Privacy Policy") {
+      const options: DocumentViewerOptions = {
+        title: 'My PDF',
+        email: {
+          enabled: false
+        },
+        print: {
+          enabled: false
+        },
+      }
+      let path = this.file.documentsDirectory
 
-      await Browser.open({ url: 'http://pilot2.itsguru.com/pdf/Fltjob Privacy Policy.pdf' });
-      // const browser = this.iab.create('http://pilot2.itsguru.com/pdf/Fltjob Privacy Policy.pdf');
-      // browser.on('loadstop').subscribe(event => {
-      //   browser.insertCSS({ code: "body{color: red;" });      });
+      const transfer = this.transfer.create();
 
-      // browser.close();
+      transfer.download('http://pilot2.itsguru.com/pdf/Fltjob%20Privacy%20Policy.pdf', path + 'myfile.pdf').then(entry => {
+
+        let url = entry.toURL();
+
+        this.document.viewDocument(url, 'application/pdf', options);
+      })
+
     }
 
-    if(name == "Disclaimer"){
+    if (name == "Disclaimer") {
+      const options: DocumentViewerOptions = {
+        title: 'My PDF',
+        email: {
+          enabled: false
+        },
+        print: {
+          enabled: false
+        },
+      }
+      let path = this.file.documentsDirectory
 
-      await Browser.open({ url: 'http://pilot2.itsguru.com/pdf/Fltjob Disclaimer.pdf' });
+      const transfer = this.transfer.create();
 
-      // const browser = this.iab.create('http://pilot2.itsguru.com/pdf/Fltjob Disclaimer.pdf');
-      // browser.on('loadstop').subscribe(event => {
-      //   browser.insertCSS({ code: "body{color: red;" });      });
+      transfer.download('http://pilot2.itsguru.com/pdf/Fltjob%20Disclaimer.pdf', path + 'myfile.pdf').then(entry => {
 
-      // browser.close();
+        let url = entry.toURL();
+
+        this.document.viewDocument(url, 'application/pdf', options);
+      })
+
     }
-    
-    
+
+
     // this.navCtrl.push("TermsPage", {'Title':name }, { animate: false });
   }
+
+  // select value from wheel selector
   openpicker(op) {
     if (op == "location") {
       this.selector.show({
@@ -152,6 +196,8 @@ export class JoinPage {
         items: [
           this.dummyJson.mtype
         ],
+        // positiveButtonText:"ok",
+        // negativeButtonText:"nope",
         defaultItems: [
           { index: 0, value: this.dummyJson.mtype[0].description }
         ],
@@ -162,14 +208,14 @@ export class JoinPage {
           this.fname = "";
           this.lname = "";
           this.email = "";
-          this.pass= "";
+          this.pass = "";
           this.confirmpass = "";
           this.cname = "";
 
         },
         err => console.log('Error: ', err)
       );
-    }else if (op == "gender") {
+    } else if (op == "gender") {
       this.selector.show({
         title: "",
         items: [
@@ -182,12 +228,17 @@ export class JoinPage {
         result => {
           console.log(result[0].description + ' at index: ' + result[0].index);
           this.gender = result[0].description;
+          if (this.gender == "Select") {
+            this.gender = "";
+          }
         },
         err => console.log('Error: ', err)
       );
     }
   }
 
+
+  // validator for password match
   equalto(field_name): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } => {
 
@@ -203,6 +254,8 @@ export class JoinPage {
   }
 
 
+  // if form is valid then join button is enable
+
   isjoin() {
     if (this.joinform.valid && this.isterms == true) {
       return true;
@@ -211,6 +264,8 @@ export class JoinPage {
       return false;
     }
   }
+
+  // form submit to server and api call
 
   submit() {
     this.authprovider.setloading();
@@ -245,23 +300,20 @@ export class JoinPage {
     else {
       this.devicetype = "2";
     }
-    this.authprovider.join(this.fname, this.lname, "", clocation, "", this.mtypes, this.email, this.pass, this.pass, this.devicetype, this.cname,this.gender).subscribe(res => {
+    if (this.gender == undefined) {
+      this.gender = "";
+    }
+    this.authprovider.join(this.fname, this.lname, "", clocation, "", this.mtypes, this.email, this.pass, this.pass, this.devicetype, this.cname, this.gender).subscribe(res => {
       this.res = res;
 
-      // if (this.res.Code == 200) {
       this.authprovider.dismissloading();
       this.message = this.res.msg;
       this.showAlert();
-      // }
-      // else if (this.res.Code == 400) {
-      //  this.authprovider.dismissloading();
-      //   this.message = this.res.message;
-      //   this.showAlert();
-      // }
+
     })
   }
 
-
+  // display dialog 
   showAlert() {
     const alert = this.alertCtrl.create({
       title: 'Pilot',

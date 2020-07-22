@@ -26,11 +26,17 @@ export class FutureavalabilityPage {
     this.authprovider.setloading();
 
     this.ActiveSegment = "future";
+
+    // get user type
     this.storage.get('usertype').then(val => {
       this.usertype = val;
     })
+
+    // get current user login id
     this.storage.get('id').then(res => {
       this.id = res;
+
+      // get availabilty
       this.authprovider.getavailability(this.id, this.date).subscribe(res => {
         console.log(res);
         this.res = res;
@@ -55,10 +61,12 @@ export class FutureavalabilityPage {
     console.log('ionViewDidLoad AvailabilityPage');
   }
 
+  // when add availabilty is clicked
   addavailability() {
     this.navCtrl.push('AddavailabilityPage');
   }
 
+  // when current tab is pressed
   IsCurrent() {
     this.app.getRootNav().push('AvailabilityPage');
   }

@@ -23,14 +23,20 @@ export class UserrattingPage {
   rate: any;
   @ViewChild('myInput') myInput: ElementRef;
   constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events, public provider: AuthproviderProvider, public storage: Storage, public alertCtrl: AlertController) {
+
+    // get current user login id
     this.storage.get('id').then(val => {
       this.id = val;
       console.log(this.id);
+
+      // get value from openpendingnotification page
       this.tripid = navParams.get('tripid');
       this.oppositeid = navParams.get('oppositeid');
       this.comment = navParams.get('comment');
       this.rate = navParams.get('rating');
       var that = this;
+
+      // initialize rateyo plugin for star rating
       jQuery(function () {
 
 
@@ -53,7 +59,8 @@ export class UserrattingPage {
 
   }
 
-  logRatingChange(rating){
+  // get the changed rating value
+  logRatingChange(rating) {
     this.ratingcount = rating;
     console.log(this.ratingcount);
   }
@@ -66,6 +73,7 @@ export class UserrattingPage {
   //   this.ratingcount = star;
   // }
 
+  // when user click to submit their rating and comment
   SubmitReview() {
     this.provider.setloading();
     this.provider.insertratingcomment(this.tripid, this.id, this.oppositeid, this.comment, this.ratingcount).subscribe(res => {
@@ -79,6 +87,9 @@ export class UserrattingPage {
       }
     })
   }
+
+
+  // display alert dialog
 
   successalert(title, msg) {
     let alert = this.alertCtrl.create({

@@ -35,32 +35,28 @@ export class SelectprofilePage {
     this.fatt == false;
     this.fins == false;
 
-    this.gdata = auth.gtdata();
-
-    console.log(this.gdata);
-
-    if (this.gdata) {
+    // if trip reschedule then get data
+    if (auth.gtdata) {
+      this.gdata = auth.gtdata();
+    }
+    if (this.gdata != "") {
       this.captain = this.gdata.Captain;
       this.scommand = this.gdata.SecondInCommand;
       this.fatt = this.gdata.FlightAttendant;
       this.fins = this.gdata.FlightInstructor;
     }
-
-
-
-    localStorage.removeItem("enrouteairportcodelist");
-    localStorage.removeItem("enrouteairportcodelist1");
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad SelectprofilePage');
   }
 
-
+  // method is call when click on next button
   next() {
 
     console.log(this.captain);
     if (this.captain == true || this.scommand == true || this.fatt == true || this.fins == true) {
+
       this.navCtrl.push('CreatetripPage', { 'captain': this.captain, 'scommand': this.scommand, 'fatt': this.fatt, 'fins': this.fins }).then(() => {
         this.events.publish('airdata', this.totalcount);
       });
@@ -70,6 +66,7 @@ export class SelectprofilePage {
     }
   }
 
+  // display error dialog
   showAlert() {
     const alert = this.alertCtrl.create({
       title: 'Error!',

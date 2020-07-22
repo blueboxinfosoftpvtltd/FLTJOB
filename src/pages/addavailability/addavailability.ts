@@ -31,22 +31,27 @@ export class AddavailabilityPage {
   availabilityid: any;
   availabilitydata: any;
   datesarray: any;
-  cityname:any;
+  cityname: any;
   constructor(private zone: NgZone, private modal: ModalController, public navCtrl: NavController, public navParams: NavParams, public authprovider: AuthproviderProvider, public storage: Storage, public alertCtrl: AlertController, public events: Events) {
 
+    // get from date from getavailable page
     this.events.subscribe('fromdate', res => {
       this.fromdate = res;
       this.fromdate = moment(this.fromdate).format('MM-DD-YYYY');
     })
+    // get to date from getavailable page
     this.events.subscribe('todate', res => {
       this.todate = res;
       this.todate = moment(this.todate).format('MM-DD-YYYY');
     })
+    // get dates array from getavailable page
     this.events.subscribe('datesdata', res => {
       this.datesarray = res;
     })
+    // get current login id
     this.storage.get('id').then((val) => {
       this.id = val;
+      // when edit mode is true
       if (this.navParams.get('edit') == true) {
         this.availabilityid = this.navParams.get('availabilityid');
         this.comment = this.navParams.get('comment');
@@ -57,6 +62,7 @@ export class AddavailabilityPage {
       }
     });
 
+    // initialze google autocomplete
     this.GoogleAutocomplete = new google.maps.places.AutocompleteService();
     this.autocomplete = { input: '' };
     this.autocompleteItems = [];
@@ -66,7 +72,7 @@ export class AddavailabilityPage {
     console.log('ionViewDidLoad AddavailabilityPage');
   }
 
-
+  // method call when submit button click
   submit() {
     this.res = "";
     if (this.fromdate == undefined || this.fromdate == null || this.fromdate == '') {
@@ -105,16 +111,13 @@ export class AddavailabilityPage {
             this.authprovider.dismissloading();
             this.showAlert('Pilot', 'Error occured!');
           }
-
-          // this.showAlert('Success!',this.res.msg);
-          // this.storage.set('AvabilityData', this.res.data.Pilot.Availability); 
-          // this.navCtrl.push("AvailabilityPage");       
         })
       }
 
     }
   }
 
+  // display alert dialog
   showAlert(title, msg) {
     const alert = this.alertCtrl.create({
       title: title,
@@ -131,6 +134,7 @@ export class AddavailabilityPage {
     alert.present();
   }
 
+  // display alert dialog
   successalert(title, msg) {
     let alert = this.alertCtrl.create({
       title: title,
@@ -147,126 +151,65 @@ export class AddavailabilityPage {
     alert.present();
   }
 
-  openModal() {
-    const myModalOptions: ModalOptions = {
-      enableBackdropDismiss: false
-    };
+  // openModal() {
+  //   const myModalOptions: ModalOptions = {
+  //     enableBackdropDismiss: false
+  //   };
 
-    const myModalData = {
-      date: 'Paul Halliday'
-    };
+  //   const myModalData = {
+  //     date: 'Paul Halliday'
+  //   };
 
-    const myModal: Modal = this.modal.create('CalendermodalPage', { data: 'myModalData' }, myModalOptions);
+  //   const myModal: Modal = this.modal.create('CalendermodalPage', { data: 'myModalData' }, myModalOptions);
 
-    myModal.present();
+  //   myModal.present();
 
-    myModal.onDidDismiss((data) => {
-      console.log("I have dismissed.");
-      console.log(data);
-      this.fromdate = data.data;
-      this.fromdate = moment(this.fromdate).format("MM/DD/YYYY");
-    });
+  //   myModal.onDidDismiss((data) => {
+  //     console.log("I have dismissed.");
+  //     console.log(data);
+  //     this.fromdate = data.data;
+  //     this.fromdate = moment(this.fromdate).format("MM/DD/YYYY");
+  //   });
 
-    myModal.onWillDismiss((data) => {
-      console.log("I'm about to dismiss");
-      console.log(data);
-      this.fromdate = data.data;
-      this.fromdate = moment(this.fromdate).format("MM/DD/YYYY");
-    });
-  }
-
-  openModal1() {
-
-    const myModalOptions: ModalOptions = {
-      enableBackdropDismiss: false
-    };
-
-    const myModalData = {
-      date: 'Paul Halliday'
-    };
-
-    const myModal: Modal = this.modal.create('CalendermodalPage', { data: 'myModalData' }, myModalOptions);
-
-    myModal.present();
-
-    myModal.onDidDismiss((data) => {
-      console.log("I have dismissed.");
-      console.log(data);
-      this.todate = data.data;
-      this.todate = moment(this.todate).format("MM/DD/YYYY");
-    });
-
-    myModal.onWillDismiss((data) => {
-      console.log("I'm about to dismiss");
-      console.log(data);
-      this.todate = data.data;
-      this.todate = moment(this.todate).format("MM/DD/YYYY");
-    });
-  }
-
-  // updateSearchResults() {
-  //   if (this.autocomplete.input == '') {
-  //     this.autocompleteItems = [];
-  //     return;
-  //   }
-  //   if (this.autocomplete.input.toString().length >= 3) {
-  //     this.cityname = this.authprovider.getmasterdata();
-  //     if (this.cityname == undefined) {
-  //       this.GoogleAutocomplete.getPlacePredictions({ input: this.autocomplete.input },
-  //         (predictions, status) => {
-  //           this.autocompleteItems = [];
-  //           this.zone.run(() => {
-  //             console.log(predictions);
-  //             if (predictions !== null) {
-  //               predictions.forEach((prediction) => {
-  //                 this.autocompleteItems.push(prediction);
-  //               });
-  //             }
-  //           });
-  //         });
-  //     }
-  //     else {
-  //       this.cityname = this.cityname.data.CityName;
-  //       console.log(this.cityname);
-  //       this.autocompleteItems = [];
-  //       this.autocompleteItems = this.cityname.filter((item) => {
-  //         return item.CityName.toLowerCase().indexOf(this.autocomplete.input.toLowerCase()) > -1;
-
-  //       });
-  //     }
-
-  //     // this.autocompleteItems = this.autocompleteItems.Cityname;
-  //     console.log(this.autocompleteItems);
-  //     if (this.autocompleteItems.length == 0) {
-  //       this.GoogleAutocomplete.getPlacePredictions({ input: this.autocomplete.input },
-  //         (predictions, status) => {
-  //           this.autocompleteItems = [];
-  //           this.zone.run(() => {
-  //             console.log(predictions);
-  //             if (predictions !== null) {
-  //               predictions.forEach((prediction) => {
-  //                 this.autocompleteItems.push(prediction);
-  //               });
-  //             }
-  //           });
-  //         });
-  //     }
-  //     // }
-  //     // this.GoogleAutocomplete.getPlacePredictions({ input: this.autocomplete.input },
-  //     //   (predictions, status) => {
-  //     //     this.autocompleteItems = [];
-  //     //     this.zone.run(() => {
-  //     //       console.log(predictions);
-  //     //       if (predictions !== null) {
-  //     //         predictions.forEach((prediction) => {
-  //     //           this.autocompleteItems.push(prediction);
-  //     //         });
-  //     //       }
-  //     //     });
-  //     //   });
-  //   }
+  //   myModal.onWillDismiss((data) => {
+  //     console.log("I'm about to dismiss");
+  //     console.log(data);
+  //     this.fromdate = data.data;
+  //     this.fromdate = moment(this.fromdate).format("MM/DD/YYYY");
+  //   });
   // }
 
+  // openModal1() {
+
+  //   const myModalOptions: ModalOptions = {
+  //     enableBackdropDismiss: false
+  //   };
+
+  //   const myModalData = {
+  //     date: 'Paul Halliday'
+  //   };
+
+  //   const myModal: Modal = this.modal.create('CalendermodalPage', { data: 'myModalData' }, myModalOptions);
+
+  //   myModal.present();
+
+  //   myModal.onDidDismiss((data) => {
+  //     console.log("I have dismissed.");
+  //     console.log(data);
+  //     this.todate = data.data;
+  //     this.todate = moment(this.todate).format("MM/DD/YYYY");
+  //   });
+
+  //   myModal.onWillDismiss((data) => {
+  //     console.log("I'm about to dismiss");
+  //     console.log(data);
+  //     this.todate = data.data;
+  //     this.todate = moment(this.todate).format("MM/DD/YYYY");
+  //   });
+  // }
+
+
+  // select the search result from autocomplete
   selectSearchResult(item) {
     console.log(item);
     console.log(item.description);
@@ -281,6 +224,8 @@ export class AddavailabilityPage {
     this.autocompleteItems = [];
 
   }
+
+  // get search result using google autocomplete
   updateSearchResults() {
     if (this.autocomplete.input == '') {
       this.autocompleteItems = [];
@@ -300,15 +245,8 @@ export class AddavailabilityPage {
       });
   }
 
-  // selectSearchResult(item) {
-  //   console.log(item);
-  //   console.log(item.description);
-  //   this.autocomplete.input = item.terms[0].value;
-  //   console.log(this.autocomplete.input);
-  //   this.autocompleteItems = [];
 
-  // }
-
+  // click to open calendar page
   opencalendar(ch) {
     if (ch == 'fromdate') {
       this.navCtrl.push('GetavailablePage', { 'isaddavailability': true, 'fromdate': true }).then(() => {

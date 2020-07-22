@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, App } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, App, Events } from 'ionic-angular';
 import { AuthproviderProvider } from '../../providers/authprovider/authprovider';
 import { Storage } from '@ionic/storage';
 import { Socket } from 'ng-socket-io';
@@ -20,11 +20,13 @@ export class MessagePage {
     public provider: AuthproviderProvider,
     public alertCtrl: AlertController,
     public app: App,
-    public socket: Socket) {
+    public socket: Socket,
+    public events: Events) {
 
 
   }
 
+  // get message list when page is load
   ionViewDidEnter() {
     this.storage.get('id').then((val) => {
       this.fkPilotId = val;
@@ -50,11 +52,16 @@ export class MessagePage {
       } else {
         this.msgList = this.msg.data.Messages;
         console.log(this.msgList);
-        this.provider.dismissloading();
+        this.provider.setmsgread(fkPilotId).subscribe(res => {
+          this.events.publish('mcount', "");
+          this.provider.dismissloading();
+
+        })
       }
     })
   }
 
+  // display alert dialog
   presentAlert(title, message) {
     let alert = this.alertCtrl.create({
       title: title,
@@ -64,6 +71,7 @@ export class MessagePage {
     alert.present();
   }
 
+  // go to chat page to send text message or attachment
   chat(photo, id, name) {
     this.socket.connect();
     this.provider.setoppositeid(id);
@@ -71,6 +79,8 @@ export class MessagePage {
     this.socket.emit('set-nickname', 'pilot');
     this.app.getRootNav().push('ChatpagePage', { 'pkPilotId': id, 'PhotoPath': photo, 'PilotFname': name, 'ismessage': true, animate: false });
   }
+
+  // method is call when remove message from message list
   removeItem(oid) {
     this.provider.setloading();
     console.log('delete call');
@@ -80,6 +90,7 @@ export class MessagePage {
     })
   }
 
+  // display alert dialog
   successalert(title, msg) {
     let alert = this.alertCtrl.create({
       title: title,

@@ -28,6 +28,7 @@ export class HistoryComponent {
     })
   }
 
+  // get history trip when component init
   ngOnInit() {
 
     console.log('Hello CurrentComponent Component');
@@ -78,71 +79,73 @@ export class HistoryComponent {
     });
   }
 
+  // click to open trip
   opentrip(tripname, tripid, aircraft, rate, enroutecode, depcode, descode, tsdate, tedate, isrecent) {
     this.app.getRootNav().push('OpenpendingnotificationPage', { 'tripname': tripname, 'tripid': tripid, 'aircraft': aircraft, 'rate': rate, 'enroutecode': enroutecode, 'depcode': depcode, 'descode': descode, 'tsdate': tsdate, 'tedate': tedate, 'isHistory': isrecent });
   }
-  canceltrip(id) {
-    this.presentConfirm(id);
-  }
+  // canceltrip(id) {
+  //   this.presentConfirm(id);
+  // }
 
-  successalert(title, msg) {
-    let alert = this.alertCtrl.create({
-      title: title,
-      message: msg,
-      buttons: [
-        {
-          text: 'Ok',
-          handler: () => {
-            this.ngOnInit();
-          }
-        }
-      ]
-    });
-    alert.present();
-  }
+  // successalert(title, msg) {
+  //   let alert = this.alertCtrl.create({
+  //     title: title,
+  //     message: msg,
+  //     buttons: [
+  //       {
+  //         text: 'Ok',
+  //         handler: () => {
+  //           this.ngOnInit();
+  //         }
+  //       }
+  //     ]
+  //   });
+  //   alert.present();
+  // }
 
-  presentConfirm(id) {
-    let alert = this.alertCtrl.create({
-      title: 'Pilot',
-      message: 'Do you want to delete trip?',
-      buttons: [
-        {
-          text: 'No',
-          handler: () => {
-            console.log('Cancel clicked');
-          }
-        },
-        {
-          text: 'Yes',
-          handler: () => {
-            this.provider.setloading();
-            this.provider.canceltrip(id).subscribe(res => {
-              this.cancelres = res;
-              if (this.cancelres.Code == 200) {
-                this.loading.dismiss();
-                this.successalert('Pilot', 'Trip deleted successfully');
-              }
-              else {
-                this.provider.dismissloading();
-              }
-            })
+  // presentConfirm(id) {
+  //   let alert = this.alertCtrl.create({
+  //     title: 'Pilot',
+  //     message: 'Do you want to delete trip?',
+  //     buttons: [
+  //       {
+  //         text: 'No',
+  //         handler: () => {
+  //           console.log('Cancel clicked');
+  //         }
+  //       },
+  //       {
+  //         text: 'Yes',
+  //         handler: () => {
+  //           this.provider.setloading();
+  //           this.provider.canceltrip(id).subscribe(res => {
+  //             this.cancelres = res;
+  //             if (this.cancelres.Code == 200) {
+  //               this.loading.dismiss();
+  //               this.successalert('Pilot', 'Trip deleted successfully');
+  //             }
+  //             else {
+  //               this.provider.dismissloading();
+  //             }
+  //           })
 
 
-          }
-        }
-      ]
-    });
-    alert.present();
-  }
-  showAlert(message) {
-    const alert = this.alertCtrl.create({
-      title: 'Pilot',
-      subTitle: message,
-      buttons: ['OK']
-    });
-    alert.present();
-  }
+  //         }
+  //       }
+  //     ]
+  //   });
+  //   alert.present();
+  // }
+  // showAlert(message) {
+  //   const alert = this.alertCtrl.create({
+  //     title: 'Pilot',
+  //     subTitle: message,
+  //     buttons: ['OK']
+  //   });
+  //   alert.present();
+  // }
 
+  // display alert message
   showAlert2(message) {
     const alert = this.alertCtrl.create({
       title: 'Pilot',
@@ -152,6 +155,7 @@ export class HistoryComponent {
     alert.present();
   }
 
+  // click to reschedule trip
   gototrip(tid) {
     this.provider.setloading();
     this.provider.gettripdetail(tid, this.id).subscribe(res => {

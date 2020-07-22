@@ -1,0 +1,64 @@
+<!--
+  Generated template for the TabpagePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar color="primary" hideBackButton>
+
+    <ion-grid>
+      <ion-row style="height: 60px">
+        <ion-col col-3>
+          <img class="profile-photo" (click)="presentActionSheet()" src="{{userprofilepic}}" />
+        </ion-col>
+        <ion-col style="align-self: center" col-6>
+          <ion-searchbar #searchbar [(ngModel)]="myInput" [showCancelButton]="shouldShowCancel" (ionInput)="onInput($event)" (ionBlur)="onfocuslost()"
+            (ionFocus)="onfocus()" (ionCancel)="onCancel($event)">
+          </ion-searchbar>
+        </ion-col>
+
+        <!-- <ion-icon name="ios-calendar-outline" (click)="availablity()"></ion-icon> -->
+
+        <ion-col style="align-self: center" col-1.5>
+          <ion-icon name="md-heart-outline" (click)="profile()"></ion-icon>
+        </ion-col>
+        <!-- <ion-col style="align-self: center" col-1>
+        </ion-col> -->
+        <ion-col style="align-self: center" col-1.5>
+          <ion-icon name="contact" (click)="logout()"></ion-icon>
+        </ion-col>
+
+      </ion-row>
+      <ion-row style="height: 40px">
+
+        <!-- <ion-buttons end> -->
+        <ion-label (click)="availablity()" style="text-align: end;
+            font-weight: 700;
+            color: white;
+            font-style: oblique;
+            margin-top: 5px;
+            text-decoration: underline;">Manage Availability</ion-label>
+        <!-- </ion-buttons> -->
+
+      </ion-row>
+    </ion-grid>
+    <!-- <ion-label (click)="availablity()">Manage Availability</ion-label> -->
+    <!-- <ion-icon name="ios-calendar-outline" (click)="availablity()"></ion-icon> -->
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content no-padding>
+  <ion-tabs mode="ios" #myTabs class="tabHome" toolbarColor="dark" tabsPlacement="top" [ngClass]="{'search-active': hideonsearchactive}"
+    [selectedIndex]="tabIndex">
+    <ion-tab [root]="tab1" tabTitle="Home" (ionSelect)="homeclick()"></ion-tab>
+    <ion-tab [root]="tab2" tabTitle="Profile" (ionSelect)="profileclick()"></ion-tab>
+    <ion-tab [root]="tab3" tabTitle="Conn" (ionSelect)="pendingclick()"></ion-tab>
+    <ion-tab [root]="tab4" tabTitle="Notification" (ionSelect)="notificationclick()"></ion-tab>
+    <ion-tab [root]="tab5" tabTitle="Msg" (ionSelect)="messageclick()"></ion-tab>
+    <ion-tab [root]="tab6" [show]="seachtabhide" tabTitle="Search" (ionSelect)="searchclick()"></ion-tab>
+  </ion-tabs>
+</ion-content>

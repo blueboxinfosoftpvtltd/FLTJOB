@@ -31,6 +31,8 @@ export class SelectcontinentPage {
   selectedociensename: string[] = [];
   ociensenameret: any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public event: Events) {
+
+    // get continents data
     this.continents = this.navParams.get('continetdata');
     console.log(this.continents);
     this.continentname = this.navParams.get('selectedcontinent');
@@ -44,8 +46,7 @@ export class SelectcontinentPage {
   }
 
   ionViewDidEnter() {
-    // this.listcontinent = "";
-    // this.listociense = "";
+    // back button functionality
     this.navBar.backButtonClick = () => {
       this.selectedcontientname = [];
       this.selectedociensename = [];
@@ -100,10 +101,14 @@ export class SelectcontinentPage {
     };
 
   }
+
+  // for continents
   checkboxselectcontinents() {
     this.listcontinent = <Array<any>>(<Object>this.continents);
 
   }
+
+  // for oceanis
   checkboxselectociens() {
     this.listociense = <Array<any>>(<Object>this.ociense);
   }

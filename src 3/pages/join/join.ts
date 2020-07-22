@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController, AlertController, Platform } from 'ionic-angular';
-import { WheelSelector } from '@ionic-native/wheel-selector';
+import { WheelSelector } from '@ionic-native/wheel-selector/ngx';
 import { FormControl, FormGroup, Validators, AbstractControl, ValidatorFn } from '@angular/forms';
 import { AuthproviderProvider } from '../../providers/authprovider/authprovider';
 /**

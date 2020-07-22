@@ -99,11 +99,13 @@ export class FiltercaptainPage {
   isgender: any;
   gdata: any;
   idata: any;
+  sdata: any;
+  fdata: any;
   constructor(public navCtrl: NavController, public navParams: NavParams, private selector: WheelSelector, public provider: AuthproviderProvider, public events: Events, public alertCtrl: AlertController, public storage: Storage, public modalCtrl: ModalController, public sprovider: SharedserviceProvider) {
 
-
+    // get rescheduled data if availabale
     this.gdata = provider.getpdata();
-
+    // jquery ratio plugin for star rating
     var that = this;
     jQuery(function () {
 
@@ -122,6 +124,7 @@ export class FiltercaptainPage {
 
     });
 
+    // get oceans data
     this.events.subscribe('oceansdata', val => {
       if (val == undefined) {
         this.selectedociens = "";
@@ -130,10 +133,14 @@ export class FiltercaptainPage {
         this.selectedociens = val;
       }
     })
+
+    // get usertype
     this.storage.get('usertype').then(val => {
       this.usertype = val;
       console.log(this.usertype);
     })
+
+    // get oceans data
     this.provider.getContinents().subscribe(res => {
       this.ocienselist = res;
       this.ocienselist = this.ocienselist.continents.oceansdata;
@@ -142,6 +149,8 @@ export class FiltercaptainPage {
         this.sprovider.getoceaniclist(this.ocienselist, this.selectociens);
       }
     });
+
+    // get continent data
     this.provider.getContinents().subscribe(res => {
       this.continentlist = res;
       this.continentlist = this.continentlist.continents.continentdata;
@@ -209,10 +218,13 @@ export class FiltercaptainPage {
     })
   }
 
+  // get rating change value
   logRatingChange(rating) {
     this.ratingcount = rating;
     console.log(this.ratingcount);
   }
+
+  // method is call when back button press
   ionViewDidEnter() {
     this.navBar.backButtonClick = () => {
       console.log(this.filtercaptainstep);
@@ -289,6 +301,8 @@ export class FiltercaptainPage {
       }
     };
 
+
+    // set the resheduled data if available
     if (this.gdata) {
       this.totaltime = this.gdata.AircraftTotalTime;
       this.totaltimetype = this.gdata.TotalTimeAircraftId;
@@ -324,6 +338,7 @@ export class FiltercaptainPage {
     console.log('ionViewDidLoad FiltercaptainPage');
   }
 
+  // set wheel seletor value
   openpicker() {
     this.selector.show({
       title: "",
@@ -342,6 +357,8 @@ export class FiltercaptainPage {
       err => console.log('Error: ', err)
     );
   }
+
+  // checkbox clic event
   cheboxcheck(op, event) {
     if (op == 'msy') {
       if (event.checked == true) {
@@ -385,10 +402,12 @@ export class FiltercaptainPage {
     }
   }
 
+  // method is called when select continents
   selectcontinents() {
     this.navCtrl.push('SelectcontinentPage', { 'continetdata': this.continentlist, 'selectedcontinent': this.continents, animate: false });
   }
 
+  // method is called when next from 3rd tab is clicked
   filter() {
     if (this.favcaptain == undefined || this.favcaptain == false) {
       this.favcaptain = 0
@@ -572,7 +591,7 @@ export class FiltercaptainPage {
   }
 
 
-
+  // method is called when next press from 1st tab
   save1() {
 
     if (this.totaltime == undefined) {
@@ -596,7 +615,7 @@ export class FiltercaptainPage {
 
 
   }
-
+  //method is called when next press from 2nd tab
   save2() {
     if (this.rate == undefined) {
       this.errormessage = "Please enter rate"
@@ -620,6 +639,7 @@ export class FiltercaptainPage {
 
   }
 
+  // method is called when change filter is called
   changefilter() {
     var that = this;
     jQuery(function () {
@@ -653,6 +673,7 @@ export class FiltercaptainPage {
     this.txt3color = '#fff';
     this.txt4color = '#fff';
   }
+  // method is called when tab is pressed on top like 1,2,3,4
   activestep(op) {
     this.filtercaptainstep = op;
 
@@ -721,6 +742,7 @@ export class FiltercaptainPage {
     }
   }
 
+  // display alert dialog
   showAlert() {
     const alert = this.alertCtrl.create({
       title: 'Pilot',
@@ -730,6 +752,7 @@ export class FiltercaptainPage {
     alert.present();
   }
 
+  // method is called when send notification is clicked
   sendnotification() {
     this.provider.setloading();
     for (let i = 0; i < this.pilotlist.length; i++) {
@@ -744,12 +767,68 @@ export class FiltercaptainPage {
       this.provider.sendnotification(this.pkid, this.id, this.tripid, this.rate).subscribe(res => {
         console.log(res);
         if (this.scommand == true) {
-          this.provider.dismissloading();
-          this.navCtrl.push('FiltersicPage', { 'id': this.id, 'tripid': this.tripid, 'aircraftname': this.aircraftname, 'fatt': this.fatt, 'fins': this.fins, 'oce': this.oceexp, 'isprofile': this.isprofile, 'isgender': this.isgender });
+          if (this.gdata) {
+            this.provider.getstrip(this.gdata.pkTripId, this.id).subscribe(res => {
+              console.log(res);
+              this.sdata = res;
+              this.sdata = this.sdata.data.Trip;
+              if (this.sdata == null) {
+                this.provider.setsdata("");
+                this.provider.dismissloading();
+                this.navCtrl.push('FiltersicPage', { 'id': this.id, 'tripid': this.tripid, 'aircraftname': this.aircraftname, 'fatt': this.fatt, 'fins': this.fins, 'oce': this.oceexp, 'isprofile': this.isprofile, 'isgender': this.isgender });
+              }
+              // console.log(tid);
+              else {
+                this.sdata = this.sdata[0];
+                this.provider.setsdata(this.sdata);
+                this.provider.dismissloading();
+                this.navCtrl.push('FiltersicPage', { 'id': this.id, 'tripid': this.tripid, 'aircraftname': this.aircraftname, 'fatt': this.fatt, 'fins': this.fins, 'oce': this.oceexp, 'isprofile': this.isprofile, 'isgender': this.isgender });
+                //this.app.getRootNav().push("SelectprofilePage");
+
+              }
+              //this.provider.dismissloading();
+            },
+              err => this.provider.dismissloading());
+          }
+          else {
+            this.provider.dismissloading();
+            this.navCtrl.push('FiltersicPage', { 'id': this.id, 'tripid': this.tripid, 'aircraftname': this.aircraftname, 'fatt': this.fatt, 'fins': this.fins, 'oce': this.oceexp, 'isprofile': this.isprofile, 'isgender': this.isgender });
+          }
+
         }
         else if (this.fatt == true) {
-          this.provider.dismissloading();
-          this.navCtrl.push('FilterflightattendantPage', { 'id': this.id, 'tripid': this.tripid, 'aircraftname': this.aircraftname, 'fatt': this.fatt, 'fins': this.fins, 'oce': this.oceexp, 'isprofile': this.isprofile, 'isgender': this.isgender });
+          if (this.gdata) {
+            this.provider.getftrip(this.gdata.pkTripId, this.id).subscribe(res => {
+              console.log(res);
+              this.fdata = res;
+              this.fdata = this.fdata.data.Trip;
+              if (this.fdata == null) {
+                this.provider.setfdata("");
+                this.provider.dismissloading();
+                this.navCtrl.push('FilterflightattendantPage', { 'id': this.id, 'tripid': this.tripid, 'aircraftname': this.aircraftname, 'fatt': this.fatt, 'fins': this.fins, 'oce': this.oceexp, 'isprofile': this.isprofile, 'isgender': this.isgender });
+              }
+              // console.log(tid);
+              else {
+                this.fdata = this.fdata[0];
+                this.provider.setfdata(this.fdata);
+                this.provider.dismissloading();
+                this.navCtrl.push('FilterflightattendantPage', { 'id': this.id, 'tripid': this.tripid, 'aircraftname': this.aircraftname, 'fatt': this.fatt, 'fins': this.fins, 'oce': this.oceexp, 'isprofile': this.isprofile, 'isgender': this.isgender });
+                //this.app.getRootNav().push("SelectprofilePage");
+
+              }
+              //this.provider.dismissloading();
+            },
+              err => this.provider.dismissloading());
+          }
+          else {
+            this.provider.dismissloading();
+            this.navCtrl.push('FilterflightattendantPage', { 'id': this.id, 'tripid': this.tripid, 'aircraftname': this.aircraftname, 'fatt': this.fatt, 'fins': this.fins, 'oce': this.oceexp, 'isprofile': this.isprofile, 'isgender': this.isgender });
+          }
+
+
+
+          // this.provider.dismissloading();
+          // this.navCtrl.push('FilterflightattendantPage', { 'id': this.id, 'tripid': this.tripid, 'aircraftname': this.aircraftname, 'fatt': this.fatt, 'fins': this.fins, 'oce': this.oceexp, 'isprofile': this.isprofile, 'isgender': this.isgender });
         }
         else if (this.fins == true) {
           //this.provider.dismissloading();
@@ -798,6 +877,7 @@ export class FiltercaptainPage {
 
   }
 
+  // display alert dialog
   showAlert1(title, msg) {
     const alert = this.alertCtrl.create({
       title: title,
@@ -814,10 +894,12 @@ export class FiltercaptainPage {
     alert.present();
   }
 
+  // click when finish button is click
   finish() {
     this.navCtrl.push('TabpagePage', { 'istab': false });
   }
 
+  // click when next button is pressed from 4th tab
   next() {
     if (this.scommand == true) {
       this.navCtrl.push('FiltersicPage', { 'id': this.id, 'tripid': this.tripid, 'aircraftname': this.aircraftname, 'fatt': this.fatt, 'fins': this.fins, 'isprofile': this.isprofile, 'isgender': this.isgender });
@@ -830,6 +912,7 @@ export class FiltercaptainPage {
     }
   }
 
+  // click to open profile 
   openProfile(opid) {
     this.provider.setloading();
     this.provider.viewprofile(this.id, opid).subscribe(res => {
@@ -842,6 +925,7 @@ export class FiltercaptainPage {
 
   }
 
+  // click to open ociens page
   selectociens() {
     this.navCtrl.push('SelectcontinentPage', { 'oceansdata': this.ocienselist, 'selectedocens': '', 'isociense': true, animate: false });
   }

@@ -21,12 +21,14 @@ export class NotificationPage {
     public app: App,
     public events: Events, public modalCtrl: ModalController) {
 
+    // this events for reload the current page 
     this.events.subscribe('poprequest', res => {
       this.ionViewDidEnter();
     })
 
   }
 
+  // get notification when page is load
   ionViewDidEnter() {
     this.storage.get('id').then((val) => {
       this.fkPilotId = val;
@@ -56,6 +58,7 @@ export class NotificationPage {
     })
   }
 
+  // display alert message
   presentAlert(title, message) {
     let alert = this.alertCtrl.create({
       title: title,
@@ -65,11 +68,14 @@ export class NotificationPage {
     alert.present();
   }
 
+  //send request to user
+
   requestpage(data) {
     console.log(data);
     this.app.getRootNav().push('RequestpagePage', { 'data': data, 'issearch': false, 'reqid': data.fkRequestId });
   }
 
+  // method is used to remove notification
   removeItem(nid) {
 
     const prompt = this.alertCtrl.create({
@@ -110,6 +116,7 @@ export class NotificationPage {
     console.log('delete call');
   }
 
+  // open profile component in modal controller
   openprofile(data) {
     // e.stopPropagation();
     console.log(data);

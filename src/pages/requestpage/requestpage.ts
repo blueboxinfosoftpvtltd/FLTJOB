@@ -35,7 +35,7 @@ export class RequestpagePage {
   reqid: any;
   reqres: any;
   searchdata: any;
-  constructor(private callNumber: CallNumber,public navCtrl: NavController, public navParams: NavParams, public authprovider: AuthproviderProvider, public storage: Storage, public alertCtrl: AlertController, public events: Events, public socket: Socket) {
+  constructor(private callNumber: CallNumber, public navCtrl: NavController, public navParams: NavParams, public authprovider: AuthproviderProvider, public storage: Storage, public alertCtrl: AlertController, public events: Events, public socket: Socket) {
     this.data = this.navParams.get('data');
     this.newoppositeid = this.navParams.get('oppositeid');
     this.reqid = this.navParams.get('reqid');
@@ -61,7 +61,7 @@ export class RequestpagePage {
 
       this.authprovider.viewprofile(this.id, this.oppositeid).subscribe(res => {
         this.res = res;
-        console.log("Requestdata",this.res.data.Pilot);
+        console.log("Requestdata", this.res.data.Pilot);
         this.profiledata = this.res.data.Pilot;
         this.reqstatus = this.profiledata.requestStatus;
         this.isfavorite = this.profiledata.isFavrouite;
@@ -84,7 +84,7 @@ export class RequestpagePage {
 
       if (this.res.Code == 200) {
         this.authprovider.dismissloading();
-        this.successalert('Pilot', 'Request send successfully');
+        this.successalert('Pilot', 'Request sent successfully');
       }
       else if (this.res.Code == 400) {
         this.authprovider.dismissloading();
@@ -184,11 +184,11 @@ export class RequestpagePage {
     })
   }
 
-  call(phonenumber){
-    if(phonenumber != undefined || phonenumber != null || phonenumber != ''){
-    this.callNumber.callNumber(phonenumber, true)
-    .then(res => console.log('Launched dialer!', res))
-    .catch(err => console.log('Error launching dialer', err));
+  call(phonenumber) {
+    if (phonenumber != undefined || phonenumber != null || phonenumber != '') {
+      this.callNumber.callNumber(phonenumber, true)
+        .then(res => console.log('Launched dialer!', res))
+        .catch(err => console.log('Error launching dialer', err));
+    }
   }
-}
 }

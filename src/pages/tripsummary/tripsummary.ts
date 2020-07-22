@@ -57,15 +57,22 @@ export class TripsummaryPage {
   offsetamt: any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage, public provider: AuthproviderProvider, public alertCtrl: AlertController, public events: Events) {
     this.disableButton = false;
+
+    // get current user usertype
     this.storage.get('usertype').then(val => {
       this.usertype = val;
 
     })
+
+    // get user full name
     this.storage.get('userfullname').then(res => {
       console.log(res);
       this.userfullname = res;
     })
 
+
+    // get current user login id
+    // get the values and set to view
     this.storage.get('id').then(val => {
       this.id = val;
       this.title = this.navParams.get('tname');
@@ -79,9 +86,6 @@ export class TripsummaryPage {
       if (tripsdate > date) {
         this.Iscancel = true;
       }
-      // else {
-      //   this.Iscancel = false;
-      // }
       this.tedate = this.navParams.get('tedate');
       this.aircraft = this.navParams.get('aircraft');
       this.rate = this.navParams.get('rate');
@@ -107,7 +111,7 @@ export class TripsummaryPage {
         }
       })
     })
-    //console.log(this.Ispilotcanceltrip);
+
 
   }
 
@@ -115,6 +119,7 @@ export class TripsummaryPage {
     this.disableButton = false;
   }
 
+  // when accept button is click
   accept() {
     this.disableButton = true;
     const prompt = this.alertCtrl.create({
@@ -131,23 +136,10 @@ export class TripsummaryPage {
         {
           text: 'Accept',
           handler: data => {
+            // if accept go to bank details page
             this.navCtrl.push('AddbankdetailPage', { 'tripid': this.tripid, 'id': this.id, 'oid': this.oppositeid, 'isacceptreject': "1", 'rate': this.rate });
           }
-          // handler: data => {                 
-          //    this.provider.setloading();
-          //     this.isacceptreject = "1";
-          //     this.provider.acceptrejecttrip(this.tripid, this.id, this.isacceptreject, this.rate).subscribe(res => {
-          //       this.res = res;
-          //       if (this.res.Code == 200) {
-          //         this.provider.dismissloading();
-          //         this.message = this.res.msg;
-          //         this.successalert();
-          //       }
-          //       else {
-          //         this.provider.dismissloading();
-          //       }
-          //     })
-          // }
+
         }
       ]
     });
@@ -155,6 +147,7 @@ export class TripsummaryPage {
 
   }
 
+  // when decline button is press
   decline() {
     this.disableButton = true;
 
@@ -195,10 +188,12 @@ export class TripsummaryPage {
 
   }
 
+  // click on negotiate to open alert box
   negotiate() {
     this.presentPrompt();
   }
 
+  // when click on accept offer is click
   acceptoffer() {
     this.provider.setloading();
     this.provider.acceptoffer(this.oppositeid, this.id, this.tripid, this.rate).subscribe(res => {
@@ -217,6 +212,8 @@ export class TripsummaryPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad TripsummaryPage');
   }
+
+  // negotiate alert controller with input
   presentPrompt() {
     this.disableButton = true;
     let alert = this.alertCtrl.create({
@@ -260,6 +257,7 @@ export class TripsummaryPage {
     alert.present();
   }
 
+  // display alert dialog
   successalert() {
     let alert = this.alertCtrl.create({
       title: 'Pilot',
@@ -276,6 +274,7 @@ export class TripsummaryPage {
     alert.present();
   }
 
+  // when owner click on accept button
   acceptowner() {
     this.disableButton = true;
     const prompt = this.alertCtrl.create({
@@ -343,6 +342,7 @@ export class TripsummaryPage {
     prompt.present();
   }
 
+  // when decline click from the owner
   declineowner() {
     this.disableButton = true;
     const prompt = this.alertCtrl.create({
@@ -381,6 +381,7 @@ export class TripsummaryPage {
     prompt.present();
   }
 
+  // display alert dialog
   erroralert() {
     let alert = this.alertCtrl.create({
       title: 'Pilot',
@@ -397,6 +398,7 @@ export class TripsummaryPage {
     alert.present();
   }
 
+  // when payment release button is pressed
   payment() {
     this.disableButton = true;
     this.provider.setloading();
@@ -462,6 +464,8 @@ export class TripsummaryPage {
 
 
   }
+
+  // when cancel trip button is pressed
   canceltrip() {
     if (this.Ispilotcanceltrip == true) {
       this.disableButton = true;
@@ -559,6 +563,7 @@ export class TripsummaryPage {
     }
   }
 
+  // display alert dialog
   successalert1() {
     let alert = this.alertCtrl.create({
       title: 'Pilot',
@@ -577,6 +582,7 @@ export class TripsummaryPage {
     alert.present();
   }
 
+  // display alert dialog for confirmation
   acceptcancel() {
     const prompt = this.alertCtrl.create({
       title: 'Pilot',
@@ -600,7 +606,7 @@ export class TripsummaryPage {
     });
     prompt.present();
   }
-
+  // display alert dialog for confirmation
   declinecancel() {
     const prompt = this.alertCtrl.create({
       title: 'Pilot',
@@ -625,6 +631,7 @@ export class TripsummaryPage {
     prompt.present();
   }
 
+  // when trip cancel button is pressed
   tripcancel(cancelacceptreject) {
     var date = moment().format('YYYY-MM-DD');
     this.provider.setloading();
@@ -653,6 +660,7 @@ export class TripsummaryPage {
     })
   }
 
+  // when ancel trip is click by owner
   canceltripowner() {
 
     if (this.Ispilotcanceltrip == true) {
@@ -750,6 +758,8 @@ export class TripsummaryPage {
       alert.present();
     }
   }
+
+  // when cancel trip accept owner
   acceptcancelowner() {
     const prompt = this.alertCtrl.create({
       title: 'Pilot',
@@ -773,6 +783,8 @@ export class TripsummaryPage {
     });
     prompt.present();
   }
+
+  // when decline accept by owner
   declinecancelowner() {
 
     const prompt = this.alertCtrl.create({
@@ -798,6 +810,7 @@ export class TripsummaryPage {
     prompt.present();
   }
 
+  // when trip successfully cancel by owner
   tripcancelowner(cancelacceptreject) {
     var date = moment().format('YYYY-MM-DD');
     this.provider.setloading();
@@ -826,6 +839,7 @@ export class TripsummaryPage {
     })
   }
 
+  // when complete trip is clicked
   completetrip() {
     this.provider.setloading();
     this.provider.copletetrip(this.tripid).subscribe(res => {
@@ -841,6 +855,8 @@ export class TripsummaryPage {
       }
     })
   }
+
+  // when trip complete by the owner
   completeowner() {
 
     const prompt = this.alertCtrl.create({

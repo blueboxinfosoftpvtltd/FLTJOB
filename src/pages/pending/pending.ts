@@ -14,7 +14,7 @@ export class PendingPage {
   reqList: any;
   length: any;
   checkLength: any;
-  reqres:any;
+  reqres: any;
   constructor(public storage: Storage,
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -22,25 +22,9 @@ export class PendingPage {
     public alertCtrl: AlertController,
     public events: Events) {
 
-
-    // this.events.subscribe('decline', res => {
-    //   this.storage.get('id').then((val) => {
-    //     this.pkpilotid = val;
-    //     console.log(this.pkpilotid);
-    //     this.getAllRequest(this.pkpilotid);
-    //   });
-    // })
-
-    // this.events.subscribe('accept', res => {
-    //   this.storage.get('id').then((val) => {
-    //     this.pkpilotid = val;
-    //     console.log(this.pkpilotid);
-    //     this.getAllRequest(this.pkpilotid);
-    //   });
-    // })
-
   }
 
+  // get all request when page load
   ionViewDidEnter() {
     this.checkLength = false;
     this.storage.get('id').then((val) => {
@@ -73,12 +57,16 @@ export class PendingPage {
         this.reqList = this.req.data.Requests;
         this.checkLength = true;
         console.log(this.reqList);
-        this.provider.dismissloading();
+        this.provider.setrequestread(pkpilotid).subscribe(res => {
+          this.events.publish('pencount', "");
+          this.provider.dismissloading();
+        })
       }
 
     })
   }
 
+  // open alert when someone accept or decline 
   successalert(title, msg, type) {
     if (type == 'decline') {
       let alert = this.alertCtrl.create({
@@ -112,6 +100,7 @@ export class PendingPage {
     }
   }
 
+  // method is called when declined is click
   DeclineRequest(pkRequestId) {
     this.provider.setloading();
     this.provider.requestreject(pkRequestId).subscribe(res => {
@@ -121,27 +110,30 @@ export class PendingPage {
     })
   }
 
+
+  // method is called when accept is click
   AcceptRequest(pkRequestId) {
     this.provider.setloading();
     this.provider.acceptreject(pkRequestId).subscribe(res => {
       console.log(res);
       this.reqres = res;
-      if(this.reqres.Code == 200){
-        this.provider.search('',this.pkpilotid).subscribe(res =>{
+      if (this.reqres.Code == 200) {
+        this.provider.search('', this.pkpilotid).subscribe(res => {
           this.events.publish('refreshsearchdata', res);
         })
         this.provider.dismissloading();
         this.successalert('Pilot', 'Request accepted successfully', 'accept');
       }
-      else{
+      else {
         this.provider.dismissloading();
       }
-      
+
       //this.presentAlert("Pilot", this.req.msg);
-     
+
     })
   }
 
+  // display alert messasge
   presentAlert(title, message) {
     let alert = this.alertCtrl.create({
       title: title,

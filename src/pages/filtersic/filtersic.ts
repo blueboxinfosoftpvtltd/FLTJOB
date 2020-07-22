@@ -83,9 +83,16 @@ export class FiltersicPage {
   isnearest: number = 0;
   isprofile: any;
   isgender: any;
+  gdata: any;
+  fdata: any;
+  idata: any;
   constructor(public navCtrl: NavController, public navParams: NavParams, private selector: WheelSelector, public provider: AuthproviderProvider, public events: Events, public alertCtrl: AlertController, public modalCtrl: ModalController) {
 
+    // get reschedule data if available
+    this.gdata = provider.getsdata();
     var that = this;
+
+    // set rating value
     jQuery(function () {
 
 
@@ -135,21 +142,27 @@ export class FiltersicPage {
       this.showfinishfi = true;
     }
 
+    // get selected continenets data from continets page
     this.events.subscribe('continentdata', res => {
       this.continents = res;
     })
+
+    // get continents data
     this.provider.getContinents().subscribe(res => {
       this.continentlist = res;
       this.continentlist = this.continentlist.continents.continentdata;
     });
   }
 
+  // get change rating value
   logRatingChange(rating) {
     this.ratingcount = rating;
     console.log(this.ratingcount);
   }
 
   ionViewDidEnter() {
+
+    // method to handle back button
     this.navBar.backButtonClick = () => {
       console.log(this.filtersicstep);
 
@@ -225,12 +238,40 @@ export class FiltersicPage {
       }
     };
 
+    // set reschedule data if available
+    if (this.gdata) {
+      this.totaltime = this.gdata.AircraftTotalTime;
+      this.totaltimetype = this.gdata.TotalTimeAircraftId;
+      this.mclass = this.gdata.FAAMedical;
+      this.ratingcount = this.gdata.RatingCount;
+      this.continents = this.gdata.Continent;
+      if (this.gdata.HavePassport) {
+        this.validpassyes = true;
+      }
+      else {
+        this.validpassno = true;
+      }
+      if (this.gdata.rating == "Commercial") {
+        this.ratingc = true;
+      }
+      else {
+        this.ratinga = true;
+      }
+      if (this.gdata.IsReqPrev12MonthTraining) {
+        this.mstrainingyes = true;
+      }
+      else {
+        this.mstrainingno = true;
+      }
+    }
+
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad FiltercaptainPage');
   }
 
+  // set wheel selector value
   openpicker() {
     this.selector.show({
       title: "",
@@ -249,6 +290,7 @@ export class FiltersicPage {
       err => console.log('Error: ', err)
     );
   }
+  // method to handle checkbox click event
   cheboxcheck(op, event) {
     if (op == 'msy') {
       if (event.checked == true) {
@@ -292,10 +334,12 @@ export class FiltersicPage {
     }
   }
 
+  // open continents page
   selectcontinents() {
     this.navCtrl.push('SelectcontinentPage', { 'continetdata': this.continentlist, 'selectedcontinent': this.continents, animate: false });
   }
 
+  // call when next button pressed from 3rd tab
   filter() {
     if (this.favsic == undefined || this.favsic == false) {
       this.favsic = 0
@@ -423,6 +467,7 @@ export class FiltersicPage {
     }
   }
 
+  // call when change filter button pressed
   changefilter() {
     var that = this;
     jQuery(function () {
@@ -456,6 +501,8 @@ export class FiltersicPage {
     this.txt3color = '#fff';
     this.txt4color = '#fff';
   }
+
+  // call when next button pressed from 1st tab
   save1() {
     if (this.totaltime == undefined) {
       this.errormessage = "Please enter total time";
@@ -478,6 +525,7 @@ export class FiltersicPage {
 
   }
 
+  //  call when next button pressed from 2nd tab
   save2() {
 
     if (this.rate == undefined) {
@@ -501,6 +549,8 @@ export class FiltersicPage {
     }
 
   }
+
+  // method to handle tab click event like 1,2,3,4
   activestep(op) {
     this.filtersicstep = op;
 
@@ -569,6 +619,8 @@ export class FiltersicPage {
       this.txt4color = '#000';
     }
   }
+
+  // display alert dialog
   showAlert() {
     const alert = this.alertCtrl.create({
       title: 'Pilot',
@@ -578,6 +630,8 @@ export class FiltersicPage {
     alert.present();
   }
 
+
+  // call when send notification button pressed
   sendnotification() {
     this.provider.setloading();
     for (let i = 0; i < this.siclist.length; i++) {
@@ -589,14 +643,79 @@ export class FiltersicPage {
     if (this.sicid.length != 0) {
       this.provider.sendnotification(this.sicid, this.id, this.tripid, this.rate).subscribe(res => {
         if (this.fatt == true) {
-          this.provider.dismissloading();
-          this.navCtrl.push('FilterflightattendantPage', { 'id': this.id, 'tripid': this.tripid, 'aircraftname': this.aircraftname, 'fins': this.fins, 'oce': this.oceexp, 'isprofile': this.isprofile, 'isgender': this.isgender });
-        }
+          if (this.gdata) {
+            this.provider.getftrip(this.gdata.pkTripId, this.id).subscribe(res => {
+              console.log(res);
+              this.fdata = res;
+              this.fdata = this.fdata.data.Trip;
+              if (this.fdata == null) {
+                this.provider.setfdata("");
+                this.provider.dismissloading();
+                this.navCtrl.push('FilterflightattendantPage', { 'id': this.id, 'tripid': this.tripid, 'aircraftname': this.aircraftname, 'fatt': this.fatt, 'fins': this.fins, 'oce': this.oceexp, 'isprofile': this.isprofile, 'isgender': this.isgender });
+              }
+              // console.log(tid);
+              else {
+                this.fdata = this.fdata[0];
+                this.provider.setfdata(this.fdata);
+                this.provider.dismissloading();
+                this.navCtrl.push('FilterflightattendantPage', { 'id': this.id, 'tripid': this.tripid, 'aircraftname': this.aircraftname, 'fatt': this.fatt, 'fins': this.fins, 'oce': this.oceexp, 'isprofile': this.isprofile, 'isgender': this.isgender });
+                //this.app.getRootNav().push("SelectprofilePage");
 
-        else if (this.fins == true) {
-          this.provider.dismissloading();
-          this.navCtrl.push('FilterflightinstructorPage', { 'id': this.id, 'tripid': this.tripid, 'aircraftname': this.aircraftname, 'fatt': this.fatt, 'oce': this.oceexp, 'isprofile': this.isprofile, 'isgender': this.isgender });
+              }
+              //this.provider.dismissloading();
+            },
+              err => this.provider.dismissloading());
+          }
+          else {
+            this.provider.dismissloading();
+            this.navCtrl.push('FilterflightattendantPage', { 'id': this.id, 'tripid': this.tripid, 'aircraftname': this.aircraftname, 'fatt': this.fatt, 'fins': this.fins, 'oce': this.oceexp, 'isprofile': this.isprofile, 'isgender': this.isgender });
+          }
+
+
+
+          // this.provider.dismissloading();
+          // this.navCtrl.push('FilterflightattendantPage', { 'id': this.id, 'tripid': this.tripid, 'aircraftname': this.aircraftname, 'fatt': this.fatt, 'fins': this.fins, 'oce': this.oceexp, 'isprofile': this.isprofile, 'isgender': this.isgender });
         }
+        else if (this.fins == true) {
+          //this.provider.dismissloading();
+          if (this.gdata) {
+            this.provider.getitrip(this.gdata.pkTripId, this.id).subscribe(res => {
+              console.log(res);
+              this.idata = res;
+              this.idata = this.idata.data.Trip;
+              if (this.idata == null) {
+                this.provider.setidata("");
+                this.provider.dismissloading();
+                this.navCtrl.push('FilterflightinstructorPage', { 'id': this.id, 'tripid': this.tripid, 'aircraftname': this.aircraftname, 'fatt': this.fatt, 'fins': this.fins, 'oce': this.oceexp, 'isprofile': this.isprofile, 'isgender': this.isgender });
+              }
+              // console.log(tid);
+              else {
+                this.idata = this.idata[0];
+                this.provider.setidata(this.idata);
+                this.provider.dismissloading();
+                this.navCtrl.push('FilterflightinstructorPage', { 'id': this.id, 'tripid': this.tripid, 'aircraftname': this.aircraftname, 'fatt': this.fatt, 'fins': this.fins, 'oce': this.oceexp, 'isprofile': this.isprofile, 'isgender': this.isgender });
+                //this.app.getRootNav().push("SelectprofilePage");
+
+              }
+              //this.provider.dismissloading();
+            },
+              err => this.provider.dismissloading());
+          }
+          else {
+            this.provider.dismissloading();
+            this.navCtrl.push('FilterflightinstructorPage', { 'id': this.id, 'tripid': this.tripid, 'aircraftname': this.aircraftname, 'fatt': this.fatt, 'fins': this.fins, 'oce': this.oceexp, 'isprofile': this.isprofile, 'isgender': this.isgender });
+          }
+
+        }
+        // if (this.fatt == true) {
+        //   this.provider.dismissloading();
+        //   this.navCtrl.push('FilterflightattendantPage', { 'id': this.id, 'tripid': this.tripid, 'aircraftname': this.aircraftname, 'fins': this.fins, 'oce': this.oceexp, 'isprofile': this.isprofile, 'isgender': this.isgender });
+        // }
+
+        // else if (this.fins == true) {
+        //   this.provider.dismissloading();
+        //   this.navCtrl.push('FilterflightinstructorPage', { 'id': this.id, 'tripid': this.tripid, 'aircraftname': this.aircraftname, 'fatt': this.fatt, 'oce': this.oceexp, 'isprofile': this.isprofile, 'isgender': this.isgender });
+        // }
         else {
           this.provider.dismissloading();
           //this.navCtrl.push('TabpagePage');
@@ -610,6 +729,7 @@ export class FiltersicPage {
 
   }
 
+  // display alert dialog
   showAlert1(title, msg) {
     const alert = this.alertCtrl.create({
       title: title,
@@ -626,10 +746,12 @@ export class FiltersicPage {
     alert.present();
   }
 
+  // call when finish button click
   finish() {
     this.navCtrl.push('TabpagePage', { 'istab': false });
   }
 
+  // call when next button press from 4th tab
   next() {
     if (this.fatt == true) {
       this.navCtrl.push('FilterflightattendantPage', { 'id': this.id, 'tripid': this.tripid, 'aircraftname': this.aircraftname, 'fins': this.fins, 'isprofile': this.isprofile, 'isgender': this.isgender });
@@ -639,6 +761,8 @@ export class FiltersicPage {
       this.navCtrl.push('FilterflightinstructorPage', { 'id': this.id, 'tripid': this.tripid, 'aircraftname': this.aircraftname, 'fatt': this.fatt, 'isprofile': this.isprofile, 'isgender': this.isgender });
     }
   }
+
+  // click to open profile page in modal controller
   openProfile(opid) {
     this.provider.setloading();
     this.provider.viewprofile(this.id, opid).subscribe(res => {

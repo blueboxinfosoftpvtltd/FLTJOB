@@ -26,6 +26,7 @@ export class SelectoceansPage {
   public date: string = new Date().toISOString();
   constructor(public navCtrl: NavController, public navParams: NavParams, public event: Events) {
 
+    // get ocanics data
     this.oceansdata = this.navParams.get('oceansdata');
     if (this.oceansdata != undefined) {
       this.title = "Select Ocean"
@@ -40,6 +41,8 @@ export class SelectoceansPage {
 
   }
   ionViewDidEnter() {
+
+    // back button functionality
     this.navBar.backButtonClick = () => {
       this.navCtrl.pop();
     };
@@ -49,6 +52,8 @@ export class SelectoceansPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad SelectaircraftPage');
   }
+
+  // when ocenas is select
   listselect(oceansname) {
     console.log(oceansname);
     this.name = oceansname;
@@ -57,6 +62,7 @@ export class SelectoceansPage {
     console.log('back done');
   }
 
+  // when class is select
   listselectclass(classname, classid) {
     this.name = classname;
     this.event.publish('classdata', [this.name, classid]);

@@ -72,7 +72,10 @@ export class OpenpendingnotificationPage {
   }
 
   ionViewDidEnter() {
+    // get trip id
     this.newtripid = this.navParams.get('tripid');
+
+    // back button functionality
     this.navBar.backButtonClick = () => {
       this.navCtrl.pop();
       if (this.isPending == true) {
@@ -88,29 +91,26 @@ export class OpenpendingnotificationPage {
     }
     this.provider.setloading();
     console.log('ionViewDidLoad OpenpendingnotificationPage');
+
     this.isPending = this.navParams.get('isPending');
     this.isCurrent = this.navParams.get('isCurrent');
     this.isFuture = this.navParams.get('');
     this.isHistory = this.navParams.get('isHistory');
-    //this.title = this.navParams.get('tripname');
     this.tripid = this.navParams.get('tripid');
     this.iscancel = this.navParams.get('iscancel');
-    // this.aircraft = this.navParams.get('aircraft');
-    // this.rate = this.navParams.get('rate');
-    // this.enroutecode = this.navParams.get('enroutecode');
-    // this.depcode = this.navParams.get('depcode');
-    // this.descode = this.navParams.get('descode');
-    // this.tsdate = this.navParams.get('tsdate');
-    // this.tedate = this.navParams.get('tedate');
 
+
+    // get current user login type
     this.storage.get('usertype').then(val => {
       this.usertype = val;
     })
+    // get current login id
     this.storage.get('id').then(val => {
       this.id = val;
       if (this.tripid == undefined) {
         this.tripid = this.newtripid;
       }
+      // get trip details and display in view
       this.provider.gettripdetail(this.tripid, this.id).subscribe(res => {
         this.res = res;
         console.log(this.res);
@@ -123,7 +123,6 @@ export class OpenpendingnotificationPage {
             this.isfav = false;
           }
           if (this.res.data.Summary != null) {
-            // this.oppositeid = this.res.data.Summary[0].oppositId;
             this.isescrow = this.res.data.Summary[0].IsEscrow;
             this.pilotname = this.res.data.Summary[0].Name;
             this.ispartial = this.res.data.Summary[0].IsPartial;
@@ -154,6 +153,8 @@ export class OpenpendingnotificationPage {
 
             this.displaydata = true;
             this.provider.dismissloading();
+
+            // when trip is pending trip
             if (this.isPending == true) {
               this.provider.getPendingtrip(this.id).subscribe(res => {
                 this.pendingdata = res;
@@ -170,6 +171,7 @@ export class OpenpendingnotificationPage {
                 }
               })
             }
+            // when trip is current trip
             if (this.isCurrent == true) {
               this.provider.getCurrenttrip(this.id).subscribe(res => {
                 this.currentdata = res;
@@ -186,6 +188,8 @@ export class OpenpendingnotificationPage {
                 }
               })
             }
+
+            // when trip is history trip
             if (this.isHistory == true) {
               this.provider.getHistorytrip(this.id).subscribe(res => {
                 this.historydata = res;
@@ -221,6 +225,7 @@ export class OpenpendingnotificationPage {
     })
   }
 
+  // add user as favorite list
   addasfav() {
     if (this.isfavorite == "0") {
       this.provider.setloading();
@@ -253,6 +258,8 @@ export class OpenpendingnotificationPage {
       })
     }
   }
+
+  // display alert dialog
   showAlert(message) {
     const alert = this.alertCtrl.create({
       title: 'Pilot',
@@ -262,6 +269,7 @@ export class OpenpendingnotificationPage {
     alert.present();
   }
 
+  // display alert dialog
   presentalert() {
     let alert = this.alertCtrl.create({
       title: 'Pilot',
@@ -282,9 +290,12 @@ export class OpenpendingnotificationPage {
 
   }
 
+  // when click on any card any view according to their type next action is performed
+  // type is 3 means rating and comment is pending
+  // type 4 means rating and comment is done
   tripsummary(type, oppositeid, tripid, rate, accpted, designation, RattingForId, EntryDate, comment, rating, message, IsAlreadyAccepted) {
     console.log(accpted);
-    console.log(RattingForId)
+    console.log(RattingForId);
     if (message == '' && type == 0) {
     }
     else {
@@ -297,6 +308,7 @@ export class OpenpendingnotificationPage {
         this.navCtrl.push('UserrattingPage', { 'tripid': tripid, 'oppositeid': RattingForId, 'comment': comment, 'rating': rating });
       }
       else {
+        // when owner and any other member wants to cancel trip
         if (type == 8 || type == 9) {
           this.provider.setloading();
           this.provider.getReasonforCancel(tripid, oppositeid).subscribe(res => {
@@ -307,9 +319,12 @@ export class OpenpendingnotificationPage {
             this.navCtrl.push('TripsummaryPage', { 'tname': this.title, 'depcode': this.depcode, 'enroutecode': this.enroutecode, 'descode': this.descode, 'tsdate': this.tsdate, 'tedate': this.tedate, 'aircraft': this.aircraft, 'rate': this.rate, 'oppositeid': oppositeid, 'tripid': tripid, 'type': type, 'accepted': accpted, 'designation': designation, 'EntryDate': EntryDate, 'Message': message, 'isaccepted': IsAlreadyAccepted, 'summary': this.notificationlist, 'reason': this.getreasonres });
           })
         }
+        // redirct to trip summary page to display trip details
+        // type 12 means initial escrow payment requested
         else if (type == 12) {
           this.navCtrl.push('TripsummaryPage', { 'tname': this.title, 'depcode': this.depcode, 'enroutecode': this.enroutecode, 'descode': this.descode, 'tsdate': this.tsdate, 'tedate': this.tedate, 'aircraft': this.aircraft, 'rate': this.rate, 'oppositeid': oppositeid, 'tripid': tripid, 'type': type, 'accepted': accpted, 'designation': designation, 'EntryDate': EntryDate, 'Message': message, 'isaccepted': IsAlreadyAccepted, 'summary': this.notificationlist, 'reason': this.getreasonres, 'iscancel': this.iscancel, 'isescrow': this.isescrow, 'partialamt': this.partialamt, 'offsetamt': this.offsetamt });
         }
+        // initial escrow not requested
         else {
           this.navCtrl.push('TripsummaryPage', { 'tname': this.title, 'depcode': this.depcode, 'enroutecode': this.enroutecode, 'descode': this.descode, 'tsdate': this.tsdate, 'tedate': this.tedate, 'aircraft': this.aircraft, 'rate': this.rate, 'oppositeid': oppositeid, 'tripid': tripid, 'type': type, 'accepted': accpted, 'designation': designation, 'EntryDate': EntryDate, 'Message': message, 'isaccepted': IsAlreadyAccepted, 'summary': this.notificationlist, 'reason': this.getreasonres, 'iscancel': this.iscancel, 'isescrow': this.isescrow, 'offsetamt': this.offsetamt, 'partialamt': null });
         }
@@ -321,6 +336,7 @@ export class OpenpendingnotificationPage {
 
   }
 
+  // click to open profile page in modal controller
   openProfile(opid, type) {
     console.log(this.oppositeid);
     if (type == '0') {

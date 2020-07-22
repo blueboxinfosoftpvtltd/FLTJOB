@@ -20,6 +20,8 @@ export class FavuserPage {
   res: any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public provider: AuthproviderProvider,
     public modalCtrl: ModalController, public events: Events, public storage: Storage, public alertCtrl: AlertController) {
+
+    // get fav list using current login id
     this.storage.get('id').then(val => {
       this.id = val;
       this.GetFavUser();
@@ -49,6 +51,7 @@ export class FavuserPage {
     })
   }
 
+  // open fav user profile
   GoToProfile(favuserid) {
     // e.stopPropagation();
     console.log(favuserid);
@@ -61,6 +64,8 @@ export class FavuserPage {
       });
     })
   }
+
+  // display alert dialog
   presentAlert(title, message) {
     let alert = this.alertCtrl.create({
       title: title,
@@ -70,6 +75,7 @@ export class FavuserPage {
     alert.present();
   }
 
+  // remove fav user
   removeItem(pid) {
 
     const prompt = this.alertCtrl.create({
@@ -98,17 +104,7 @@ export class FavuserPage {
                 this.provider.dismissloading();
                 this.presentAlert("Pilot", "No favorites found");
               }
-              // this.favuserlist = [];
-              // this.notification = res;
-              // if (this.notification.data == null) {
-              //   this.provider.dismissloading();
-              //   this.presentAlert("Pilot", "No notifications found");
-              // } else {
-              //   this.provider.dismissloading();
-              //   this.notificationList = this.notification.data.Notification;
-              //   console.log(this.notificationList);
 
-              // }
             },
               err => this.provider.dismissloading())
           }

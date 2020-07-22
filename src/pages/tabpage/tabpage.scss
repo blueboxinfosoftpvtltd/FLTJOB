@@ -13,6 +13,16 @@ page-tabpage {
     .tabs .tabbar {
         background-color: #fff;
     }
+    .tab-badge {
+        right: 4%;
+        top: 4%;
+        /* right: calc(50% - 50px); */
+        padding: 1px 6px;
+        position: absolute;
+        height: auto;
+        font-size: 12px;
+        line-height: 16px;
+    }
 
     .tabs-ios .tab-button[aria-selected=true] {
         color: #000;

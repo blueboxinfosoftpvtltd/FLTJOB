@@ -50,6 +50,7 @@ export class CountryselectPage {
   }
 
   ionViewDidEnter() {
+    // get country data
     var country = this.provider.getmasterdata();
     this.countrydata = country.data.Countries;
     this.tempcountry = this.countrydata;
@@ -58,6 +59,8 @@ export class CountryselectPage {
     this.issingle = this.navParams.get('issingle');
     console.log(this.countrydata);
     this.provider.dismissloading();
+
+    // back button functionality
     this.navBar.backButtonClick = () => {
       this.selecteddata = [];
       for (let i = 0; i < this.tempcountry.length; i++) {
@@ -93,6 +96,7 @@ export class CountryselectPage {
     console.log('ionViewDidLoad SelectaircraftPage');
   }
 
+  // checkbox select method
   checkboxselect(data, event) {
     if (event.checked == false) {
       this.listcountry.splice(data);
@@ -102,6 +106,7 @@ export class CountryselectPage {
 
   }
 
+  // list select method
   listselect(name, code) {
     this.event.publish('countryname', [name, code]);
     this.navCtrl.pop();
