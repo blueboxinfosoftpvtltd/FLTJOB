@@ -35,6 +35,7 @@ export class AuthproviderProvider {
   sdata: any;
   idata: any;
   fdata: any;
+  senderID: any;
   isback: boolean = false;
   constructor(public http: HttpClient, public storage: Storage, public loadingCtrl: LoadingController) {
     console.log('Hello AuthproviderProvider Provider');

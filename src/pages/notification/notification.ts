@@ -61,7 +61,7 @@ export class NotificationPage {
   // display alert message
   presentAlert(title, message) {
     let alert = this.alertCtrl.create({
-      title: title,
+      title: "",
       subTitle: message,
       buttons: ['Ok']
     });
@@ -79,7 +79,6 @@ export class NotificationPage {
   removeItem(nid) {
 
     const prompt = this.alertCtrl.create({
-      title: 'Pilot',
       message: "Are you sure you want to delete ?",
       buttons: [
         {

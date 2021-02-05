@@ -120,7 +120,7 @@ export class AddavailabilityPage {
   // display alert dialog
   showAlert(title, msg) {
     const alert = this.alertCtrl.create({
-      title: title,
+      title: "",
       subTitle: msg,
       buttons: [
         {
@@ -137,7 +137,7 @@ export class AddavailabilityPage {
   // display alert dialog
   successalert(title, msg) {
     let alert = this.alertCtrl.create({
-      title: title,
+      title: "",
       message: msg,
       buttons: [
         {

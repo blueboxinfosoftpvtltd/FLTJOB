@@ -262,7 +262,7 @@ export class AvailabilityPage {
 
   showAlert(title, msg) {
     const alert = this.alertCtrl.create({
-      title: title,
+      title: "",
       subTitle: msg,
       buttons: ['OK']
     });
@@ -271,7 +271,6 @@ export class AvailabilityPage {
 
   presentConfirm(pkAvailabilityId, fkPilotid, Comment, FromDate, ToDate) {
     let alert = this.alertCtrl.create({
-      title: 'Pilot',
       message: 'Do you want to delete availability?',
       buttons: [
         {
@@ -303,7 +302,7 @@ export class AvailabilityPage {
 
   presentAlert(title, message) {
     let alert = this.alertCtrl.create({
-      title: title,
+      title: "",
       subTitle: message,
       buttons: ['Ok']
     });

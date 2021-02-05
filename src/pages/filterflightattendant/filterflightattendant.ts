@@ -651,7 +651,7 @@ export class FilterflightattendantPage {
 
     if (this.favattendant == false && this.allattendant == false && this.avlattendant == false) {
       let alert = this.alertCtrl.create({
-        title: "Pilot",
+        title: "",
         message: "Please select atleast one option",
         buttons: [
           {
@@ -666,7 +666,7 @@ export class FilterflightattendantPage {
     }
     else if (this.favattendant == undefined && this.allattendant == undefined && this.avlattendant == undefined) {
       let alert = this.alertCtrl.create({
-        title: "Pilot",
+        title: "",
         message: "Please select atleast one option",
         buttons: [
           {
@@ -754,22 +754,29 @@ export class FilterflightattendantPage {
         }
         this.res = res;
         if (this.res.Code == 200) {
-          if (this.res.data.FA == null || this.res.data == null) {
+          if(this.res.data == null){
             this.dispdata = false;
-            if (this.fns_shno == 0) {
-              this.fns_sh = '_finish'
-            }
-            else if (this.fns_shno > 0) {
-              this.fns_sh = '_next'
-            }
           }
-          else {
+          else{
             this.dispdata = true;
             this.attendantlist = this.res.data.FA;
-            if (this.fns_shno >= 0) {
-              this.fns_sh = '_send'
-            }
           }
+          // if (this.res.data.FA == null || this.res.data == null) {
+          //   this.dispdata = false;
+          //   if (this.fns_shno == 0) {
+          //     this.fns_sh = '_finish'
+          //   }
+          //   else if (this.fns_shno > 0) {
+          //     this.fns_sh = '_next'
+          //   }
+          // }
+          // else {
+          //   this.dispdata = true;
+          //   this.attendantlist = this.res.data.FA;
+          //   if (this.fns_shno >= 0) {
+          //     this.fns_sh = '_send'
+          //   }
+          // }
           this.provider.dismissloading();
         }
 
@@ -933,7 +940,6 @@ export class FilterflightattendantPage {
   // display alert dialog
   showAlert() {
     const alert = this.alertCtrl.create({
-      title: 'Pilot',
       subTitle: this.errormessage,
       buttons: ['OK']
     });
@@ -1005,7 +1011,7 @@ export class FilterflightattendantPage {
   // display alert dialog
   showAlert1(title, msg) {
     const alert = this.alertCtrl.create({
-      title: title,
+      title: "",
       subTitle: msg,
       buttons: [
         {

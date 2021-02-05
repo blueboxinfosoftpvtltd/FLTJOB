@@ -430,7 +430,7 @@ export class FiltercaptainPage {
 
     if (this.favcaptain == false && this.allcaptain == false && this.avlcaptain == false) {
       let alert = this.alertCtrl.create({
-        title: "Pilot",
+        title: "",
         message: "Please select atleast one option",
         buttons: [
           {
@@ -445,7 +445,7 @@ export class FiltercaptainPage {
     }
     else if (this.favcaptain == undefined && this.allcaptain == undefined && this.avlcaptain == undefined) {
       let alert = this.alertCtrl.create({
-        title: "Pilot",
+        title: "",
         message: "Please select atleast one option",
         buttons: [
           {
@@ -745,7 +745,6 @@ export class FiltercaptainPage {
   // display alert dialog
   showAlert() {
     const alert = this.alertCtrl.create({
-      title: 'Pilot',
       subTitle: this.errormessage,
       buttons: ['OK']
     });
@@ -880,7 +879,7 @@ export class FiltercaptainPage {
   // display alert dialog
   showAlert1(title, msg) {
     const alert = this.alertCtrl.create({
-      title: title,
+      title: "",
       subTitle: msg,
       buttons: [
         {

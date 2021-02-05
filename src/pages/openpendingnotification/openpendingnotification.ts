@@ -60,6 +60,7 @@ export class OpenpendingnotificationPage {
   pilotname: any;
   ispartial: any;
   fpartialamt: any;
+  RattingForDesignation: any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public provider: AuthproviderProvider, public storage: Storage, public events: Events, public modalCtrl: ModalController, public alertCtrl: AlertController) {
 
     this.isVoid = this.provider.getescrowskip();
@@ -69,6 +70,7 @@ export class OpenpendingnotificationPage {
     else if (this.isVoid == false) {
       this.isskip = 0;
     }
+    this.RattingForDesignation = "Owner/Operator";
   }
 
   ionViewDidEnter() {
@@ -250,7 +252,7 @@ export class OpenpendingnotificationPage {
         if (this.favres.Code == 200) {
           this.provider.dismissloading();
           this.isfav = false;
-          this.showAlert('Remove from favorite list');
+          this.showAlert('Removed from favorite list');
         }
         else {
           this.provider.dismissloading();
@@ -262,7 +264,6 @@ export class OpenpendingnotificationPage {
   // display alert dialog
   showAlert(message) {
     const alert = this.alertCtrl.create({
-      title: 'Pilot',
       subTitle: message,
       buttons: ['OK']
     });
@@ -272,7 +273,6 @@ export class OpenpendingnotificationPage {
   // display alert dialog
   presentalert() {
     let alert = this.alertCtrl.create({
-      title: 'Pilot',
       message: 'No records found!',
       buttons: [
         {

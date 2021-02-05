@@ -6,7 +6,7 @@
     <ion-col style="padding: 9px !important;">
       <ion-row style="background: #387ef5">
         <ion-col col-5>
-          <img class="profile-photo" src="{{data.PhotoPath}}" />
+          <img class="profile-photo" (click)="viewProfile(data.FromPilotId)" src="{{data.PhotoPath}}" />
         </ion-col>
         <ion-col col-7>
           <ion-row>

@@ -80,7 +80,7 @@ export class UserrattingPage {
       this.res = res;
       if (this.res.Code == 200) {
         this.provider.dismissloading();
-        this.successalert('Pilot', 'Rating and comment done');
+        this.successalert('', 'Rating and comment done');
       }
       else {
         this.provider.dismissloading();

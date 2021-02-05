@@ -46,6 +46,7 @@
     "angular2-moment": "^0.8.2",
     "angular2-text-mask": "^9.0.0",
     "call-number": "^1.0.1",
+    "capacitor-apple-login": "git+https://github.com/rlfrahm/capacitor-apple-login.git",
     "capacitor-fcm": "^0.1.0",
     "cordova-ios": "^5.1.1",
     "cordova-plugin-badge": "^0.8.8",

@@ -148,7 +148,7 @@ export class GetavailablePage {
   // display alert dialog
   showAlert(title, msg) {
     const alert = this.alertCtrl.create({
-      title: title,
+      title: "",
       subTitle: msg,
       buttons: ['OK']
     });

@@ -20,6 +20,7 @@ import { AuthproviderProvider } from '../../providers/authprovider/authprovider'
 export class SelectaircraftPage {
   @ViewChild('navbar') navBar: Navbar;
   aircrafts: any;
+  tempaircrafts: any;
   name: any;
   aircraftname: any;
   listaircraft: any[] = [];
@@ -60,10 +61,16 @@ export class SelectaircraftPage {
   // when type i searchbox
   onInput() {
     if (this.type == 'aircraft' || this.type == 'singleaircraft') {
+ 
       if (this.searchcode.toString().length >= 2) {
-        this.aircrafts = this.aircrafts.filter((item) => {
+
+        this.aircrafts = this.tempdata.filter((item) => {
           console.log(this.searchcode);
-          return item.AircraftType.indexOf(this.searchcode) > -1;
+         // return item.AircraftType.indexOf(this.searchcode) > -1;
+        //  return item.AircraftType.toLowerCase().trim().indexOf((this.searchcode.toLowerCase().trim()) > -1);
+         // return item.AircraftType.includes(this.searchcode);
+          return (item.AircraftType.toLowerCase().indexOf(this.searchcode.toLowerCase()) > -1);
+      
         });
       }
       else if (this.searchcode.toString().length < 2) {
@@ -72,9 +79,14 @@ export class SelectaircraftPage {
     }
     else if (this.type == 'trainaircraft') {
       if (this.searchcode.toString().length >= 2) {
-        this.trainaircrafts = this.trainaircrafts.filter((item) => {
+        this.trainaircrafts = this.traintempdata.filter((item) => {
           console.log(this.searchcode);
-          return item.AircraftType.indexOf(this.searchcode) > -1;
+     //    return item.AircraftType.indexOf(this.searchcode) > -1;
+      //   return item.AircraftType.toLowerCase().trim().indexOf((this.searchcode.toLowerCase().trim()) > -1);
+        // return item.AircraftType.includes(this.searchcode);
+         return (item.AircraftType.toLowerCase().indexOf(this.searchcode.toLowerCase()) > -1);
+      
+      
         });
       }
       else if (this.searchcode.toString().length < 2) {
@@ -84,9 +96,14 @@ export class SelectaircraftPage {
 
     else if (this.type == 'language') {
       if (this.searchcode.toString().length >= 2) {
-        this.languages = this.languages.filter((item) => {
+        this.languages = this.templanguage.filter((item) => {
           console.log(this.searchcode);
-          return item.LanguageName.indexOf(this.searchcode) > -1;
+        //  return item.LanguageName.indexOf(this.searchcode) > -1;
+         // return item.LanguageName.toLowerCase().indexOf((this.searchcode.toLowerCase()) > -1);
+       //  return item.LanguageName.toLowerCase().trim().indexOf((this.searchcode.toLowerCase().trim()) > -1);
+        // return item.LanguageName.includes(this.searchcode);
+         return (item.LanguageName.toLowerCase().indexOf(this.searchcode.toLowerCase()) > -1);
+      
         });
       }
       else if (this.searchcode.toString().length < 2) {

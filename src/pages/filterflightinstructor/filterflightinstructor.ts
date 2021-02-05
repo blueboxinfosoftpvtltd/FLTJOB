@@ -372,7 +372,7 @@ export class FilterflightinstructorPage {
 
     if (this.favinstructor == false && this.allinstructor == false && this.avlinstructor == false) {
       let alert = this.alertCtrl.create({
-        title: "Pilot",
+        title: "",
         message: "Please select atleast one option",
         buttons: [
           {
@@ -387,7 +387,7 @@ export class FilterflightinstructorPage {
     }
     else if (this.favinstructor == undefined && this.allinstructor == undefined && this.avlinstructor == undefined) {
       let alert = this.alertCtrl.create({
-        title: "Pilot",
+        title: "",
         message: "Please select atleast one option",
         buttons: [
           {
@@ -420,7 +420,7 @@ export class FilterflightinstructorPage {
       if (this.instrumentinsno == true) {
         this.instrumentinstructor = "0";
       }
-      else if (this, this.instrumentinsyes == true) {
+      else if (this.instrumentinsyes == true) {
         this.instrumentinstructor = "1";
       }
 
@@ -622,7 +622,6 @@ export class FilterflightinstructorPage {
   // display alert dialog
   showAlert() {
     const alert = this.alertCtrl.create({
-      title: 'Pilot',
       subTitle: this.errormessage,
       buttons: ['OK']
     });
@@ -657,7 +656,7 @@ export class FilterflightinstructorPage {
   // display alert dialog
   showAlert1(title, msg) {
     const alert = this.alertCtrl.create({
-      title: title,
+      title: "",
       subTitle: msg,
       buttons: [
         {
@@ -686,7 +685,6 @@ export class FilterflightinstructorPage {
         this.events.publish('userdata', res);
       });
     })
-
   }
 }
 

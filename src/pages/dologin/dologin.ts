@@ -403,7 +403,6 @@ export class DologinPage {
   // display loading dialog
   showAlert() {
     const alert = this.alertCtrl.create({
-      title: 'Pilot',
       subTitle: this.message,
       buttons: ['OK']
     });

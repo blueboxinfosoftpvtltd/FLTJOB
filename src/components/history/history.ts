@@ -148,7 +148,7 @@ export class HistoryComponent {
   // display alert message
   showAlert2(message) {
     const alert = this.alertCtrl.create({
-      title: 'Pilot',
+     // title: 'Pilot',
       subTitle: message,
       buttons: ['OK']
     });

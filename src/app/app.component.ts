@@ -50,6 +50,7 @@ export class MyApp {
     pencount: number = 0;
     message: any;
     mcount: number = 0;
+    isgoogle:any;
     // tab1: any = HomePage;
     // tab2: any = "ProfilePage";
     // tab3: any = "PendingPage";
@@ -127,6 +128,9 @@ export class MyApp {
                     this.provider.settoken(this.token);
                 }
 
+            })
+            storage.get('isgooglelogin').then(val =>{
+                 this.isgoogle = val;
             })
 
             // if password is store in storage then login when user resart the app without logout
@@ -400,6 +404,7 @@ export class MyApp {
                     });
 
                 }
+                
 
                 // if no value is available in storage then get fcm token and redirect to login page
                 else {

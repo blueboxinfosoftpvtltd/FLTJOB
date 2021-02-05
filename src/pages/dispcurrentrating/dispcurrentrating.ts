@@ -72,7 +72,7 @@ export class DispcurrentratingPage {
   // display alert dialog
   successalert(title, msg) {
     let alert = this.alertCtrl.create({
-      title: title,
+      title: "",
       message: msg,
       buttons: [
         {
@@ -89,7 +89,6 @@ export class DispcurrentratingPage {
   // alert to confirm on deletion of certificate
   presentConfirm(data) {
     let alert = this.alertCtrl.create({
-      title: 'Pilot',
       message: 'Do you want to delete certificate?',
       buttons: [
         {

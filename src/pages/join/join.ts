@@ -316,7 +316,6 @@ export class JoinPage {
   // display dialog 
   showAlert() {
     const alert = this.alertCtrl.create({
-      title: 'Pilot',
       subTitle: this.message,
       buttons: [
         {

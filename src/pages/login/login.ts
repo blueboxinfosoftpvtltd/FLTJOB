@@ -85,14 +85,19 @@ export class LoginPage {
 
 
   // google login method
-  GoogleLogin() {
+  GoogleLogin(val) {
     if (this.platform.is('ios')) {
       this.devicetype = '1';
     }
     else {
       this.devicetype = '2';
     }
+    if(val == 'apple'){
+      this.devicetype = '1';
+    }
     // this.googlePlus.logout().then(() => {
+
+    if(val == 'google'){
     this.googlePlus.login({})
       .then(res => {
         console.log(res);
@@ -497,9 +502,425 @@ export class LoginPage {
 
 
       })
-
       .catch(err => console.error(err));
+    }
+
+    if(val == 'apple'){
+      const { SignInWithApple } = Plugins;
+      SignInWithApple.Authorize()
+        .then(async (res) => {
+          if (res.response && res.response.identityToken) {
+            this.EmailId = res.response.email;
+            this.PilotFname = res.response.givenName;
+            this.PilotLname = res.response.familyName;
+            this.PhotoPath = "";
+            this.provider.setloading();
+            this.provider.doGoogleLogin(this.EmailId, this.PilotFname, this.PilotLname, this.PhotoPath, this.devicetype).subscribe(res => {
+
+              console.log(res);
+              this.res = res;
+    
+              if (this.res.data != null) {
+                let udata = {
+                  "email": this.EmailId,
+                  "password": null,
+                  "id": this.res.data.Pilot.pkPilotId,
+                  "usertype": this.res.data.Pilot.MemberShipType,
+                  "userprofilepic": this.res.data.Pilot.PhotoPath,
+                  "userfullname": this.res.data.Pilot.PilotFname + ' ' + this.res.data.Pilot.PilotLname,
+                  "devicetype": this.devicetype,
+                  'isgooglelogin': false,
+                  'fname': this.res.data.Pilot.PilotFname,
+                  'lname': this.res.data.Pilot.PilotLname
+                }
+                this.userarray.push(udata);
+                this.storage.get('uarray').then(data => {
+                  console.log(data);
+                  if (data != null) {
+                    for (let i = 0; i < data.length; i++) {
+                      if (data[i].email != this.EmailId) {
+                        this.userarray.push(data[i]);
+                      }
+    
+                    }
+    
+                  }
+                  this.storage.set('uarray', this.userarray);
+                  this.storage.set('Auth', 1);
+                  this.storage.set('email', this.EmailId);
+                  this.storage.set('password', null);
+                  this.storage.set('id', this.res.data.Pilot.pkPilotId);
+                  this.storage.set('usertype', this.res.data.Pilot.MemberShipType);
+                  this.storage.set('userprofilepic', this.res.data.Pilot.PhotoPath);
+                  this.storage.set('logout', false);
+                  this.storage.set('userfullname', this.res.data.Pilot.PilotFname + ' ' + this.res.data.Pilot.PilotLname);
+                  this.storage.set('isgooglelogin', false);
+                  this.storage.set('fname', this.res.data.Pilot.PilotFname);
+                  this.storage.set('lname', this.res.data.Pilot.PilotLname);
+                  this.provider.dismissloading();
+                  this.provider.savecurrentuserdata(this.res);
+                  this.storage.get('introslidelogin1').then(val => {
+                    this.intro = val;
+                    if (this.intro == null || this.intro == undefined || this.intro == "") {
+    
+    
+                      this.provider.getPendingtrip(this.res.data.Pilot.pkPilotId).subscribe(res => {
+                        console.log(res);
+                        this.pendingtrip = res;
+                        if (this.pendingtrip.data.Trip != null) {
+                          this.pcount = 0;
+                          for (let i = 0; i < this.pendingtrip.data.Trip.length; i++) {
+                            if (this.pendingtrip.data.Trip[i].IsRecent == true) {
+                              this.pcount += 1;
+                            }
+    
+                          }
+                          this.events.publish('pendingcount', this.pcount);
+                          console.log(this.pcount);
+                        }
+                      })
+                      this.provider.getCurrenttrip(this.res.data.Pilot.pkPilotId).subscribe(res => {
+                        console.log(res);
+                        this.currenttrip = res;
+                        if (this.currenttrip.data.Trip != null) {
+                          this.ccount = 0;
+                          for (let i = 0; i < this.currenttrip.data.Trip.length; i++) {
+                            if (this.currenttrip.data.Trip[i].IsRecent == true) {
+                              this.ccount += 1;
+                            }
+    
+                          }
+                          this.events.publish('currentcount', this.ccount);
+                          console.log(this.ccount);
+                        }
+                      })
+                      this.provider.getHistorytrip(this.res.data.Pilot.pkPilotId).subscribe(res => {
+                        console.log(res);
+                        this.historytrip = res;
+                        if (this.historytrip.data.Trip != null) {
+                          this.hcount = 0;
+                          for (let i = 0; i < this.historytrip.data.Trip.length; i++) {
+                            if (this.historytrip.data.Trip[i].IsRecent == true) {
+                              this.hcount += 1;
+                            }
+    
+                          }
+                          this.events.publish('historycount', this.hcount);
+                          console.log(this.hcount);
+                        }
+                      })
+                      this.provider.getFuturetrip(this.res.data.Pilot.pkPilotId).subscribe(res => {
+                        console.log(res);
+                        this.futuretrip = res;
+                        if (this.futuretrip.data.Trip != null) {
+                          this.fcount = 0;
+                          for (let i = 0; i < this.futuretrip.data.Trip.length; i++) {
+                            if (this.futuretrip.data.Trip[i].IsRecent == true) {
+                              this.fcount += 1;
+                            }
+    
+                          }
+                          this.events.publish('futurecount', this.fcount);
+                          console.log(this.fcount);
+                        }
+                      })
+                      this.provider.getAllRequest(this.res.data.Pilot.pkPilotId).subscribe(res => {
+    
+                        this.pending = res;
+    
+                        if (this.pending.data.Requests != null) {
+                          this.pencount = 0;
+                          for (let i = 0; i < this.pending.data.Requests.length; i++) {
+                            if (this.pending.data.Requests[i].IsRecent == 0) {
+                              this.pencount += 1;
+                            }
+    
+                          }
+                          this.events.publish('pencount', this.pencount);
+                          console.log(this.pencount);
+                        }
+                      })
+                      this.provider.getRecentMsgList(this.res.data.Pilot.pkPilotId).subscribe(res => {
+                        this.messages = res;
+    
+                        if (this.messages.data.Messages != null) {
+                          this.mcount = 0;
+                          for (let i = 0; i < this.messages.data.Messages.length; i++) {
+                            if (this.messages.data.Messages[i].IsReceive == true && this.messages.data.Messages[i].IsRecent == 0) {
+                              this.mcount += 1;
+                            }
+    
+                          }
+                          this.events.publish('mcount', this.mcount);
+                          console.log(this.mcount);
+                        }
+    
+                      })
+                      if (this.res.data.Pilot.MemberShipType == "" || this.res.data.Pilot.MemberShipType == 0) {
+                        this.navCtrl.push("TabpagePage", { tabIndex: 1, 'istab': 'google' }, { animate: false }).then(() => {
+                          this.events.publish('userdata', this.res);
+                        })
+                      }
+                      else {
+                        this.navCtrl.push("TabpagePage", { tabIndex: 0, 'istab': 'google' }, { animate: false }).then(() => {
+                          this.events.publish('userdata', this.res);
+                        })
+                      }
+    
+    
+                    }
+                    else {
+                      SplashScreen.show({
+                        showDuration: 2000,
+                        autoHide: true
+                      });
+                      setTimeout(() => {
+                        location.reload();
+                      }, 2000);
+    
+    
+                      this.provider.getPendingtrip(this.res.data.Pilot.pkPilotId).subscribe(res => {
+                        console.log(res);
+                        this.pendingtrip = res;
+                        if (this.pendingtrip.data.Trip != null) {
+                          this.pcount = 0;
+                          for (let i = 0; i < this.pendingtrip.data.Trip.length; i++) {
+                            if (this.pendingtrip.data.Trip[i].IsRecent == true) {
+                              this.pcount += 1;
+                            }
+    
+                          }
+                          this.events.publish('pendingcount', this.pcount);
+                          console.log(this.pcount);
+                        }
+                      })
+                      this.provider.getCurrenttrip(this.res.data.Pilot.pkPilotId).subscribe(res => {
+                        console.log(res);
+                        this.currenttrip = res;
+                        if (this.currenttrip.data.Trip != null) {
+                          this.ccount = 0;
+                          for (let i = 0; i < this.currenttrip.data.Trip.length; i++) {
+                            if (this.currenttrip.data.Trip[i].IsRecent == true) {
+                              this.ccount += 1;
+                            }
+    
+                          }
+                          this.events.publish('currentcount', this.ccount);
+                          console.log(this.ccount);
+                        }
+                      })
+                      this.provider.getHistorytrip(this.res.data.Pilot.pkPilotId).subscribe(res => {
+                        console.log(res);
+                        this.historytrip = res;
+                        if (this.historytrip.data.Trip != null) {
+                          this.hcount = 0;
+                          for (let i = 0; i < this.historytrip.data.Trip.length; i++) {
+                            if (this.historytrip.data.Trip[i].IsRecent == true) {
+                              this.hcount += 1;
+                            }
+    
+                          }
+                          this.events.publish('historycount', this.hcount);
+                          console.log(this.hcount);
+                        }
+                      })
+                      this.provider.getFuturetrip(this.res.data.Pilot.pkPilotId).subscribe(res => {
+                        console.log(res);
+                        this.futuretrip = res;
+                        if (this.futuretrip.data.Trip != null) {
+                          this.fcount = 0;
+                          for (let i = 0; i < this.futuretrip.data.Trip.length; i++) {
+                            if (this.futuretrip.data.Trip[i].IsRecent == true) {
+                              this.fcount += 1;
+                            }
+    
+                          }
+                          this.events.publish('futurecount', this.fcount);
+                          console.log(this.fcount);
+                        }
+                      })
+                      this.provider.getAllRequest(this.res.data.Pilot.pkPilotId).subscribe(res => {
+    
+                        this.pending = res;
+    
+                        if (this.pending.data.Requests != null) {
+                          this.pencount = 0;
+                          for (let i = 0; i < this.pending.data.Requests.length; i++) {
+                            if (this.pending.data.Requests[i].IsRecent == 0) {
+                              this.pencount += 1;
+                            }
+    
+                          }
+                          this.events.publish('pencount', this.pencount);
+                          console.log(this.pencount);
+                        }
+                      })
+                      this.provider.getRecentMsgList(this.res.data.Pilot.pkPilotId).subscribe(res => {
+                        this.messages = res;
+    
+                        if (this.messages.data.Messages != null) {
+                          this.mcount = 0;
+                          for (let i = 0; i < this.messages.data.Messages.length; i++) {
+                            if (this.messages.data.Messages[i].IsReceive == true && this.messages.data.Messages[i].IsRecent == 0) {
+                              this.mcount += 1;
+                            }
+    
+                          }
+                          this.events.publish('mcount', this.mcount);
+                          console.log(this.mcount);
+                        }
+    
+                      })
+                      if (this.res.data.Pilot.MemberShipType == "" || this.res.data.Pilot.MemberShipType == 0) {
+                        this.navCtrl.push("TabpagePage", { tabIndex: 1, 'istab': 'google' }, { animate: false }).then(() => {
+                          this.events.publish('userdata', this.res);
+                        })
+                      }
+                      else {
+                        this.navCtrl.push("TabpagePage", { tabIndex: 0, 'istab': 'google' }, { animate: false }).then(() => {
+                          this.events.publish('userdata', this.res);
+                        })
+                      }
+    
+    
+    
+                    }
+                  })
+    
+                  if (this.userarray.length > 1) {
+    
+    
+                  }
+                  else {
+    
+                    this.provider.getPendingtrip(this.res.data.Pilot.pkPilotId).subscribe(res => {
+                      console.log(res);
+                      this.pendingtrip = res;
+                      if (this.pendingtrip.data.Trip != null) {
+                        this.pcount = 0;
+                        for (let i = 0; i < this.pendingtrip.data.Trip.length; i++) {
+                          if (this.pendingtrip.data.Trip[i].IsRecent == true) {
+                            this.pcount += 1;
+                          }
+    
+                        }
+                        this.events.publish('pendingcount', this.pcount);
+                        console.log(this.pcount);
+                      }
+                    })
+                    this.provider.getCurrenttrip(this.res.data.Pilot.pkPilotId).subscribe(res => {
+                      console.log(res);
+                      this.currenttrip = res;
+                      if (this.currenttrip.data.Trip != null) {
+                        this.ccount = 0;
+                        for (let i = 0; i < this.currenttrip.data.Trip.length; i++) {
+                          if (this.currenttrip.data.Trip[i].IsRecent == true) {
+                            this.ccount += 1;
+                          }
+    
+                        }
+                        this.events.publish('currentcount', this.ccount);
+                        console.log(this.ccount);
+                      }
+                    })
+                    this.provider.getHistorytrip(this.res.data.Pilot.pkPilotId).subscribe(res => {
+                      console.log(res);
+                      this.historytrip = res;
+                      if (this.historytrip.data.Trip != null) {
+                        this.hcount = 0;
+                        for (let i = 0; i < this.historytrip.data.Trip.length; i++) {
+                          if (this.historytrip.data.Trip[i].IsRecent == true) {
+                            this.hcount += 1;
+                          }
+    
+                        }
+                        this.events.publish('historycount', this.hcount);
+                        console.log(this.hcount);
+                      }
+                    })
+                    this.provider.getFuturetrip(this.res.data.Pilot.pkPilotId).subscribe(res => {
+                      console.log(res);
+                      this.futuretrip = res;
+                      if (this.futuretrip.data.Trip != null) {
+                        this.fcount = 0;
+                        for (let i = 0; i < this.futuretrip.data.Trip.length; i++) {
+                          if (this.futuretrip.data.Trip[i].IsRecent == true) {
+                            this.fcount += 1;
+                          }
+    
+                        }
+                        this.events.publish('futurecount', this.fcount);
+                        console.log(this.fcount);
+                      }
+                    })
+                    this.provider.getAllRequest(this.res.data.Pilot.pkPilotId).subscribe(res => {
+    
+                      this.pending = res;
+    
+                      if (this.pending.data.Requests != null) {
+                        this.pencount = 0;
+                        for (let i = 0; i < this.pending.data.Requests.length; i++) {
+                          if (this.pending.data.Requests[i].IsRecent == 0) {
+                            this.pencount += 1;
+                          }
+    
+                        }
+                        this.events.publish('pencount', this.pencount);
+                        console.log(this.pencount);
+                      }
+                    })
+                    this.provider.getRecentMsgList(this.res.data.Pilot.pkPilotId).subscribe(res => {
+                      this.messages = res;
+    
+                      if (this.messages.data.Messages != null) {
+                        this.mcount = 0;
+                        for (let i = 0; i < this.messages.data.Messages.length; i++) {
+                          if (this.messages.data.Messages[i].IsReceive == true && this.messages.data.Messages[i].IsRecent == 0) {
+                            this.mcount += 1;
+                          }
+    
+                        }
+                        this.events.publish('mcount', this.mcount);
+                        console.log(this.mcount);
+                      }
+    
+                    })
+                    if (this.res.data.Pilot.MemberShipType == "" || this.res.data.Pilot.MemberShipType == 0) {
+                      this.navCtrl.push("TabpagePage", { tabIndex: 1, 'istab': 'google' }, { animate: false }).then(() => {
+                        this.events.publish('userdata', this.res);
+                      })
+                    }
+                    else {
+                      this.navCtrl.push("TabpagePage", { tabIndex: 0, 'istab': 'google' }, { animate: false }).then(() => {
+                        this.events.publish('userdata', this.res);
+                      })
+                    }
+    
+                  }
+    
+    
+                  console.log('login');
+    
+                })
+              }
+              else {
+                this.message = this.res.msg;
+                this.showAlert();
+              }
+            });
+          } 
+        })
+        .catch((response) => {
+          //this.presentAlert();
+        });
+    }
+
+      
   }
+
+
+  // {"identityToken":"eyJraWQiOiI4NkQ4OEtmIiwiYWxnIjoiUlMyNTYifQ.eyJpc3MiOiJodHRwczovL2FwcGxlaWQuYXBwbGUuY29tIiwiYXVkIjoiY29tLmJsdWVib3hpbmZvc29mdC5waWxvdCIsImV4cCI6MTU5Njg4NTM3NSwiaWF0IjoxNTk2ODg0Nzc1LCJzdWIiOiIwMDA0NTEuNDlkZjAyMzMxNTk5NGQ0ZjhiNTM3NzJhMjFjYTFiYzQuMTEwMCIsImNfaGFzaCI6IkFjS2ZJc1ZLbXgxRHhDV1l6ejExZ3ciLCJlbWFpbCI6ImFwcGxlQGl0c2d1cnUuY29tIiwiZW1haWxfdmVyaWZpZWQiOiJ0cnVlIiwiYXV0aF90aW1lIjoxNTk2ODg0Nzc1LCJub25jZV9zdXBwb3J0ZWQiOnRydWV9.MD0LH_qqOHnGPCCAeANSUqVIZcjloWerPDKeilpulRn8rHuh4ZnBYMHVScGc5crmNBBK57cFIqAgctcy-c3u5M1gkUrM2MKWFKG5ZMaf9jx-0_TYAAWUyJzBUbuOalQ-G2Xoh9Tn1kQohwx80351q0FrCiEU0kN5GWheX7rFcU4XWDw3THkL09-A8eBniYTa78NEnxPQcHZOh-PsK9lU80L-mkg18x4dScVGZP-0BYyV_fweJKq9bTJj1OFHoX9EKNqU_cBz3TpvbON_IeCIDfm0NFW0BBEkJWk0iW_Tocdl1SIfA0KtXVgW40BwlP9QOktxetfxLRdONGZcbskkJQ","authorizationCode":"cb031c5689d184a0eaa91aee946f74345.0.muvr.uYcr1MaBte-EFf5cadWY9w","user":"000451.49df023315994d4f8b53772a21ca1bc4.1100","familyName":"Patel","email":"apple@itsguru.com","givenName":"Himanshu"}
+  
 
   // back press from page
   back() {
@@ -525,7 +946,6 @@ export class LoginPage {
 
   showAlert() {
     const alert = this.alertCtrl.create({
-      title: 'Pilot',
       subTitle: this.message,
       buttons: ['OK']
     });

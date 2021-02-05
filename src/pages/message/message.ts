@@ -64,7 +64,7 @@ export class MessagePage {
   // display alert dialog
   presentAlert(title, message) {
     let alert = this.alertCtrl.create({
-      title: title,
+      title: "",
       subTitle: message,
       buttons: ['Ok']
     });
@@ -93,7 +93,7 @@ export class MessagePage {
   // display alert dialog
   successalert(title, msg) {
     let alert = this.alertCtrl.create({
-      title: title,
+      title: "",
       message: msg,
       buttons: [
         {

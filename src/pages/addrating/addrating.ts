@@ -289,7 +289,7 @@ export class AddratingPage {
   // display alert dialog
   showalert(title, message) {
     let alert = this.alertCtrl.create({
-      title: title,
+      title: "",
       subTitle: message,
       buttons: [
         {

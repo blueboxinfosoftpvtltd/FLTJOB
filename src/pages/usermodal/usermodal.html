@@ -45,7 +45,7 @@
     <ion-col col-2 style="align-self: center">
       <!-- <ion-checkbox mode="ios" [(ngModel)]="name.checked"></ion-checkbox> -->
       <ion-list style="margin: 0px" radio-group [(ngModel)]="rvalue">
-        <ion-radio mode="md" (ionSelect)="radioclick($event,name)" value={{name.userfullname}}></ion-radio>
+        <ion-radio mode="md" (ionSelect)="radioclick($event,name)" value={{name.id}} checked="{{name.checked}}" ></ion-radio>
       </ion-list>
     </ion-col>
     <ion-col col-12>
@@ -56,18 +56,18 @@
 </ion-content>
 <ion-footer>
   <ion-row center>
+        <ion-col text-center>
+          <button ion-button *ngIf="islogin" class="fullbtn" (click)="login()">Login</button>
+        </ion-col>
+  </ion-row>
+  <ion-row center>
     <ion-col text-center>
       <button ion-button class="fullbtn" (click)="addac()">Add account</button>
     </ion-col>
   </ion-row>
   <ion-row center>
     <ion-col text-center>
-      <button ion-button *ngIf="islogin" class="fullbtn" (click)="login()">Login</button>
-    </ion-col>
-  </ion-row>
-  <ion-row center>
-    <ion-col text-center>
-      <button ion-button class="fullbtn" (click)="logout()">Sign out of all account</button>
+      <button ion-button class="fullbtn"  (click)="logout()">Sign out of all account</button>
     </ion-col>
   </ion-row>
 

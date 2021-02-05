@@ -35,16 +35,23 @@ export class UsermodalPage {
   hcount: number = 0;
   message: any;
   username: any;
+  user_id: any;
+  
   constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage, public provider: AuthproviderProvider, public events: Events, public alertCtrl: AlertController, private app: App, public googlePlus: GooglePlus) {
 
     this.storage.get('userfullname').then(val => {
+     
       this.username = val;
+      this.storage.get('id').then(val => {
+      this.user_id = val;
+      
       this.storage.get('uarray').then(val => {
         if (val != null) {
           this.users = val;
           this.users.forEach((element, index) => {
-            if (element.userfullname == this.username) {
-              this.rvalue = element.userfullname;
+            if (element.userfullname == this.username && element.id == this.user_id ) {
+             // this.rvalue = element.userfullname;
+              this.rvalue = element.id;
               this.clogin = element.userfullname;
             }
             else {
@@ -52,6 +59,7 @@ export class UsermodalPage {
             }
           });
         }
+      })
       })
     })
 
@@ -68,6 +76,7 @@ export class UsermodalPage {
     if (e != this.clogin) {
       this.islogin = true;
       this.udetail = val;
+      
     }
     else {
       this.islogin = false;
@@ -83,6 +92,7 @@ export class UsermodalPage {
   }
 
   showAlert() {
+    const { SignInWithApple } = Plugins;
     const prompt = this.alertCtrl.create({
       title: "FLTJOB",
       message: "Are you sure you want to logout ?",
@@ -92,8 +102,16 @@ export class UsermodalPage {
           handler: data => {
             this.googlePlus.logout().then(() => {
             })
+            
             this.app.getRootNav().getActiveChildNav().select(0);
+
+            
             this.navCtrl.setRoot('LoginPage', { animate: false }).then(() => {
+             
+            this.storage.remove('id').then(val => {
+                console.log(val);
+            this.storage.remove('usertype').then(val => {
+                console.log(val);
               this.storage.remove('uarray').then(val => {
                 console.log(val);
                 this.storage.remove('email').then(val => {
@@ -102,7 +120,9 @@ export class UsermodalPage {
                     console.log(val);
                   })
                 })
+                })
               })
+            })
             });
           }
         },
@@ -119,6 +139,8 @@ export class UsermodalPage {
 
   logout() {
     this.showAlert();
+
+  
   }
   login() {
     this.provider.setloading();

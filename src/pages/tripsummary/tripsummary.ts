@@ -55,6 +55,16 @@ export class TripsummaryPage {
   ispartial: number = 0;
   partialamt: any;
   offsetamt: any;
+
+  diffInDays: any;
+  fromdate: any;
+  todate:  any;
+  totalamt: any;
+  totalamt1: any;
+  totalamt2: any;
+  oneDay: any;
+  displayRate: any;
+  displayPartialamt:any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage, public provider: AuthproviderProvider, public alertCtrl: AlertController, public events: Events) {
     this.disableButton = false;
 
@@ -81,14 +91,28 @@ export class TripsummaryPage {
       this.descode = this.navParams.get('descode');
       this.tsdate = this.navParams.get('tsdate');
       this.cancelflag = this.navParams.get('iscancel');
+    
       var tripsdate = moment(this.tsdate).format('YYYY-MM-DD');
       var date = moment().format('YYYY-MM-DD');
       if (tripsdate > date) {
         this.Iscancel = true;
       }
       this.tedate = this.navParams.get('tedate');
+
+      this.oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+      this.fromdate = moment(this.tsdate,"YYYY-MM-DD");
+      this.todate = moment(this.tedate,"YYYY-MM-DD");
+     // this.diffInDays = Math.abs(this.fromdate.diff(this.todate, 'days'));  
+     // this.diffInDays = Math.round(Math.abs(this.fromdate.diff(this.todate, 'days') / this.oneDay)) ;  
+      this.diffInDays = Math.round(Math.abs((this.fromdate - this.todate) / this.oneDay) + 1);
+      
       this.aircraft = this.navParams.get('aircraft');
+      this.displayRate = this.navParams.get('rate');
       this.rate = this.navParams.get('rate');
+      
+      this.totalamt = parseFloat(this.diffInDays) * parseFloat(this.rate);
+      this.rate = this.totalamt;
+      
       this.oppositeid = this.navParams.get('oppositeid');
       this.tripid = this.navParams.get('tripid');
       this.type = this.navParams.get('type');
@@ -101,7 +125,25 @@ export class TripsummaryPage {
       this.tripsummary = this.navParams.get('summary');
       this.isescrow = this.navParams.get('isescrow');
       this.partialamt = this.navParams.get('partialamt');
+
+
+      this.totalamt1 = parseFloat(this.diffInDays) * parseFloat(this.partialamt);
+      this.partialamt = this.totalamt1;
+      
       this.offsetamt = this.navParams.get('offsetamt');
+
+      /*if (thisoffsetamt == '') 
+      {
+        this.totalamt = parseFloat(this.diffInDays) * parseFloat(this.rate);
+        this.rate = this.totalamt;
+  
+     
+      }
+      else{
+        this.totalamt2 = parseFloat(this.diffInDays) * parseFloat(this.offsetamt);
+        this.offsetamt = this.totalamt2;
+      }*/
+
       this.tripsummary.find(ele => {
         if (ele.type > 0) {
           this.Ispilotcanceltrip = false;
@@ -123,7 +165,6 @@ export class TripsummaryPage {
   accept() {
     this.disableButton = true;
     const prompt = this.alertCtrl.create({
-      title: 'Pilot',
       message: "Are you sure you want to accept ?",
       buttons: [
         {
@@ -152,7 +193,7 @@ export class TripsummaryPage {
     this.disableButton = true;
 
     const prompt = this.alertCtrl.create({
-      title: 'Pilot',
+      //title: 'Pilot',
       message: "Are you sure you want to decline offer ?",
       buttons: [
         {
@@ -210,6 +251,7 @@ export class TripsummaryPage {
   }
 
   ionViewDidLoad() {
+    
     console.log('ionViewDidLoad TripsummaryPage');
   }
 
@@ -260,7 +302,7 @@ export class TripsummaryPage {
   // display alert dialog
   successalert() {
     let alert = this.alertCtrl.create({
-      title: 'Pilot',
+     // title: 'Pilot',
       message: this.message,
       buttons: [
         {
@@ -278,7 +320,7 @@ export class TripsummaryPage {
   acceptowner() {
     this.disableButton = true;
     const prompt = this.alertCtrl.create({
-      title: 'Pilot',
+      //title: 'Pilot',
       message: "Are you sure you want to accept offer ?",
       buttons: [
         {
@@ -346,7 +388,7 @@ export class TripsummaryPage {
   declineowner() {
     this.disableButton = true;
     const prompt = this.alertCtrl.create({
-      title: 'Pilot',
+      //title: 'Pilot',
       message: "Are you sure you want to decline crew member ?",
       buttons: [
         {
@@ -384,7 +426,7 @@ export class TripsummaryPage {
   // display alert dialog
   erroralert() {
     let alert = this.alertCtrl.create({
-      title: 'Pilot',
+      //title: 'Pilot',
       message: 'Error ocuured!',
       buttons: [
         {
@@ -470,7 +512,7 @@ export class TripsummaryPage {
     if (this.Ispilotcanceltrip == true) {
       this.disableButton = true;
       const prompt = this.alertCtrl.create({
-        title: 'Pilot',
+       // title: 'Pilot',
         message: "Are you sure you want to cancel trip ?",
         buttons: [
           {
@@ -566,7 +608,7 @@ export class TripsummaryPage {
   // display alert dialog
   successalert1() {
     let alert = this.alertCtrl.create({
-      title: 'Pilot',
+     // title: 'Pilot',
       message: this.message,
       buttons: [
         {
@@ -585,7 +627,7 @@ export class TripsummaryPage {
   // display alert dialog for confirmation
   acceptcancel() {
     const prompt = this.alertCtrl.create({
-      title: 'Pilot',
+      //title: 'Pilot',
       message: "Are you sure you want to accept ?",
       buttons: [
         {
@@ -609,7 +651,7 @@ export class TripsummaryPage {
   // display alert dialog for confirmation
   declinecancel() {
     const prompt = this.alertCtrl.create({
-      title: 'Pilot',
+      //title: 'Pilot',
       message: "Are you sure you want to decline ?",
       buttons: [
         {
@@ -666,7 +708,7 @@ export class TripsummaryPage {
     if (this.Ispilotcanceltrip == true) {
       this.disableButton = true;
       const prompt = this.alertCtrl.create({
-        title: 'Pilot',
+      //  title: 'Pilot',
         message: "Are you sure you want to cancel trip ?",
         buttons: [
           {
@@ -762,7 +804,7 @@ export class TripsummaryPage {
   // when cancel trip accept owner
   acceptcancelowner() {
     const prompt = this.alertCtrl.create({
-      title: 'Pilot',
+     // title: 'Pilot',
       message: "Are you sure you want to accept ?",
       buttons: [
         {
@@ -788,7 +830,7 @@ export class TripsummaryPage {
   declinecancelowner() {
 
     const prompt = this.alertCtrl.create({
-      title: 'Pilot',
+     // title: 'Pilot',
       message: "Are you sure you want to decline ?",
       buttons: [
         {
@@ -860,7 +902,7 @@ export class TripsummaryPage {
   completeowner() {
 
     const prompt = this.alertCtrl.create({
-      title: 'Pilot',
+     // title: 'Pilot',
       message: "Are you sure you want to complete trip ?",
       buttons: [
         {

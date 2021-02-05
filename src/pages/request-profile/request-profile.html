@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title></ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <div class="ionAvtar" *ngIf="senderImage != null"> 
+      <img src="{{senderImage}}" alt="image" class="image">
+  </div>
+
+  <div>
+    <ion-item>
+        <ion-label>Name: </ion-label>
+        <ion-input value="{{senderFirstName}} {{senderLastName}}" placeholder="Not Avalible" readonly></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label>Member Type: </ion-label>
+        <ion-input value="{{senderMemberType}}" placeholder="Not Avalible" readonly></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label>Email: </ion-label>
+        <ion-input value="{{senderGender}}" placeholder="Not Avalible" readonly></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label>Company Name: </ion-label>
+        <ion-input value="{{senderCompenyName}}" placeholder="Not Avalible" readonly></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label>Platform: </ion-label>
+        <ion-input value="FLTJOB" placeholder="Not Avalible" readonly></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Continent: </ion-label>
+      <ion-input value="{{senderContinent}}" placeholder="Not Avalible" readonly></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Langauge Spoken: </ion-label>
+      <ion-input value="{{senderLangaugeSpoken}}" placeholder="Not Avalible" readonly></ion-input>
+  </ion-item>
+  </div>
+</ion-content>

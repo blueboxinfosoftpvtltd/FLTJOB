@@ -68,7 +68,7 @@ export class FavuserPage {
   // display alert dialog
   presentAlert(title, message) {
     let alert = this.alertCtrl.create({
-      title: title,
+      title: "",
       subTitle: message,
       buttons: ['Ok']
     });
@@ -79,7 +79,6 @@ export class FavuserPage {
   removeItem(pid) {
 
     const prompt = this.alertCtrl.create({
-      title: 'Pilot',
       message: "Are you sure you want to delete ?",
       buttons: [
         {

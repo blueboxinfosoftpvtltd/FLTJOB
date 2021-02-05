@@ -136,10 +136,13 @@ export class AirportcodePage {
           this.airportcodes = this.airportcodes.data.AirportCode;
           this.tempairportcode = this.airportcodes;
           console.log(this.tempairportcode)
-
         }
         this.searchdata = false;
       })
+         this.airportcodes = this.tempairportcode.filter((item) => {
+            console.log(this.searchcode);
+           return (item.AirportCode.toLowerCase().indexOf(this.searchcode.toLowerCase()) > -1);
+          });  
     }
     else {
       this.airportcodes = this.tempairportcode;

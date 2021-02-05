@@ -150,8 +150,8 @@ export class ProfilePage {
   phoneNumber: any = "";
   dummyJson = {
     onoff: [
-      { description: 'On' },
-      { description: 'Off' }
+      { description: 'ON' },
+      { description: 'OFF' }
     ],
     yesno: [
       { description: 'Yes' },
@@ -320,10 +320,10 @@ export class ProfilePage {
           this.photo = this.userdata.data.Pilot.PhotoPath;
           this.clocation = this.userdata.data.Pilot.CurrentLocation;
           if (this.clocation == true) {
-            this.clocation = this.dummyJson.yesno[0].description;
+            this.clocation = this.dummyJson.onoff[0].description;
           }
           else {
-            this.clocation = this.dummyJson.yesno[1].description;
+            this.clocation = this.dummyJson.onoff[1].description;
           }
         }
 
@@ -399,10 +399,10 @@ export class ProfilePage {
             this.photo = this.userdata.data.Pilot.PhotoPath;
             console.log(this.clocation)
             if (this.clocation == true) {
-              this.clocation = this.dummyJson.yesno[0].description;
+              this.clocation = this.dummyJson.onoff[0].description;
             }
             else {
-              this.clocation = this.dummyJson.yesno[1].description;
+              this.clocation = this.dummyJson.onoff[1].description;
             }
             console.log(this.clocation)
             this.phoneno = this.userdata.data.Pilot.cellNumber;
@@ -612,7 +612,7 @@ export class ProfilePage {
     var fkid;
     var location;
     var passport;
-    if (this.clocation == 'Yes') {
+    if (this.clocation == 'ON') {
       location = true;
     }
     else {
@@ -896,10 +896,10 @@ export class ProfilePage {
       this.selector.show({
         title: "",
         items: [
-          this.dummyJson.yesno
+          this.dummyJson.onoff
         ],
         defaultItems: [
-          { index: 0, value: this.dummyJson.yesno[0].description }
+          { index: 0, value: this.dummyJson.onoff[0].description }
         ],
       }).then(
         result => {
@@ -1459,7 +1459,6 @@ export class ProfilePage {
   // remove photo from FA gallery
   presentConfirm(val) {
     let alert = this.alertCtrl.create({
-      title: 'Pilot',
       message: 'Do you want to delete photo?',
       buttons: [
         {

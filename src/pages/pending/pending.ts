@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, Events } from 'ionic-angular';
 import { AuthproviderProvider } from '../../providers/authprovider/authprovider';
 import { Storage } from '@ionic/storage';
+import { RequestProfilePage } from '../request-profile/request-profile';
 
 @IonicPage()
 @Component({
@@ -70,7 +71,7 @@ export class PendingPage {
   successalert(title, msg, type) {
     if (type == 'decline') {
       let alert = this.alertCtrl.create({
-        title: title,
+        title: "",
         message: msg,
         buttons: [
           {
@@ -85,7 +86,7 @@ export class PendingPage {
     }
     else if (type == 'accept') {
       let alert = this.alertCtrl.create({
-        title: title,
+        title: "",
         message: msg,
         buttons: [
           {
@@ -110,7 +111,10 @@ export class PendingPage {
     })
   }
 
-
+  viewProfile(senderID){
+    this.provider.senderID = senderID;
+    this.navCtrl.push(RequestProfilePage);
+  }
   // method is called when accept is click
   AcceptRequest(pkRequestId) {
     this.provider.setloading();
@@ -136,7 +140,7 @@ export class PendingPage {
   // display alert messasge
   presentAlert(title, message) {
     let alert = this.alertCtrl.create({
-      title: title,
+      title: "",
       subTitle: message,
       buttons: ['Ok']
     });

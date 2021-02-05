@@ -23,13 +23,21 @@
 
   <ion-row center style="margin-top: 40px">
     <ion-col text-center>
-      <button ion-button class="fullbtn" (click)="GoogleLogin()">Login With Google</button>
+      <button ion-button class="fullbtn" (click)="GoogleLogin('google')">Login With Google</button>
     </ion-col>
   </ion-row>
 
   <ion-row center style="margin-top: 40px">
     <ion-col text-center>
       <button ion-button class="fullbtn" (click)="dologin()">Already have an account ? Sign in</button>
+    </ion-col>
+  </ion-row>
+
+  <ion-row center style="margin-top: 40px">
+    <ion-col text-center>
+      <button ion-button class="fullbtna" (click)="GoogleLogin('apple')">
+          <ion-icon style="font-size: 1.4em;margin-right: 15px" name="logo-apple"></ion-icon>
+        Sign in with Apple</button>
     </ion-col>
   </ion-row>
 

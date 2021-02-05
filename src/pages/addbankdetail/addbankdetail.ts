@@ -141,7 +141,6 @@ export class AddbankdetailPage {
 
   alert() {
     let alert = this.alertCtrl.create({
-      title: 'Pilot',
       message: 'Enter a valid percentage.',
       buttons: [
         {
@@ -155,7 +154,6 @@ export class AddbankdetailPage {
   }
   successalert() {
     let alert = this.alertCtrl.create({
-      title: 'Pilot',
       message: this.message,
       buttons: [
         {
@@ -179,7 +177,6 @@ export class AddbankdetailPage {
 
   presentConfirm() {
     let alert = this.alertCtrl.create({
-      title: 'Pilot',
       message: 'Escrow keeps both pilot and operator protected.By skipping escrow you understand and accept the risk associated with it.',
       buttons: [
         {
@@ -216,7 +213,6 @@ export class AddbankdetailPage {
   }
   erroralert() {
     let alert = this.alertCtrl.create({
-      title: 'Pilot',
       message: this.message,
       buttons: [
         {

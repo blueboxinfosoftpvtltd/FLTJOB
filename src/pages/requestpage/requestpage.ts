@@ -84,7 +84,7 @@ export class RequestpagePage {
 
       if (this.res.Code == 200) {
         this.authprovider.dismissloading();
-        this.successalert('Pilot', 'Request sent successfully');
+        this.successalert('', 'Request sent successfully');
       }
       else if (this.res.Code == 400) {
         this.authprovider.dismissloading();
@@ -143,7 +143,6 @@ export class RequestpagePage {
 
   showAlert(message) {
     const alert = this.alertCtrl.create({
-      title: 'Pilot',
       subTitle: message,
       buttons: ['OK']
     });

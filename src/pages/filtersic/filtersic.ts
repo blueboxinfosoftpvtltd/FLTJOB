@@ -362,7 +362,7 @@ export class FiltersicPage {
 
     if (this.favsic == false && this.allsic == false && this.avlsic == false) {
       let alert = this.alertCtrl.create({
-        title: "Pilot",
+        title: "",
         message: "Please select atleast one option",
         buttons: [
           {
@@ -377,7 +377,7 @@ export class FiltersicPage {
     }
     else if (this.favsic == undefined && this.allsic == undefined && this.avlsic == undefined) {
       let alert = this.alertCtrl.create({
-        title: "Pilot",
+        title: "",
         message: "Please select atleast one option",
         buttons: [
           {
@@ -623,7 +623,6 @@ export class FiltersicPage {
   // display alert dialog
   showAlert() {
     const alert = this.alertCtrl.create({
-      title: 'Pilot',
       subTitle: this.errormessage,
       buttons: ['OK']
     });
@@ -732,7 +731,7 @@ export class FiltersicPage {
   // display alert dialog
   showAlert1(title, msg) {
     const alert = this.alertCtrl.create({
-      title: title,
+      title: "",
       subTitle: msg,
       buttons: [
         {
